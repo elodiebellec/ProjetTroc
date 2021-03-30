@@ -112,12 +112,12 @@ public class UtilisateurManager {
     			be.addError("Numero de telephone obligatoire");
     			return false;
     	} 
-    	if (!code_postal.matches("(?=.*[0-9])")) {
+    	if (!code_postal.matches("[0-9]{5}")) {
  			be.addError(
  					"Le Code Postal ne doit contenir que des chiffres");
  			return false;
     		}
-    	if (!telephone.matches("(?=.*[0-9])")) {
+    	if (!telephone.matches("[0-9]")) {
  			be.addError(
  					"Le numero de telephone ne doit contenir que des chiffres");
  			return false;
