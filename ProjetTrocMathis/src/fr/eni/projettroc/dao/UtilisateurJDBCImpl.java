@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.exception.BusinessException;
+import fr.eni.projettroc.exception.Errors;
 
 
 public class UtilisateurJDBCImpl implements UtilisateurDAO{
@@ -18,6 +19,9 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,administrateur) values(?,?,?,?,?,?,?,?,?,?)";
+	
+	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
+	
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(CONNECTION);
@@ -80,6 +84,42 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 				throw be;
 			}
 
+	}
+	
+	public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessException {
+		Utilisateur utilisateur = null;
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_No);
+			stmt.setInt(1, no_utilisateur);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				utilisateur = builderUtilisateur(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError(Errors.LECTURE_LISTE_ECHEC);
+			throw be;
+		}
+		
+		
+		return utilisateur;
+	}
+
+	private Utilisateur builderUtilisateur(ResultSet rs)throws SQLException {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCode_postal(rs.getString("code_Postal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setMot_de_passe(rs.getString("mot_de_passe"));
+		return utilisateur;
 	}
  }
 
