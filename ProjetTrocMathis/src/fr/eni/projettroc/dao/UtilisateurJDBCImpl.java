@@ -1,6 +1,7 @@
 package fr.eni.projettroc.dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +13,11 @@ import fr.eni.projettroc.dao.ConnectionProvider;
 import fr.eni.projettroc.exception.BusinessException;
 
 
-public class UtilisateursJDBCImpl implements UtilisateursDAO{
+public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
-
+	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,administrateur) values(?,?,?,?,?,?,?,?,?,?)";
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(CONNECTION);
@@ -56,7 +57,7 @@ public class UtilisateursJDBCImpl implements UtilisateursDAO{
 	
 	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException{
 		try(Connection cnx = ConnectionProvider.getConnection()){
-			PreparedStatement requete = cnx.prepareStatement("INSERT INTO utilisateurs VALUES (null,?,?,?,?,?,?,?,?,?);");
+			PreparedStatement requete = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			requete.setString(1, utilisateur.getPseudo());
 			requete.setString(2, utilisateur.getNom());
 			requete.setString(3, utilisateur.getPrenom());
@@ -66,9 +67,19 @@ public class UtilisateursJDBCImpl implements UtilisateursDAO{
 			requete.setString(7, utilisateur.getCode_postal());
 			requete.setString(8, utilisateur.getVille());
 			requete.setString(9, utilisateur.getMot_de_passe());
-		}catch (Exception e) {
-			throw new BusinessException();
-		}
+			requete.setInt(10, 1);
+			requete.executeUpdate();
+			ResultSet rs = requete.getGeneratedKeys();
+			if (rs.next()) {
+				utilisateur.setNo_utilisateur(rs.getInt(1));
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				BusinessException be = new BusinessException();
+				be.addError("erreur");
+				throw be;
+			}
 
-    }
-}
+	}
+ }
+
