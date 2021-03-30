@@ -41,7 +41,7 @@
 				<h2>Filtres :</h2>
 				<br>
 				
-		<form name="formbarre">
+		<form action="./Accueil" method="post">
 			 <input type="text" name="barre" id="barre" value= "recherche..." />
 			
 			<br> <br>		
@@ -55,7 +55,7 @@
 			<br> <br>		
 			 <input type="button" onclick="rechercher() " value="Rechercher" />
 			
-			</form>
+		</form>
 			<br>
 			
 			<div class="card h-100">
