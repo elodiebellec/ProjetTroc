@@ -1,4 +1,5 @@
 package fr.eni.projettroc.bll;
+
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
 
@@ -41,6 +42,45 @@ public class UtilisateurManager {
    }
    
    
+   public Utilisateur ajouterUnUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,
+		   String rue,String code_postal,String ville,String mot_de_passe) throws BusinessException{
+	   BusinessException be = new BusinessException();
+	   Utilisateur u = null;
+	   
+	   u = new Utilisateur();
+	   u.setPseudo(pseudo);
+	   u.setNom(nom);
+	   u.setPrenom(prenom);
+	   u.setEmail(email);
+	   u.setTelephone(telephone);
+	   u.setRue(rue);
+	   u.setCode_postal(code_postal);
+	   u.setVille(ville);
+	   u.setMot_de_passe(mot_de_passe);
+	   utilisateursDAO.insertUtilisateur(u);
+	   return u;
+   }
+   
+ /*  public ListeCourse ajouterListeEtArticle(String nomListe, String nomArticle) throws BusinessException {
+		BusinessException be = new BusinessException();
+		validerNomListe(nomListe, be);
+		validerNomArticle(nomArticle, be);
+
+		ListeCourse listeCourse = null;
+
+		if (!be.hasErreurs()) {
+			listeCourse = new ListeCourse();
+			listeCourse.setNom(nomListe.trim());
+			listeCourseDAO.insert(listeCourse);
+
+			Article article = new Article();
+			article.setNom(nomArticle.trim());
+			articleDAO.insert(article, listeCourse.getId());
+			listeCourse.getArticles().add(article);
+			return listeCourse;
+		} else {
+			throw be;
+		}*/
    
    
    private boolean validateLogin(String pseudo,String email, BusinessException be) {
@@ -82,6 +122,8 @@ public class UtilisateurManager {
 
 		return true;
 	}
+
+
 
 }
 

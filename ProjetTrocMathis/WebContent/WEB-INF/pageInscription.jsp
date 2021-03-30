@@ -49,43 +49,43 @@
 					
   <div class="form-group">
     <label for="pseudo">Pseudo</label>
-    <input type="text" class="form-control" id="pseudo" aria-describedby="pseudoHelp" placeholder="Entrer votre pseudo">
+    <input type="text" class="form-control" id="pseudo" name="pseudo" aria-describedby="pseudoHelp" placeholder="Entrer votre pseudo">
     <small id="pseudoHelp" class="form-text text-muted">Ne communiquer jamais votre pseudo</small>
  </div>
   <div class="form-group">
     <label for="password">Mot De Passe</label>
-    <input type="password" class="form-control" id="motdepasse" placeholder="Mot de passe">
+    <input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe">
   </div> <div class="form-group">
     <label for="password2">Confirmation du Mot De Passe</label>
-    <input type="password" class="form-control" id="motdepasseconfirmation" placeholder="Mot de passe">
+    <input type="password" class="form-control" id="motdepasseconfirmation" name="motdepasseconfirmation" placeholder="Mot de passe">
   </div> 
    <div class="form-group">
     <label for="nom">Nom</label>
-    <input type="text" class="form-control" id="nom" aria-describedby="nomHelp" placeholder="Entrer votre Nom">
+    <input type="text" class="form-control" id="nom" name="nom" aria-describedby="nomHelp" placeholder="Entrer votre Nom">
   </div> 
    <div class="form-group">
     <label for="prenom">Prenom</label>
-    <input type="text" class="form-control" id="prenom" aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
+    <input type="text" class="form-control" id="prenom" name="prenom" aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
   </div> 
    <div class="form-group">
     <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Entrer votre Email">
+    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Entrer votre Email">
   </div> 
   <div class="form-group">
     <label for="telephone">Telephone</label>
-    <input type="text" class="form-control" id="telephone" placeholder="Entrer votre telephone">
+    <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Entrer votre telephone">
   </div>
      <div class="form-group">
     <label for="rue">Rue</label>
-    <input type="text" class="form-control" id="rue" placeholder="Entrer votre rue">
+    <input type="text" class="form-control" id="rue" name="rue" placeholder="Entrer votre rue">
   </div>
   <div class="form-group">
     <label for="codepostal">Code Postal</label>
-    <input type="text" class="form-control" id="codepostal" placeholder="Entrer votre CP">
+    <input type="text" class="form-control" id="codepostal" name="codepostal" placeholder="Entrer votre CP">
   </div>
      <div class="form-group">
     <label for="codepostal">Ville</label>
-    <input type="text" class="form-control" id="ville" placeholder="Entrer votre ville">
+    <input type="text" class="form-control" id="ville" name="ville" placeholder="Entrer votre ville">
   </div>
  
   <div class="form-check">
