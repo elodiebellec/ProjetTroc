@@ -2,6 +2,7 @@ package fr.eni.projettroc.bo;
 
 import java.time.LocalDate;
 
+
 public class ArticleVendu {
 	
 	private int no_article;
