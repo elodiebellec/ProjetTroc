@@ -17,6 +17,8 @@ public interface ArticleVenduDAO {
 	
 	public void deleteArticle(int no_article) throws BusinessException;
 	
+	public ArticleVendu selectByNoArticle (int no_article) throws BusinessException;
+	
 	//public List<ListeArticleVendu> selectAllByIdListe(int no_article) throws BusinessException;
 
 	
