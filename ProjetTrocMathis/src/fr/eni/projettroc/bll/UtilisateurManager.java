@@ -117,7 +117,7 @@ public class UtilisateurManager {
  					"Le Code Postal ne doit contenir que des chiffres");
  			return false;
     		}
-    	if (!telephone.matches("[0-9]")) {
+    	if (!telephone.matches("[0-9]{10}")) {
  			be.addError(
  					"Le numero de telephone ne doit contenir que des chiffres");
  			return false;

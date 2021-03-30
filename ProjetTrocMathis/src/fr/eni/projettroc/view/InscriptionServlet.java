@@ -44,9 +44,8 @@ public class InscriptionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		UtilisateurManager um = UtilisateurManager.getUtilisateursManager();  
-		try {
-			HttpSession session = request.getSession();
+		UtilisateurManager user = UtilisateurManager.getUtilisateursManager(); 
+		        
 			    String pseudo = request.getParameter("pseudo");
 				String nom = request.getParameter("nom");
 				String prenom = request.getParameter("prenom");
@@ -56,8 +55,10 @@ public class InscriptionServlet extends HttpServlet {
 				String code_postal = request.getParameter("codepostal");
 				String ville = request.getParameter("ville");
 				String mot_de_passe = request.getParameter("motdepasse");
-				um.ajouterUnUtilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
-				session.setAttribute("user",um);
+	try {
+		        HttpSession session = request.getSession();
+				user.ajouterUnUtilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
+				session.setAttribute("user",user);
 				request.getRequestDispatcher("/WEB-INF/accueilUtilisateur.jsp").forward(request, response);
 		   } catch (BusinessException e) {
 			e.printStackTrace();
