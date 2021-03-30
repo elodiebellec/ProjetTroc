@@ -4,22 +4,17 @@ import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.UtilisateurDAO;
 
-import javax.print.event.PrintJobAttributeEvent;
 
-<<<<<<< HEAD
-import fr.eni.projettroc.dao.UtilisateurDAO;
-=======
 
->>>>>>> branch 'master' of https://github.com/elodiebellec/ProjetTroc.git
+
+
 import fr.eni.projettroc.exception.BusinessException;
 
 public class UtilisateurManager {
 	//Attribut pour représenter la couche DAL
-<<<<<<< HEAD
-	private UtilisateurDAO utilisateursDAO;
-=======
+
 	private UtilisateurDAO utilisateurDAO;
->>>>>>> branch 'master' of https://github.com/elodiebellec/ProjetTroc.git
+
 
    private static UtilisateurManager instance;
    
