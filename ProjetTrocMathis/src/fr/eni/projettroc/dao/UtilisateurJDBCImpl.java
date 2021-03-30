@@ -17,7 +17,9 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
-	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,administrateur) values(?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
+	
+	
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(CONNECTION);
@@ -67,7 +69,8 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 			requete.setString(7, utilisateur.getCode_postal());
 			requete.setString(8, utilisateur.getVille());
 			requete.setString(9, utilisateur.getMot_de_passe());
-			requete.setInt(10, 1);
+			requete.setInt(10, utilisateur.getCredit());
+			requete.setInt(11, 1);
 			requete.executeUpdate();
 			ResultSet rs = requete.getGeneratedKeys();
 			if (rs.next()) {
