@@ -2,15 +2,19 @@ package fr.eni.projettroc.dao;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.sun.org.apache.bcel.internal.generic.DALOAD;
+
 
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.ConnectionProvider;
 import fr.eni.projettroc.exception.BusinessException;
+import sun.nio.ch.Util;
 
 
 public class UtilisateurJDBCImpl implements UtilisateurDAO{
@@ -18,6 +22,29 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String SELECT = "select * from utlistateurs where pseudo=?";
+	
+	
+	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCode_postal(rs.getString("code_postal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setCredit(rs.getInt("credit"));
+		return utilisateur;
+		
+	}
+
+	
+	
+	
+	
+	
 	
 	
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
@@ -84,5 +111,25 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 			}
 
 	}
- }
+	
+	public Utilisateur selectByPseudo(String pseudo) throws BusinessException{
+		Utilisateur utilisateur = null;
+		try(Connection cnx = ConnectionProvider.getConnection()){
+		PreparedStatement requete = cnx.prepareStatement(SELECT);
+		requete.setString(1, pseudo);
+		ResultSet rs = requete.executeQuery();
+		
+		while (rs.next()) {
+			utilisateur = utilisateurBuilder(rs);
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur");
+			throw be;
+		}
+
+		return utilisateur;
+	}
+}
 
