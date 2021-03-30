@@ -2,7 +2,7 @@ package fr.eni.projettroc.bo;
 
 import java.time.LocalDate;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+
 
 public class ArticleVendu {
 	
