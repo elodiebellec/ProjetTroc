@@ -12,7 +12,7 @@ import fr.eni.projettroc.dao.ConnectionProvider;
 import fr.eni.projettroc.exception.BusinessException;
 
 
-public class UtilisateursJDBCImpl implements UtilisateursDAO{
+public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
@@ -71,4 +71,9 @@ public class UtilisateursJDBCImpl implements UtilisateursDAO{
 		}
 
     }
+	
+	public void Utilisateur UtilisateurJDBCImpl() {
+		Utilisateur utilisateur = new Utilisateur();
+		return utilisateur;
+	}
 }
