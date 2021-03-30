@@ -27,6 +27,20 @@
 			</div>
 		</div>
 	</nav>
+	<c:if test="${!empty errors}">
+			<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
+				<div class="card h-100 alert">
+					<div class="card-body alert alert-danger">
+						<h4 class="card-title">Erreurs</h4>								
+						<c:forEach var="msg" items="${errors}">
+							<p class="card-text">${msg}</p>
+						</c:forEach>
+					</div>
+				</div>
+			</div>
+		
+		</c:if>
+	
 	
 	
     <div class="container">
