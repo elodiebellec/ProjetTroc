@@ -2,20 +2,21 @@ package fr.eni.projettroc.bll;
 
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
+import fr.eni.projettroc.dao.UtilisateurDAO;
 
 import javax.print.event.PrintJobAttributeEvent;
 
-import fr.eni.projettroc.dao.UtilisateursDAO;
+
 import fr.eni.projettroc.exception.BusinessException;
 
 public class UtilisateurManager {
 	//Attribut pour représenter la couche DAL
-	private UtilisateursDAO utilisateursDAO;
+	private UtilisateurDAO utilisateurDAO;
 
    private static UtilisateurManager instance;
    
    private UtilisateurManager() {
-	   utilisateursDAO = DAOFactory.getUtilisateursDAO();
+	   utilisateurDAO = DAOFactory.getUtilisateursDAO();
    }
    
    public static UtilisateurManager getUtilisateursManager() {
@@ -31,22 +32,22 @@ public class UtilisateurManager {
 		boolean isValidPwd = validatePassword(mot_de_passe, be);
 		if (isValidLogin && isValidPwd) {
 			//Appelle de la couche DAL
-			return utilisateursDAO.find(pseudo, mot_de_passe, email);
+			return utilisateurDAO.find(pseudo, mot_de_passe, email);
 		} else {
 			throw be;
 		}
 	}
+
    
-   public void ajouterUtlisateur(Utilisateur utilisateur) throws BusinessException{
-	   utilisateursDAO.insertUtilisateur(utilisateur);
-   }
-   
-   
-   public Utilisateur ajouterUnUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,
+     public Utilisateur ajouterUnUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,
 		   String rue,String code_postal,String ville,String mot_de_passe) throws BusinessException{
 	   BusinessException be = new BusinessException();
 	   Utilisateur u = null;
+	   boolean isValidPseudo = validatePseudo(pseudo, be);
+	   boolean isValidPwd = validatePassword(mot_de_passe, be);
+	   boolean isValidIdentite = validateIdentité(nom, prenom, email, rue, ville, code_postal, telephone, be);
 	   
+	   if(isValidPseudo && isValidPwd && isValidIdentite) {
 	   u = new Utilisateur();
 	   u.setPseudo(pseudo);
 	   u.setNom(nom);
@@ -57,33 +58,77 @@ public class UtilisateurManager {
 	   u.setCode_postal(code_postal);
 	   u.setVille(ville);
 	   u.setMot_de_passe(mot_de_passe);
-	   utilisateursDAO.insertUtilisateur(u);
+	   utilisateurDAO.insertUtilisateur(u);
 	   return u;
+   }else {
+	   throw be;
    }
+  }
    
- /*  public ListeCourse ajouterListeEtArticle(String nomListe, String nomArticle) throws BusinessException {
-		BusinessException be = new BusinessException();
-		validerNomListe(nomListe, be);
-		validerNomArticle(nomArticle, be);
 
-		ListeCourse listeCourse = null;
+     private boolean validatePseudo(String pseudo, BusinessException be) {
+ 		if (pseudo == null) {
+ 			be.addError("Login est obligatoire");
+ 			return false;
+ 		}
+ 		pseudo = pseudo.trim();
+ 		if (pseudo.isEmpty() || pseudo.length() < 6) {
+ 			be.addError("Login doit contenir au moins 6 caractères");
+ 			return false;
+ 		}
+ 		if (pseudo.length() > 30 ) {
+ 			be.addError("Login doit contenir au plus 30 caractères");
+ 			return false;
+ 		}
 
-		if (!be.hasErreurs()) {
-			listeCourse = new ListeCourse();
-			listeCourse.setNom(nomListe.trim());
-			listeCourseDAO.insert(listeCourse);
+ 		return true;
+ 	}
+     private boolean validateIdentité(String nom,String prenom,String email, String rue, String ville, String code_postal, String telephone ,BusinessException be) {
+  		if (nom == null) {
+  			be.addError("Nom obligatoire");
+  			return false;
+  		}
+  		if (prenom == null) {
+  			be.addError("Prenom obligatoire");
+  			return false;
+  		}
+  		if (email == null) {
+  			be.addError("Email obligatoire");
+  			return false;
+  		}
+  		if (rue == null) {
+  			be.addError("Rue obligatoire");
+  			return false;
+  		}
+  		if (ville == null) {
+  			be.addError("Ville obligatoire");
+  			return false;
+  		}
+  		if (code_postal == null) {
+    			be.addError("Code Postal obligatoire");
+    			return false;
+    	}
+    	if (telephone == null) {
+    			be.addError("Numero de telephone obligatoire");
+    			return false;
+    	} 
+    	if (!code_postal.matches("(?=.*[0-9])")) {
+ 			be.addError(
+ 					"Le Code Postal ne doit contenir que des chiffres");
+ 			return false;
+    		}
+    	if (!telephone.matches("(?=.*[0-9])")) {
+ 			be.addError(
+ 					"Le numero de telephone ne doit contenir que des chiffres");
+ 			return false;
+    		}
+  		return true;
+  	}
 
-			Article article = new Article();
-			article.setNom(nomArticle.trim());
-			articleDAO.insert(article, listeCourse.getId());
-			listeCourse.getArticles().add(article);
-			return listeCourse;
-		} else {
-			throw be;
-		}*/
-   
-   
-   private boolean validateLogin(String pseudo,String email, BusinessException be) {
+     
+     
+     
+     private boolean validateLogin(String pseudo,String email, BusinessException be) {
 		if (pseudo == null && email == null) {
 			be.addError("Login est obligatoire");
 			return false;
@@ -100,15 +145,8 @@ public class UtilisateurManager {
 
 		return true;
 	}
-     /**
-	 * Vérifier que le password n'est pas null, pas vide et qu'il respecte un nombre
-	 * de caractères entre 8 et 12 Le mot de passe doit contenir au moins un
-	 * chiffre, 1 majuscule, 1 caractère spécial
-	 * 
-	 * @param pwd
-	 * @param be
-	 * @return
-	 */
+   
+     
 	private boolean validatePassword(String mot_de_passe, BusinessException be) {
 		if (mot_de_passe == null) {
 			be.addError("Mot de passe est obligatoire");

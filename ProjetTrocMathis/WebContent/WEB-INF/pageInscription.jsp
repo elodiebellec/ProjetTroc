@@ -61,11 +61,11 @@
   </div> 
    <div class="form-group">
     <label for="nom">Nom</label>
-    <input type="text" class="form-control" id="nom" name="nom" aria-describedby="nomHelp" placeholder="Entrer votre Nom">
+    <input type="text" class="form-control" id="identite" name="nom" aria-describedby="nomHelp" placeholder="Entrer votre Nom">
   </div> 
    <div class="form-group">
     <label for="prenom">Prenom</label>
-    <input type="text" class="form-control" id="prenom" name="prenom" aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
+    <input type="text" class="form-control" id="identite" name="prenom" aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
   </div> 
    <div class="form-group">
     <label for="email">Email</label>
