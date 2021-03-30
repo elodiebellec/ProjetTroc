@@ -1,6 +1,10 @@
 package fr.eni.projettroc.dao;
 
 import fr.eni.projettroc.bo.Categorie;
+import java.util.List;
+
+import fr.eni.projettroc.bo.Categorie;
+import fr.eni.projettroc.exception.BusinessException;
 
 public interface CategorieDAO {
 
@@ -8,6 +12,8 @@ public interface CategorieDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	List<Categorie> getListCategories() throws BusinessException;
 
 	}
 
