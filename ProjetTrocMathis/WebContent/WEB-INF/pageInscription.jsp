@@ -48,51 +48,52 @@
 					<form action="./Inscription" method="post">
 					
   <div class="form-group">
-    <label for="exampleInputEmail1">Pseudo</label>
-    <input type="text" class="form-control" id="pseudo" aria-describedby="pseudoHelp" placeholder="Enter votre pseudo">
+    <label for="pseudo">Pseudo</label>
+    <input type="text" class="form-control" id="pseudo" aria-describedby="pseudoHelp" placeholder="Entrer votre pseudo">
     <small id="pseudoHelp" class="form-text text-muted">Ne communiquer jamais votre pseudo</small>
+ </div>
+  <div class="form-group">
+    <label for="password">Mot De Passe</label>
+    <input type="password" class="form-control" id="motdepasse" placeholder="Mot de passe">
+  </div> <div class="form-group">
+    <label for="password2">Confirmation du Mot De Passe</label>
+    <input type="password" class="form-control" id="motdepasseconfirmation" placeholder="Mot de passe">
   </div> 
    <div class="form-group">
-    <label for="exampleInputEmail1">Nom</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <label for="nom">Nom</label>
+    <input type="text" class="form-control" id="nom" aria-describedby="nomHelp" placeholder="Entrer votre Nom">
   </div> 
    <div class="form-group">
-     <label for="exampleInputEmail1">Prenom</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
+    <label for="prenom">Prenom</label>
+    <input type="text" class="form-control" id="prenom" aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
+  </div> 
    <div class="form-group">
-    <label for="exampleInputEmail1">Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Entrer votre Email">
+  </div> 
   <div class="form-group">
-    <label for="exampleInputPassword1">Telephone</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <label for="telephone">Telephone</label>
+    <input type="text" class="form-control" id="telephone" placeholder="Entrer votre telephone">
   </div>
      <div class="form-group">
-    <label for="exampleInputEmail1">Rue</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <label for="rue">Rue</label>
+    <input type="text" class="form-control" id="rue" placeholder="Entrer votre rue">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Code Postal</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <label for="codepostal">Code Postal</label>
+    <input type="text" class="form-control" id="codepostal" placeholder="Entrer votre CP">
   </div>
      <div class="form-group">
-    <label for="exampleInputEmail1">Ville</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <label for="codepostal">Ville</label>
+    <input type="text" class="form-control" id="ville" placeholder="Entrer votre ville">
   </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Mot De Passe</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
+ 
   <div class="form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    <label class="form-check-label" for="exampleCheck1">Accepter les conditions</label>
   </div>
   <button type="submit" class="btn btn-primary">Créer</button>
+ <span><button type="submit" class="btn btn-primary">Annuler</button></span>
    </form>
    </div>
    

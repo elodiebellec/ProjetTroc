@@ -27,6 +27,8 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+	
 		request.getRequestDispatcher("/WEB-INF/pageInscription.jsp").forward(request, response);
 	}
 
@@ -35,7 +37,18 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		String pseudo = request.getParameter("name");
+		
+		
 	}
-
+	/*requete.setString(1, utilisateur.getPseudo());
+	requete.setString(2, utilisateur.getNom());
+	requete.setString(3, utilisateur.getPrenom());
+	requete.setString(4, utilisateur.getEmail());
+	requete.setString(5, utilisateur.getTelephone());
+	requete.setString(6, utilisateur.getRue());
+	requete.setString(7, utilisateur.getCode_postal());
+	requete.setString(8, utilisateur.getVille());
+	requete.setString(9, utilisateur.getMot_de_passe());*/
 }

@@ -35,6 +35,14 @@ public class UtilisateurManager {
 			throw be;
 		}
 	}
+   
+   public void ajouterUtlisateur(Utilisateur utilisateur) throws BusinessException{
+	   utilisateursDAO.insertUtilisateur(utilisateur);
+   }
+   
+   
+   
+   
    private boolean validateLogin(String pseudo,String email, BusinessException be) {
 		if (pseudo == null && email == null) {
 			be.addError("Login est obligatoire");
@@ -52,8 +60,7 @@ public class UtilisateurManager {
 
 		return true;
 	}
-
-	/**
+     /**
 	 * Vérifier que le password n'est pas null, pas vide et qu'il respecte un nombre
 	 * de caractères entre 8 et 12 Le mot de passe doit contenir au moins un
 	 * chiffre, 1 majuscule, 1 caractère spécial
