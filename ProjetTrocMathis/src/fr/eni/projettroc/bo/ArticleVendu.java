@@ -3,7 +3,6 @@ package fr.eni.projettroc.bo;
 import java.time.LocalDate;
 
 
-
 public class ArticleVendu {
 	
 	private int no_article;
@@ -22,9 +21,6 @@ public class ArticleVendu {
 	}
 	
 	
-
-
-
 	public ArticleVendu(int no_article, String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, int prix_initial, int prix_vente, Utilisateur utilisateur) {
 		super();
@@ -38,9 +34,6 @@ public class ArticleVendu {
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
 	}
-
-
-
 
 
 	public int getNo_article() {
