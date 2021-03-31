@@ -40,9 +40,14 @@
 			<div class="card h-100">
 			
 			<div class="form-group">
-			<button type="submit" class="btn btn-primary btn-lg btn-block" id="belodie" name="belodie">belodie</button>
-				
-			</div>		
+			</div>	
+			</div>
+			<div class="form-group">
+							<label for="password">Pseudo </label> <input
+								class="form-control" id="psd" required name="psd"
+								type="text">	
+		<button type="submit" class="btn btn-primary btn-lg btn-block" id="belodie" name="belodie">Rechercher</button>	
+		
 		</div>
 		
 		</div>

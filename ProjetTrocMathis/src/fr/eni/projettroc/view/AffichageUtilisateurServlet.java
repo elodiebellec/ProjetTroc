@@ -38,7 +38,7 @@ public class AffichageUtilisateurServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String personne = request.getParameter("belodie");
+		String personne = request.getParameter("psd");
 		
 		try {
 			Utilisateur u = UtilisateurManager.getUtilisateursManager().afficherPersonne(personne);
