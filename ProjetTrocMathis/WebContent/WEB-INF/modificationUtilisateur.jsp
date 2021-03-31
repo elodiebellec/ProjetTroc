@@ -46,7 +46,7 @@
 			<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
 				<div class="card-body">
 				<h1>Modifier Utilsateur</h1>
-					<form action="./Inscription" method="post">
+					<form action="./ModificationUtilisateur" method="post">
 					
   <div class="form-group">
     <label for="pseudo">Pseudo</label>
@@ -88,7 +88,7 @@
     <label for="codepostal">Ville</label>
     <input type="text" class="form-control" id="ville" name="ville" placeholder="Entrer votre ville">
   </div>
- 
+  
   <div class="form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">Accepter les conditions</label>

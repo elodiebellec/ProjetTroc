@@ -32,15 +32,16 @@ public class UtilisateurManager {
    
    
    public Utilisateur modifierUnUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,
-   String rue,String code_postal,String ville,String mot_de_passe) throws BusinessException{
+   String rue,String code_postal,String ville,String mot_de_passe,int no_utilisateur) throws BusinessException{
 	   BusinessException be = new BusinessException();
-	Utilisateur u;
+	Utilisateur u = null;
 	boolean isValidPseudo = validatePseudo(pseudo, be);
 	boolean isValidPwd = validatePassword(mot_de_passe, be);
 	boolean isValidIdentite = validateIdentité(nom, prenom, email, rue, ville, code_postal, telephone, be);
 
 	if(isValidPseudo && isValidPwd && isValidIdentite) {
-		u = new Utilisateur();
+		u =new Utilisateur();
+		
 		u.setPseudo(pseudo);
 		u.setNom(nom);
 		u.setPrenom(prenom);
@@ -50,6 +51,7 @@ public class UtilisateurManager {
 		u.setCode_postal(code_postal);
 		u.setVille(ville);
 		u.setMot_de_passe(mot_de_passe);
+		u.setNo_utilisateur(no_utilisateur);
 		utilisateurDAO.update(u);
 		return u;
 		}else {
@@ -68,9 +70,10 @@ public class UtilisateurManager {
 			throw be;
 		}
 	}
-
    
-     public Utilisateur validerAjoutPersonne(String pseudo,String nom,String prenom,String email,String telephone,
+ 
+
+       public Utilisateur validerAjoutPersonne( String pseudo,String nom,String prenom,String email,String telephone,
 		   String rue,String code_postal,String ville,String mot_de_passe,int credit) throws BusinessException{
 	   BusinessException be = new BusinessException();
 	   Utilisateur u = null;
@@ -196,6 +199,7 @@ public class UtilisateurManager {
 
 		return true;
 	}
+
 
 
 

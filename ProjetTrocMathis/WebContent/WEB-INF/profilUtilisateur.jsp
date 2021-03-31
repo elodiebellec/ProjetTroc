@@ -77,6 +77,9 @@
       <form action="./ModificationUtilisateur" method="get">
 		<input type="submit" value="Modifier" class="btn btn-primary">
 </form>
+            <a href="${pageContext.request.contextPath}/ModificationUtilisateur?idpersonne=${user.no_utilisateur}"
+													class="badge" title="Editer la liste"><i
+													class="material-icons">create</i></a>
   </body>
   <footer>
   </footer>
