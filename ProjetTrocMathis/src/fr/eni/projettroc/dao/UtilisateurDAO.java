@@ -14,4 +14,6 @@ public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessExcep
 public void insertUtilisateur(Utilisateur utilisateur)throws BusinessException;
 
 public Utilisateur selectByPseudo(String pseudo)throws BusinessException;
+
+public void update(Utilisateur utilisateur)throws BusinessException;
 }

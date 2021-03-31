@@ -22,12 +22,40 @@ public class UtilisateurManager {
 	   utilisateurDAO = DAOFactory.getUtilisateurDAO();
    }
    
+   
    public static UtilisateurManager getUtilisateursManager() {
 		if (instance == null) {
 			instance = new UtilisateurManager();
 		}
 		return instance;
 	}
+   
+   
+   public Utilisateur modifierUnUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,
+   String rue,String code_postal,String ville,String mot_de_passe) throws BusinessException{
+	   BusinessException be = new BusinessException();
+	Utilisateur u;
+	boolean isValidPseudo = validatePseudo(pseudo, be);
+	boolean isValidPwd = validatePassword(mot_de_passe, be);
+	boolean isValidIdentite = validateIdentité(nom, prenom, email, rue, ville, code_postal, telephone, be);
+
+	if(isValidPseudo && isValidPwd && isValidIdentite) {
+		u = new Utilisateur();
+		u.setPseudo(pseudo);
+		u.setNom(nom);
+		u.setPrenom(prenom);
+		u.setEmail(email);
+		u.setTelephone(telephone);
+		u.setRue(rue);
+		u.setCode_postal(code_postal);
+		u.setVille(ville);
+		u.setMot_de_passe(mot_de_passe);
+		utilisateurDAO.update(u);
+		return u;
+		}else {
+			throw be;
+}
+}
    
    public Utilisateur validerLaConnection(String pseudo, String mot_de_passe, String email)throws BusinessException{
 	   BusinessException be = new BusinessException();
@@ -162,7 +190,7 @@ public class UtilisateurManager {
 		}
 		if (!mot_de_passe.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,12}")) {
 			be.addError(
-					"Mot de passe doit contenir entre 8 et 12 caractères (1 chiffre, 1 majuscule, 1 caractère spécial)");
+					"Mot de passe doit contenir entre 6 et 12 caractères (1 chiffre, 1 majuscule, 1 caractère spécial)");
 			return false;
 		}
 

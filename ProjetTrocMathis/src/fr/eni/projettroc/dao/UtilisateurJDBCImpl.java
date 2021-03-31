@@ -3,13 +3,13 @@ package fr.eni.projettroc.dao;
 import java.sql.Connection;
 
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
-
+import com.mysql.cj.conf.ConnectionPropertiesTransform;
 
 import fr.eni.projettroc.bo.Utilisateur;
 
@@ -25,10 +25,9 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String SELECT = "select * from utilisateurs where pseudo=?";
-	
-
 	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
-
+    private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom?,email=?,telephone=?,rue=?,codepostal=?,ville=?,mot_de_passe=? "
+    		+ "WHERE no_utilisateur=?";
 	
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
@@ -167,6 +166,28 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 		utilisateur.setMot_de_passe(rs.getString("mot_de_passe"));
 		return utilisateur;
 	}
+	
+	 public void update(Utilisateur utilisateur)throws BusinessException{
+	       
+	        try(Connection cnx = ConnectionProvider.getConnection()){
+	            PreparedStatement requete = cnx.prepareStatement(UPDATE_UTILISATEUR);
+	            requete.setString(1, utilisateur.getPseudo());
+				requete.setString(2, utilisateur.getNom());
+				requete.setString(3, utilisateur.getPrenom());
+				requete.setString(4, utilisateur.getEmail());
+				requete.setString(5, utilisateur.getTelephone());
+				requete.setString(6, utilisateur.getRue());
+				requete.setString(7, utilisateur.getCode_postal());
+				requete.setString(8, utilisateur.getVille());
+				requete.setString(9, utilisateur.getMot_de_passe());
+	            requete.setInt(10, utilisateur.getNo_utilisateur());
+
+	            requete.executeUpdate();
+	        }catch (Exception e){
+	  
+	            throw new BusinessException();
+	        }
+	    }
  }
 
 
