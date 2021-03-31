@@ -8,13 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.sun.org.apache.bcel.internal.generic.DALOAD;
+
 
 
 import fr.eni.projettroc.bo.Utilisateur;
-import fr.eni.projettroc.dao.ConnectionProvider;
+
 import fr.eni.projettroc.exception.BusinessException;
-import sun.nio.ch.Util;
+
+import fr.eni.projettroc.exception.Errors;
+
 
 
 public class UtilisateurJDBCImpl implements UtilisateurDAO{
@@ -24,6 +26,9 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String SELECT = "select * from utilisateurs where pseudo=?";
 	
+
+	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
+
 	
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
@@ -63,7 +68,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 				u.setCredit(rs.getInt("credit"));
 				return u;
 			}else {
-				//Utilisateur non trouvé
+				//Utilisateur non trouvÃ©
 				BusinessException be = new BusinessException();
 				be.addError("Pseudo ou Mot de passe inconnu");
 				throw be;
@@ -105,6 +110,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 
 	}
 	
+
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException{
 		Utilisateur utilisateur = null;
 		try(Connection cnx = ConnectionProvider.getConnection()){
@@ -124,5 +130,44 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 
 		return utilisateur;
 	}
-}
+
+
+	public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessException {
+		Utilisateur utilisateur = null;
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_No);
+			stmt.setInt(1, no_utilisateur);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				utilisateur = builderUtilisateur(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError(Errors.LECTURE_LISTE_ECHEC);
+			throw be;
+		}
+		
+		
+		return utilisateur;
+	}
+
+	private Utilisateur builderUtilisateur(ResultSet rs)throws SQLException {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCode_postal(rs.getString("code_Postal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setMot_de_passe(rs.getString("mot_de_passe"));
+		return utilisateur;
+	}
+ }
+
+
 
