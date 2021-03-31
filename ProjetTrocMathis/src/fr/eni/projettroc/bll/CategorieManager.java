@@ -1,14 +1,12 @@
 package fr.eni.projettroc.bll;
 
+
+
+import java.util.List;
+
 import fr.eni.projettroc.bo.Categorie;
-import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.CategorieDAO;
 import fr.eni.projettroc.dao.DAOFactory;
-import fr.eni.projettroc.dao.UtilisateurDAO;
-
-
-
-
 
 import fr.eni.projettroc.exception.BusinessException;
 
@@ -30,6 +28,12 @@ public class CategorieManager {
 		}
 		return instance;
 	}
+   
+   public List<Categorie> toutesLesCategorie() throws BusinessException{
+		//Aucune vérification
+		//Seulement l'appel à la couche DAL
+		return categorieDAO.getListCategories();
+	}	
    
   
    
