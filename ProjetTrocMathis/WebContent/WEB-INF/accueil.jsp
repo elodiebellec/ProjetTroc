@@ -61,6 +61,9 @@
 			<br>
 			
 			<div class="card h-100">
+				<c:forEach var="c" items="${listeCategories}">
+					 <option>${c.libelle}</option>
+				</c:forEach>
 			</div>
 		</div>
 		
