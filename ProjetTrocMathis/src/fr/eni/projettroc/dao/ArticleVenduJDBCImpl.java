@@ -20,6 +20,7 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	private static final String DELETE_BY_No = "DELETE FROM Articles_vendus where no_article=?";
 	//private static final String DELETE_ALL = "delete from Articles_vendus where id_liste=?";
 	private static final String SELECT_BY_No = "SELECT no_article FROM Articles_vendus WHERE no_article=?";
+	private static final String UPDATE = "UPDATE Articles_vendus SET nom_article=?, description=?,date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, prix_vente=?, categorie=? WHERE no_article=?";
 	
 	@Override
 	public void insert(ArticleVendu article) throws BusinessException {
@@ -125,9 +126,26 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 
 	@Override
 	public void update(ArticleVendu article) throws BusinessException {
-		// TODO Auto-generated method stub
+		UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement requete = cnx.prepareStatement(UPDATE);
+			requete.setInt(1, article.getNo_article()); 	
+			requete.setString(2, article.getNom_article());
+			requete.setString(3, article.getDescription());
+			requete.setDate(4,java.sql.Date.valueOf(article.getDate_debut_encheres()));
+			requete.setDate(5,java.sql.Date.valueOf(article.getDate_fin_encheres()));
+			requete.setInt(6, article.getPrix_initial());
+			requete.setInt(7,article.getPrix_vente());
+			requete.setInt(8,article.getCategorie().getNo_categorie());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
+		}
 		
-	}
+	
 	
 
 
