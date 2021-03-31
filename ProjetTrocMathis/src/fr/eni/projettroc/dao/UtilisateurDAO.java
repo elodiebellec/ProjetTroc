@@ -11,5 +11,5 @@ public interface UtilisateurDAO {
 	
     public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException;
 
-
+    public Utilisateur selectByPseudo(String pseudo)throws BusinessException;
 }

@@ -22,7 +22,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String SELECT = "select * from utlistateurs where pseudo=?";
+	private static final String SELECT = "select * from utilisateurs where pseudo=?";
 	
 	
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
@@ -40,13 +40,6 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 		
 	}
 
-	
-	
-	
-	
-	
-	
-	
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(CONNECTION);
