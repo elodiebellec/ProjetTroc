@@ -11,6 +11,7 @@ import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Categorie;
+import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.exception.BusinessException;
 import fr.eni.projettroc.exception.Errors;
 
@@ -154,10 +155,28 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 		}*/
 	
 	
-	private ArticleVendu articleBuilder(ResultSet rs) throws SQLException {
+	private ArticleVendu articleBuilder(ResultSet rs) throws SQLException, BusinessException {
 		ArticleVendu articleVendu = new ArticleVendu();
+		UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		Utilisateur utilisateur = new Utilisateur();
+		
+		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();
+		Categorie categorie = new Categorie();
+		
 		articleVendu.setNo_article(rs.getInt("no_article"));
 		articleVendu.setNom_article(rs.getString("nom_article"));
+		articleVendu.setDescription(rs.getString("description"));
+		articleVendu.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
+		articleVendu.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
+		articleVendu.setPrix_initial(rs.getInt("prix_initial"));
+		articleVendu.setPrix_vente(rs.getInt("prix_vente"));
+		if(rs.getInt("no_utilisateur") != 0) {
+			//L'instance utilisateur récupère les données de utilisateurDAO
+			utilisateur = utilisateurDAO.selectByNoUtilisateur(rs.getInt("no_utilisateur"));
+			articleVendu.setUtilisateur(utilisateur);
+		}
+
+		
 		return articleVendu;
 	}
 

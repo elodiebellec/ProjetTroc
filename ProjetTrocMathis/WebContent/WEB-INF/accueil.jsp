@@ -60,11 +60,17 @@
 		</form>
 			<br>
 			
-			<div class="card h-100">
-				<c:forEach var="c" items="${listeArticleVendu}">
-					 <option>${c.nom_article}</option>
-				</c:forEach>
-			</div>
+			
+			<c:forEach var="c" items="${listeArticleVendu}">
+				<div class="card h-100">
+					 <p>${c.nom_article}</p>
+					 <p>${c.prix_initial}</p>
+					 <p>${c.date_fin_encheres}</p>
+					 <p>${c.utilisateur}</p>
+				</div>
+				<br>
+			</c:forEach>
+			
 		</div>
 		
 	</div>
