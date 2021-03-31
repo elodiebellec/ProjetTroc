@@ -42,8 +42,8 @@ public class UtilisateurManager {
 	}
 
    
-     public Utilisateur ajouterUnUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,
-		   String rue,String code_postal,String ville,String mot_de_passe) throws BusinessException{
+     public Utilisateur validerAjoutPersonne(String pseudo,String nom,String prenom,String email,String telephone,
+		   String rue,String code_postal,String ville,String mot_de_passe,int credit) throws BusinessException{
 	   BusinessException be = new BusinessException();
 	   Utilisateur u = null;
 	   boolean isValidPseudo = validatePseudo(pseudo, be);
@@ -61,6 +61,7 @@ public class UtilisateurManager {
 	   u.setCode_postal(code_postal);
 	   u.setVille(ville);
 	   u.setMot_de_passe(mot_de_passe);
+	   u.setCredit(credit);
 	   utilisateurDAO.insertUtilisateur(u);
 	   return u;
    }else {
@@ -120,7 +121,7 @@ public class UtilisateurManager {
  					"Le Code Postal ne doit contenir que des chiffres");
  			return false;
     		}
-    	if (!telephone.matches("[0-9]")) {
+    	if (!telephone.matches("[0-9]{10}")) {
  			be.addError(
  					"Le numero de telephone ne doit contenir que des chiffres");
  			return false;

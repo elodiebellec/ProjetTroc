@@ -2,25 +2,60 @@ package fr.eni.projettroc.dao;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
 
 
 
 import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.exception.BusinessException;
+<<<<<<< HEAD
+import sun.nio.ch.Util;
+=======
 import fr.eni.projettroc.exception.Errors;
+>>>>>>> branch 'enchere' of https://github.com/elodiebellec/ProjetTroc.git
 
 
 public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
+<<<<<<< HEAD
+	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String SELECT = "select * from utlistateurs where pseudo=?";
+	
+	
+	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCode_postal(rs.getString("code_postal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setCredit(rs.getInt("credit"));
+		return utilisateur;
+		
+	}
+
+	
+	
+	
+	
+	
+	
+=======
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,administrateur) values(?,?,?,?,?,?,?,?,?,?)";
 	
 	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
+>>>>>>> branch 'enchere' of https://github.com/elodiebellec/ProjetTroc.git
 	
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -71,7 +106,8 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 			requete.setString(7, utilisateur.getCode_postal());
 			requete.setString(8, utilisateur.getVille());
 			requete.setString(9, utilisateur.getMot_de_passe());
-			requete.setInt(10, 1);
+			requete.setInt(10, utilisateur.getCredit());
+			requete.setInt(11, 1);
 			requete.executeUpdate();
 			ResultSet rs = requete.getGeneratedKeys();
 			if (rs.next()) {
@@ -86,6 +122,28 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 
 	}
 	
+<<<<<<< HEAD
+	public Utilisateur selectByPseudo(String pseudo) throws BusinessException{
+		Utilisateur utilisateur = null;
+		try(Connection cnx = ConnectionProvider.getConnection()){
+		PreparedStatement requete = cnx.prepareStatement(SELECT);
+		requete.setString(1, pseudo);
+		ResultSet rs = requete.executeQuery();
+		
+		while (rs.next()) {
+			utilisateur = utilisateurBuilder(rs);
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur");
+			throw be;
+		}
+
+		return utilisateur;
+	}
+}
+=======
 	public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessException {
 		Utilisateur utilisateur = null;
 		
@@ -122,5 +180,6 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 		return utilisateur;
 	}
  }
+>>>>>>> branch 'enchere' of https://github.com/elodiebellec/ProjetTroc.git
 
 

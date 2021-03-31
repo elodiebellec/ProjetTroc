@@ -44,9 +44,7 @@ public class InscriptionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
-		UtilisateurManager um = UtilisateurManager.getUtilisateursManager();  
-		try {
-			HttpSession session = request.getSession();
+		        
 			    String pseudo = request.getParameter("pseudo");
 				String nom = request.getParameter("nom");
 				String prenom = request.getParameter("prenom");
@@ -56,9 +54,12 @@ public class InscriptionServlet extends HttpServlet {
 				String code_postal = request.getParameter("codepostal");
 				String ville = request.getParameter("ville");
 				String mot_de_passe = request.getParameter("motdepasse");
-				um.ajouterUnUtilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
-				session.setAttribute("user",um);
-				request.getRequestDispatcher("/WEB-INF/accueilUtilisateur.jsp").forward(request, response);
+				int credit =100;
+	try {
+		Utilisateur u = UtilisateurManager.getUtilisateursManager().validerAjoutPersonne(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,credit);
+		        HttpSession session = request.getSession();
+				session.setAttribute("user",u);
+				request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, response);
 		   } catch (BusinessException e) {
 			e.printStackTrace();
 			request.setAttribute("errors", e.getErrors());

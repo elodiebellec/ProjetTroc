@@ -1,11 +1,16 @@
 package fr.eni.projettroc.view;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.projettroc.bll.CategorieManager;
+import fr.eni.projettroc.bo.Categorie;
 
 /**
  * Servlet implementation class accueil
@@ -26,8 +31,21 @@ public class AccueilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+			
+			List<Categorie> listeCategories;
+			try {
+				listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();
+				request.setAttribute("listeCategories", listeCategories);
+			} catch (fr.eni.projettroc.exception.BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		
+		
 		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+	
+	
 	}
 
 	/**
