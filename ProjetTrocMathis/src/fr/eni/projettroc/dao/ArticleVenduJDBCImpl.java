@@ -175,6 +175,12 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 			utilisateur = utilisateurDAO.selectByNoUtilisateur(rs.getInt("no_utilisateur"));
 			articleVendu.setUtilisateur(utilisateur);
 		}
+		
+		if(rs.getInt("no_categorie") != 0) {
+			//L'instance utilisateur récupère les données de utilisateurDAO
+			categorie = categorieDAO.selectByNoCategorie(rs.getInt("no_categorie"));
+			articleVendu.setCategorie(categorie);
+		}
 
 		
 		return articleVendu;

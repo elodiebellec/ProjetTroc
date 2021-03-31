@@ -27,7 +27,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String SELECT = "select * from utilisateurs where pseudo=?";
 	
 
-	private static final String SELECT_BY_NO = "select * from utilisateurs where no_utilisateur=?";
+	private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
 
 	
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
