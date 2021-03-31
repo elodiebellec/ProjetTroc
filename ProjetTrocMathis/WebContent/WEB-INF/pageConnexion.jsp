@@ -57,6 +57,9 @@
 							<input type="submit" value="OK" class="btn btn-primary">
 						</div>
 					</form>
+					<form action="./Inscription" method="get">
+					<input type="submit" value="Créer un compte" class="btn btn-primary">
+					</form>
 				</div>
 			</div>
 		</div>

@@ -59,7 +59,7 @@ public class InscriptionServlet extends HttpServlet {
 		Utilisateur u = UtilisateurManager.getUtilisateursManager().validerAjoutPersonne(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,credit);
 		   HttpSession session = request.getSession();
 		   session.setAttribute("user",u);
-		request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/accueilUtilisateur.jsp").forward(request, response);
 		   } catch (BusinessException e) {
 			e.printStackTrace();
 			request.setAttribute("errors", e.getErrors());

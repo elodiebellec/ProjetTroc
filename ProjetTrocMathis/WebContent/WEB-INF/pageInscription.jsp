@@ -93,6 +93,8 @@
     <label class="form-check-label" for="exampleCheck1">Accepter les conditions</label>
   </div>
   <button type="submit" class="btn btn-primary">Créer</button>
+  </form>
+  <form action="./Accueil" method="get">
  <span><button type="submit" class="btn btn-primary">Annuler</button></span>
    </form>
    </div>
