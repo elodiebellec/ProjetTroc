@@ -3,6 +3,8 @@
 	pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page errorPage="error.jsp" isErrorPage="false" %>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -37,9 +39,29 @@
 		<!-- Page Heading -->
 		<h1 class="my-2">Liste des enchères</h1>
 		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-			<div class="card h-100">
+			
+				<h2>Filtres :</h2>
+				<br>
 				
-			</div>		
+		<form action="./Accueil" method="post">
+			 <input type="text" name="barre" id="barre" value= "recherche..." />
+			
+			<br> <br>		
+			
+			<select class="form-select" aria-label="Default select example">
+			  <option selected>Open this select menu</option>
+			  <option value="1">One</option>
+			  <option value="2">Two</option>
+			  <option value="3">Three</option>
+			</select>
+			<br> <br>		
+			 <input type="button" onclick="rechercher() " value="Rechercher" />
+			
+		</form>
+			<br>
+			
+			<div class="card h-100">
+			</div>
 		</div>
 		
 	</div>

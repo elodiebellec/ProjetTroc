@@ -4,14 +4,17 @@ import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.UtilisateurDAO;
 
-import javax.print.event.PrintJobAttributeEvent;
+
+
 
 
 import fr.eni.projettroc.exception.BusinessException;
 
 public class UtilisateurManager {
 	//Attribut pour représenter la couche DAL
+
 	private UtilisateurDAO utilisateurDAO;
+
 
    private static UtilisateurManager instance;
    
