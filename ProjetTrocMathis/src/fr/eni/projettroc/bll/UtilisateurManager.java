@@ -68,6 +68,10 @@ public class UtilisateurManager {
 	   throw be;
    }
   }
+     
+     public Utilisateur afficherPersonne(String pseudo) throws BusinessException{
+    	 return utilisateurDAO.selectByPseudo(pseudo);
+     }
    
 
      private boolean validatePseudo(String pseudo, BusinessException be) {

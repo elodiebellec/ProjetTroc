@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page errorPage="error.jsp" isErrorPage="false" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="template/head.html" %>
 </head>
-
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
@@ -19,13 +18,14 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link" href="./Accueil">Accueil
+					<li class="nav-item active"><a class="nav-link" href="./AccueilUtilisateur">Accueil
 					</a></li>
+					<li class="nav-item active"><a class="nav-link" href="./Deconnexion">Se deconnecter
+					</a>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	
 	<c:if test="${!empty errors}">
 			<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
 				<div class="card h-100 alert">
@@ -39,31 +39,44 @@
 			</div>
 		
 		</c:if>
-
-<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
-				<div class="card-body">
-					<form action="./Connexion" method="post">
-						<div class="form-group">
-							<label for="login">Login : </label> <input class="form-control"
-								id="login" required name="login">
-						</div>
-						<div class="form-group">
-							<label for="password">Password : </label> <input
-								class="form-control" id="mdp" required name="mdp"
-								type="password">
-						</div>
-						<div class="form-group">
-							<input type="submit" value="OK" class="btn btn-primary">
-						</div>
-					</form>
-					<form action="./Inscription" method="get">
-					<input type="submit" value="Créer un compte" class="btn btn-primary">
-					</form>
-				</div>
-			</div>
-		</div>
 	
+	
+	
+    <div class="container">
+      <h1>Profil de Elodie</h1>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>Pseudo</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Email</th>
+            <th>Telephone</th>
+            <th>Rue</th>
+            <th>Code Postal</th>
+            <th>Ville</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>${users.pseudo}</td>
+            <td>${users.nom}</td>
+            <td>${users.prenom}</td>
+            <td>${users.email}</td>
+            <td>${users.telephone}</td>
+            <td>${users.rue}</td>
+            <td>${users.code_postal}</td>
+             <td>${users.ville}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <footer>
+  </footer>
+  
+  
+  <script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-</body>
 </html>

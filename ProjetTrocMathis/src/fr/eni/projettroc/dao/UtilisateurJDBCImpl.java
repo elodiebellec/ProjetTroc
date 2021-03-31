@@ -24,8 +24,11 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String SELECT = "select * from utlistateurs where pseudo=?";
+	private static final String SELECT = "select * from utilisateurs where pseudo=?";
+	
+
 	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
+
 	
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
@@ -65,7 +68,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 				u.setCredit(rs.getInt("credit"));
 				return u;
 			}else {
-				//Utilisateur non trouvé
+				//Utilisateur non trouvÃ©
 				BusinessException be = new BusinessException();
 				be.addError("Pseudo ou Mot de passe inconnu");
 				throw be;

@@ -14,6 +14,5 @@ public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessExcep
 }
 
  
-
-
-
+    public Utilisateur selectByPseudo(String pseudo)throws BusinessException;
+}

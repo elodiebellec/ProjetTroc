@@ -35,12 +35,23 @@
 
 		<!-- Page Heading -->
 		<h1 class="my-2">Liste des enchères</h1>
+		<form action="./AffichageUtilisateur" method="post">
 		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
 			<div class="card h-100">
-				
-			</div>		
+			
+			<div class="form-group">
+			</div>	
+			</div>
+			<div class="form-group">
+							<label for="password">Pseudo </label> <input
+								class="form-control" id="psd" required name="psd"
+								type="text">	
+		<button type="submit" class="btn btn-primary btn-lg btn-block" id="belodie" name="belodie">Rechercher</button>	
+		
 		</div>
 		
+		</div>
+		</form>
 	</div>
 	<!-- /.container -->
 
