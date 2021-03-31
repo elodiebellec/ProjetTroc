@@ -8,10 +8,7 @@ import fr.eni.projettroc.exception.BusinessException;
 
 public interface CategorieDAO {
 
-	static Categorie selectByNoCategorie(int int1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Categorie selectByNoCategorie(int int1) throws BusinessException;
 
 	List<Categorie> getListCategories() throws BusinessException;
 

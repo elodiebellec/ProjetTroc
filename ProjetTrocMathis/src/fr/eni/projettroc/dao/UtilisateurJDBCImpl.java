@@ -14,21 +14,18 @@ import java.util.List;
 import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.exception.BusinessException;
-<<<<<<< HEAD
-import sun.nio.ch.Util;
-=======
+
 import fr.eni.projettroc.exception.Errors;
->>>>>>> branch 'enchere' of https://github.com/elodiebellec/ProjetTroc.git
+
 
 
 public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	
 	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
-<<<<<<< HEAD
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String SELECT = "select * from utlistateurs where pseudo=?";
-	
+	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
 	
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
@@ -45,18 +42,6 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 		
 	}
 
-	
-	
-	
-	
-	
-	
-=======
-	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,administrateur) values(?,?,?,?,?,?,?,?,?,?)";
-	
-	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
->>>>>>> branch 'enchere' of https://github.com/elodiebellec/ProjetTroc.git
-	
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(CONNECTION);
@@ -122,7 +107,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 
 	}
 	
-<<<<<<< HEAD
+
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException{
 		Utilisateur utilisateur = null;
 		try(Connection cnx = ConnectionProvider.getConnection()){
@@ -142,8 +127,8 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 
 		return utilisateur;
 	}
-}
-=======
+
+
 	public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessException {
 		Utilisateur utilisateur = null;
 		
@@ -180,6 +165,6 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 		return utilisateur;
 	}
  }
->>>>>>> branch 'enchere' of https://github.com/elodiebellec/ProjetTroc.git
+
 
 

@@ -19,7 +19,7 @@ public class UtilisateurManager {
    private static UtilisateurManager instance;
    
    private UtilisateurManager() {
-	   utilisateurDAO = DAOFactory.getUtilisateursDAO();
+	   utilisateurDAO = DAOFactory.getUtilisateurDAO();
    }
    
    public static UtilisateurManager getUtilisateursManager() {

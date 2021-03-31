@@ -52,6 +52,11 @@ public class CategorieJDBCImpl implements CategorieDAO{
 		return listeCategorie;
 	}
 	
+	public Categorie selectByNoCategorie(int int1) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 	
 }
