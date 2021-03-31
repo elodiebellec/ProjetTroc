@@ -14,26 +14,25 @@ import fr.eni.projettroc.exception.Errors;
 
 
 
-public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
+public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	
-	//private static final String INSERT = "INSERT INTO Articles_vendus(no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie, utilisateur, categorie) values(?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String INSERT = "INSERT INTO Articles_vendus VALUES(null,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT = "INSERT INTO Articles_vendus(nom_article, description,date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, utilisateur, categorie) VALUES(?,?,?,?,?,?,?,?)";
 	private static final String DELETE_BY_No = "DELETE FROM Articles_vendus where no_article=?";
 	//private static final String DELETE_ALL = "delete from Articles_vendus where id_liste=?";
 	private static final String SELECT_BY_No = "SELECT no_article FROM Articles_vendus WHERE no_article=?";
+	
 	@Override
 	public void insert(ArticleVendu article) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = cnx.prepareStatement(INSERT);
-			stmt.setInt(1, article.getNo_article());
-			stmt.setString(2, article.getNom_article());
-			stmt.setString(3, article.getDescription());
-			stmt.setDate(4,java.sql.Date.valueOf(article.getDate_debut_encheres()));
+			PreparedStatement stmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, article.getNom_article());
+			stmt.setString(2, article.getDescription());
+			stmt.setDate(3,java.sql.Date.valueOf(article.getDate_debut_encheres()));
 			stmt.setDate(4,java.sql.Date.valueOf(article.getDate_fin_encheres()));
-			stmt.setInt(6, article.getPrix_initial());
-			stmt.setInt(7, article.getPrix_vente());
-			stmt.setInt(8, article.getUtilisateur().getNo_utilisateur());
-			stmt.setInt(9, article.getCategorie().getNo_categorie());
+			stmt.setInt(5, article.getPrix_initial());
+			stmt.setInt(6, article.getPrix_vente());
+			stmt.setInt(7, article.getUtilisateur().getNo_utilisateur());
+			stmt.setInt(8, article.getCategorie().getNo_categorie());
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -89,6 +88,8 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 		
 	private ArticleVendu builderArticle(ResultSet rs) throws SQLException {
 		ArticleVendu av = new ArticleVendu();
+		UtilisateurDAO utilisateurDAO =DAOFactory.getUtilisateurDAO();
+		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();
 		av.setNo_article(rs.getInt("no_article"));
 		av.setNom_article(rs.getString("nom_article"));
 		av.setDescription(rs.getString("description"));
@@ -96,8 +97,24 @@ public class ArticleVenduJdbcImpl implements ArticleVenduDAO {
 		av.setDate_fin_encheres(rs.getDate("date_fin-encheres").toLocalDate());
 		av.setPrix_initial(rs.getInt("prix_initial"));
 		av.setPrix_vente(rs.getInt("prix_vente"));
-		av.setUtilisateur(UtilisateurDAO.selectByNoUtilisateur(rs.getInt("utilisateur")));
-		av.setCategorie(CategorieDAO.selectByNoCategorie(rs.getInt("categorie")));
+		try {
+			av.setUtilisateur(utilisateurDAO.selectByNoUtilisateur(rs.getInt("utilisateur")));
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			av.setCategorie(categorieDAO.selectByNoCategorie(rs.getInt("categorie")));
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	 
 		return null;
 	}

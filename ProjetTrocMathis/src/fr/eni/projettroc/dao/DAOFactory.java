@@ -3,7 +3,7 @@ package fr.eni.projettroc.dao;
 
 
 public class DAOFactory {
-	public static UtilisateurDAO getUtilisateursDAO() {
+	public static UtilisateurDAO getUtilisateurDAO() {
 		return new UtilisateurJDBCImpl();
 	}
 	
@@ -17,6 +17,10 @@ public class DAOFactory {
 	
 	public static CategorieDAO getCategorieDAO() {
 		return new CategorieJDBCImpl();
+	}
+	
+	public static ArticleVenduDAO getArticleVenduDAO( ) {
+		return new ArticleVenduJDBCImpl();
 	}
 	
 	
