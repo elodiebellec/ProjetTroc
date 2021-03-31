@@ -22,7 +22,7 @@ public class ArticleVendu {
 	
 	
 	public ArticleVendu(int no_article, String nom_article, String description, LocalDate date_debut_encheres,
-			LocalDate date_fin_encheres, int prix_initial, int prix_vente, Utilisateur utilisateur) {
+			LocalDate date_fin_encheres, int prix_initial, int prix_vente, Utilisateur utilisateur, Categorie categorie) {
 		super();
 		this.no_article = no_article;
 		this.nom_article = nom_article;
