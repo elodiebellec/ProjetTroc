@@ -35,7 +35,6 @@ public class CategorieJDBCImpl implements CategorieDAO{
 			Statement stmt = cnx.createStatement();
 			ResultSet rs = stmt.executeQuery(SELECT_ALL);
 
-			// Parcours la liste des enregistrements, et rassembler par id du repas
 		
 			while (rs.next()) {
 				listeCategorie.add(categorieBuilder(rs));

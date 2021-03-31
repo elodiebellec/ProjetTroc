@@ -17,9 +17,11 @@ public interface ArticleVenduDAO {
 	
 	public void deleteArticle(int no_article) throws BusinessException;
 	
-	public ArticleVendu selectByNoArticle (int no_article) throws BusinessException;
+	public List<ArticleVendu> getListByNom (String nom_article) throws BusinessException;
+
+	public List<ArticleVendu> getListArticle() throws BusinessException;
 	
-	//public List<ListeArticleVendu> selectAllByIdListe(int no_article) throws BusinessException;
+	
 
 	
 
