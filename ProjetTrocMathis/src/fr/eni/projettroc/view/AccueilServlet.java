@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.projettroc.bll.CategorieManager;
+import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Categorie;
 
 /**
@@ -33,9 +34,17 @@ public class AccueilServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
 			List<Categorie> listeCategories;
+			List<ArticleVendu> listeArticleVendu;
+			ArticleVendu articleAffiche;
 			try {
-				listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();
+				//Afficher la liste des catégorie
+				listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();				
 				request.setAttribute("listeCategories", listeCategories);
+				//Récupérer une liste des articles en vente
+				//listeArticleVendu = ArticleVenduManager.getArticleManager().tousLesArticles();				
+				//request.setAttribute("listeCategories", listeCategories);
+				//Afficher les articles vendus
+				
 			} catch (fr.eni.projettroc.exception.BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
