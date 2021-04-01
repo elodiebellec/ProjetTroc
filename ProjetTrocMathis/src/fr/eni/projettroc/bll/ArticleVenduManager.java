@@ -2,9 +2,11 @@ package fr.eni.projettroc.bll;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
+import fr.eni.projettroc.bo.Categorie;
 import fr.eni.projettroc.dao.ArticleVenduDAO;
 import fr.eni.projettroc.dao.DAOFactory;
 
@@ -33,20 +35,33 @@ public class ArticleVenduManager {
 	   articleVenduDAO.insert(articleVendu);
    }
    
+   public List<ArticleVendu> listeArticles() throws BusinessException{
+		
+		return articleVenduDAO.getListArticle();
+   }
    
-   
-   
-   
-   
-   
-   
-   /*public List<Categorie> toutesLesCategorie() throws BusinessException{
-		//Aucune vérification
-		//Seulement l'appel à la couche DAL
-		return categorieDAO.getListCategories();
-	}	*/
-   
-  
+   public void modifierArticle(ArticleVendu articleVendu) throws BusinessException{
+	   articleVenduDAO.update(articleVendu);
+   }
+	
+	
+	public void deleteArticle(int no_article) throws BusinessException{
+		articleVenduDAO.deleteArticle(no_article);
+	}
+	
+	public List<ArticleVendu> listeArticlesParCategorie (int no_categorie) throws BusinessException {
+		return articleVenduDAO.getListByCategorie(no_categorie);
+	}
+	
+	public List<ArticleVendu> listeArticlesParNom (List<ArticleVendu> listeArticle, String nom) throws BusinessException {
+		List<ArticleVendu> listeParNom = new ArrayList<ArticleVendu>();
+		for (ArticleVendu articleVendu : listeArticle) {
+			if(nom.equals(articleVendu.getNom_article())) {
+				listeParNom.add(articleVendu);
+			}
+		}
+		return listeParNom;
+	}
    
 
 

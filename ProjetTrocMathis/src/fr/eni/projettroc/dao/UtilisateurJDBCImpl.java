@@ -27,7 +27,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String SELECT = "select * from utilisateurs where pseudo=?";
 	
 
-	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
+	private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
 
 	
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
@@ -132,41 +132,33 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	}
 
 
-	public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessException {
+	
+	
+	@Override
+	public Utilisateur selectByNoUtilisateur (int no_utilisateur) throws BusinessException {
 		Utilisateur utilisateur = null;
-		
+		//Connexion à la base de données et try pour que la connexion se ferme automatiquement.
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_No);
-			stmt.setInt(1, no_utilisateur);
-			ResultSet rs = stmt.executeQuery();
+			//requete
+			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
+			// on sélectionne l'utilisateur dont le numéro est renseigné dans la requête
+			requete.setInt(1, no_utilisateur);
+			ResultSet rs = requete.executeQuery();
+
 			if (rs.next()) {
-				utilisateur = builderUtilisateur(rs);
+				//appelle de la fonction utilisateurBuilder qui permet de récupérer toutes les colonnes de la table utilisateur
+				utilisateur = utilisateurBuilder(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.addError(Errors.LECTURE_LISTE_ECHEC);
+			be.addError("Erreur selectByNoUtilisateur");
 			throw be;
 		}
-		
-		
+		//Je retourne l'utilisateur sélectionné
 		return utilisateur;
 	}
 
-	private Utilisateur builderUtilisateur(ResultSet rs)throws SQLException {
-		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
-		utilisateur.setPseudo(rs.getString("pseudo"));
-		utilisateur.setNom(rs.getString("nom"));
-		utilisateur.setPrenom(rs.getString("prenom"));
-		utilisateur.setEmail(rs.getString("email"));
-		utilisateur.setTelephone(rs.getString("telephone"));
-		utilisateur.setRue(rs.getString("rue"));
-		utilisateur.setCode_postal(rs.getString("code_Postal"));
-		utilisateur.setVille(rs.getString("ville"));
-		utilisateur.setMot_de_passe(rs.getString("mot_de_passe"));
-		return utilisateur;
-	}
  }
 
 
