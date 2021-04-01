@@ -2,6 +2,8 @@ package fr.eni.projettroc.bll;
 
 
 
+import java.util.List;
+
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.UtilisateurDAO;
@@ -81,11 +83,12 @@ public class UtilisateurManager {
 		   String rue,String code_postal,String ville,String mot_de_passe,String mot_de_passe_confirmation ,int credit) throws BusinessException{
 	   BusinessException be = new BusinessException();
 	   Utilisateur u = null;
+	   boolean isPseudoInexistant = pseudoIdentique(pseudo, be);
 	   boolean isValidPseudo = validatePseudo(pseudo, be);
 	   boolean isValidPwd = validatePassword(mot_de_passe, be);
 	   boolean isValidIdentite = validateIdentite(nom, prenom, email, rue, ville, code_postal, telephone, be);
 	   boolean isValidSecondPassword = validateSecondPassword(mot_de_passe, mot_de_passe_confirmation, be);
-	   if(isValidPseudo && isValidPwd && isValidIdentite && isValidSecondPassword) {
+	   if(isValidPseudo && isValidPwd && isValidIdentite && isValidSecondPassword && isPseudoInexistant) {
 	   u = new Utilisateur();
 	   u.setPseudo(pseudo);
 	   u.setNom(nom);
@@ -109,11 +112,30 @@ public class UtilisateurManager {
     	 return utilisateurDAO.selectByPseudo(pseudo);
      }
      
+   
+     
+     
      public void supprimerUtilisateur(int no_utilsateur)throws BusinessException {
  		utilisateurDAO.delete(no_utilsateur);
  		
  	}
-     private boolean pseudoIdentique(String pseudo) {
+    
+     
+     
+     private boolean pseudoIdentique(String pseudo, BusinessException be)  {
+     List<Utilisateur> utilisateur = null;
+	try {
+		utilisateur = utilisateurDAO.getListeUtilisateur();
+	} catch (BusinessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+     for(Utilisateur u : utilisateur) {
+    	 if(pseudo.equals(u.getPseudo())) {
+    		 be.addError("Pseudo deja utiliser");
+    		 return false; 
+    	 }
+    }
     
     
      return true; 

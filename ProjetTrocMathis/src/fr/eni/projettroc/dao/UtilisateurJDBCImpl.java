@@ -7,11 +7,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mysql.cj.conf.ConnectionPropertiesTransform;
 
-
+import fr.eni.projettroc.bo.Enchere;
 import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.exception.BusinessException;
@@ -30,8 +32,11 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
     private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
     private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
-
-	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
+    private static final String SELECT_PERSONNE = "SELECT pseudo FROM utilisateurs";
+	
+    
+    
+    public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(rs.getString("pseudo"));
 		utilisateur.setNom(rs.getString("nom"));
@@ -45,6 +50,8 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 		return utilisateur;
 		
 	}
+    
+ 
 
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -211,6 +218,35 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 				throw be;
 			}
 
+		}
+	    public List<Utilisateur> getListeUtilisateur() throws BusinessException {
+			List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>();
+
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+				Statement stmt = cnx.createStatement();
+				ResultSet rs = stmt.executeQuery(SELECT_PERSONNE);
+
+				// Parcours la liste des enregistrements, et rassembler par id du repas
+				Utilisateur utilisateur = new Utilisateur();
+				while (rs.next()) {
+					try {
+						utilisateur.setPseudo(rs.getString("pseudo"));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					listeUtilisateur.add(utilisateur);
+					}
+					
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				BusinessException be = new BusinessException();
+				be.addError("Connexion impossible");
+				throw be;
+			}
+
+			return listeUtilisateur;
 		}
 
  }
