@@ -25,10 +25,12 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String CONNECTION = "select no_utilisateur,pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
+
 	private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
 	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
     private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
     private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
+
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(rs.getString("pseudo"));
@@ -68,7 +70,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 				u.setCredit(rs.getInt("credit"));
 				return u;
 			}else {
-				//Utilisateur non trouvé
+				//Utilisateur non trouvÃ©
 				BusinessException be = new BusinessException();
 				be.addError("Pseudo ou Mot de passe inconnu");
 				throw be;
@@ -134,26 +136,32 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 
 
 
-	public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessException {
+
+	public Utilisateur selectByNoUtilisateur (int no_utilisateur) throws BusinessException {
+
 		Utilisateur utilisateur = null;
-		
+		//Connexion à la base de données et try pour que la connexion se ferme automatiquement.
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = cnx.prepareStatement(SELECT_BY_No);
-			stmt.setInt(1, no_utilisateur);
-			ResultSet rs = stmt.executeQuery();
+			//requete
+			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
+			// on sélectionne l'utilisateur dont le numéro est renseigné dans la requête
+			requete.setInt(1, no_utilisateur);
+			ResultSet rs = requete.executeQuery();
+
 			if (rs.next()) {
-				utilisateur = builderUtilisateur(rs);
+				//appelle de la fonction utilisateurBuilder qui permet de récupérer toutes les colonnes de la table utilisateur
+				utilisateur = utilisateurBuilder(rs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.addError(Errors.LECTURE_LISTE_ECHEC);
+			be.addError("Erreur selectByNoUtilisateur");
 			throw be;
 		}
-		
-		
+		//Je retourne l'utilisateur sélectionné
 		return utilisateur;
 	}
+
 
 	private Utilisateur builderUtilisateur(ResultSet rs)throws SQLException {
 		Utilisateur utilisateur = new Utilisateur();
@@ -204,6 +212,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 			}
 
 		}
+
  }
 
 

@@ -19,6 +19,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link" href="./VendreUnArticle">Nouvelle Vente
+					</a></li>
 					<li class="nav-item active"><a class="nav-link" href="./AccueilUtilisateur">Accueil
 					</a></li>
 					<li class="nav-item active"><a class="nav-link" href="./Deconnexion">Se deconnecter
