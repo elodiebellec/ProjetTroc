@@ -113,6 +113,11 @@ public class UtilisateurManager {
  		utilisateurDAO.delete(no_utilsateur);
  		
  	}
+     private boolean pseudoIdentique(String pseudo) {
+    
+    
+     return true; 
+}
    
 
      private boolean validatePseudo(String pseudo, BusinessException be) {
