@@ -3,6 +3,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page errorPage="error.jsp" isErrorPage="false"%>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -45,6 +47,7 @@
 				<div class="form-row">
 					<label class="col-md-2" for="article">Article : </label>
 					<div class="col-md-8">
+					
 						<input class="form-control" id="article" type="text" required
 							name="article">
 					</div>
@@ -81,78 +84,98 @@
 						l'article : </label>
 					<div class="col-md-8">
 
-						<label for="fichier">UPLOADER</label> <input type="file"
+						<input type="file" id="image" name="image"
+							accept="image/png, image/jpeg">
+
+
+						<!--<label for="fichier">UPLOADER</label> <input type="file"
 							class="form-control-file" id="fichier">
 					</div>
 					<a button type="button" class="btn btn-light"
 						class="shadow-lg p-3 mb-5 bg-white" href="#">UPLOADER
 						</button>
-					</a>
-				</div>
-			</div>
-
-
-
-			<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="miseAPrix">Mise à prix : </label>
-					<div class="col-md-8">
-						<input type="number" class="form-control" id="miseAPrix">
+					</a>  -->
 					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="debutEnchere">Début de
-						l'enchère : </label>
-					<div class="col-md-8">
-						<input class="form-control" type="date" id="debutEnchere" required
-							name="debutEnchere">
+
+
+				<div class="form-group">
+					<div class="form-row">
+						<label class="col-md-2" for="miseAPrix">Mise à prix : </label>
+						<div class="col-md-8">
+							<input type="number" class="form-control" id="miseAPrix">
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<div class="form-row">
-
-					<label class="col-md-2" for="finEnchere">Fin de l'enchère :
-					</label>
-					<div class="col-md-8">
-						<input class="form-control" type="date" id="finEnchere" required
-							name="finEnchere">
+				<div class="form-group">
+					<div class="form-row">
+						<label class="col-md-2" for="debutEnchere">Début de
+							l'enchère : </label>
+						<div class="col-md-8">
+							<input class="form-control" type="date" id="debutEnchere"
+								required name="debutEnchere">
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="rue">Rue : </label>
-					<div class="col-md-8">
-						<input class="form-control" id="rue" type="text" required
-							name="rue">
+				<div class="form-group">
+					<div class="form-row">
+
+						<label class="col-md-2" for="finEnchere">Fin de l'enchère
+							: </label>
+						<div class="col-md-8">
+							<input class="form-control" type="date" id="finEnchere" required
+								name="finEnchere">
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="codePostal">Code Postal : </label>
-					<div class="col-md-8">
-						<input class="form-control" id="codePostal" type="text" required
-							name="codePostal">
+				<div class="card h-100">
+					<div class="card-body">
+
+						<div class="form-group">
+							<div class="form-row">
+								<label class="col-md-2" for="rue">Rue : </label>
+								<div class="col-md-8">
+									<input class="form-control" id="rue" type="text" required
+										name="rue">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="form-row">
+								<label class="col-md-2" for="codePostal">Code Postal : </label>
+								<div class="col-md-8">
+									<input class="form-control" id="codePostal" type="text"
+										required name="codePostal">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="form-row">
+								<label class="col-md-2" for="ville">Ville : </label>
+								<div class="col-md-8">
+									<input class="form-control" id="ville" type="text" required
+										name="ville">
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="ville">Ville : </label>
-					<div class="col-md-8">
-						<input class="form-control" id="ville" type="text" required
-							name="ville">
-					</div>
+
+				<div class="container">
+					<button type="button" class="col-md-2"
+						class="btn btn-outline-secondary mb-2">Enregistrer</button>
+					<button type="button" class="col-md-2"
+						class="btn btn-outline-secondary mb-2">Annuler</button>
 				</div>
-			</div>
+
+				<div></div>
 </body>
 </html>
