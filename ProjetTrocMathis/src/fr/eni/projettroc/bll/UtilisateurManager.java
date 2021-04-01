@@ -11,7 +11,7 @@ import fr.eni.projettroc.dao.UtilisateurDAO;
 import fr.eni.projettroc.exception.BusinessException;
 
 public class UtilisateurManager {
-	//Attribut pour représenter la couche DAL
+	//Attribut pour reprï¿½senter la couche DAL
 
 	private UtilisateurDAO utilisateurDAO;
 
@@ -48,7 +48,7 @@ public class UtilisateurManager {
 	   Utilisateur u = null;
 	   boolean isValidPseudo = validatePseudo(pseudo, be);
 	   boolean isValidPwd = validatePassword(mot_de_passe, be);
-	   boolean isValidIdentite = validateIdentité(nom, prenom, email, rue, ville, code_postal, telephone, be);
+	   boolean isValidIdentite = validateIdentite(nom, prenom, email, rue, ville, code_postal, telephone, be);
 	   
 	   if(isValidPseudo && isValidPwd && isValidIdentite) {
 	   u = new Utilisateur();
@@ -81,17 +81,17 @@ public class UtilisateurManager {
  		}
  		pseudo = pseudo.trim();
  		if (pseudo.isEmpty() || pseudo.length() < 6) {
- 			be.addError("Login doit contenir au moins 6 caractères");
+ 			be.addError("Login doit contenir au moins 6 caractï¿½res");
  			return false;
  		}
  		if (pseudo.length() > 30 ) {
- 			be.addError("Login doit contenir au plus 30 caractères");
+ 			be.addError("Login doit contenir au plus 30 caractï¿½res");
  			return false;
  		}
 
  		return true;
  	}
-     private boolean validateIdentité(String nom,String prenom,String email, String rue, String ville, String code_postal, String telephone ,BusinessException be) {
+     private boolean validateIdentite(String nom,String prenom,String email, String rue, String ville, String code_postal, String telephone ,BusinessException be) {
   		if (nom == null) {
   			be.addError("Nom obligatoire");
   			return false;
@@ -143,11 +143,11 @@ public class UtilisateurManager {
 		}
 		pseudo = pseudo.trim();
 		if (pseudo.isEmpty() || email.isEmpty() || pseudo.length() < 6) {
-			be.addError("Login doit contenir au moins 6 caractères");
+			be.addError("Login doit contenir au moins 6 caractï¿½res");
 			return false;
 		}
 		if (pseudo.length() > 30 || email.length() >30) {
-			be.addError("Login doit contenir au plus 30 caractères");
+			be.addError("Login doit contenir au plus 30 caractï¿½res");
 			return false;
 		}
 
@@ -162,7 +162,7 @@ public class UtilisateurManager {
 		}
 		if (!mot_de_passe.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,12}")) {
 			be.addError(
-					"Mot de passe doit contenir entre 8 et 12 caractères (1 chiffre, 1 majuscule, 1 caractère spécial)");
+					"Mot de passe doit contenir entre 8 et 12 caractï¿½res (1 chiffre, 1 majuscule, 1 caractï¿½re spï¿½cial)");
 			return false;
 		}
 

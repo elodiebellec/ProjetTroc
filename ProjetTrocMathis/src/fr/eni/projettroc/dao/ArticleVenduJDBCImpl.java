@@ -20,13 +20,12 @@ import fr.eni.projettroc.exception.Errors;
 
 public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	
-	private static final String INSERT = "INSERT INTO Articles_vendus(nom_article, description,date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, utilisateur, categorie) VALUES(?,?,?,?,?,?,?,?)";
-	private static final String DELETE_BY_NO = "DELETE FROM Articles_vendus where no_article=?";
-	//private static final String DELETE_ALL = "delete from Articles_vendus where id_liste=?";
-	private static final String SELECT_ALL_BY_NOM = "SELECT `no_article`,`nom_article`,`description`,`date_debut_encheres`,`date_fin_encheres`,`prix_initial`,`prix_vente`,`no_utilisateur`,`no_categorie` FROM `articles_vendus` WHERE nom_article=?";
-	private static final String UPDATE = "UPDATE Articles_vendus SET nom_article=?, description=?,date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, prix_vente=?, categorie=? WHERE no_article=?";
+	private static final String INSERT = "INSERT INTO `articles_vendus`(`no_article`, `nom_article`, `description`, `date_debut_encheres`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie`) VALUES (?,?,?,?,?,?,?,?,?)";
+	private static final String DELETE_BY_NO = "DELETE FROM `articles_vendus` WHERE `no_article`=?";
+	private static final String UPDATE = "UPDATE `articles_vendus` SET `no_article`=?,`nom_article`=?,`description`=?,`date_debut_encheres`=?,`date_fin_encheres`=?,`prix_initial`=?,`prix_vente`=?,`no_utilisateur`=?,`no_categorie`=? WHERE `no_article`=?";
 	private static final String SELECT_ALL = "SELECT `no_article`,`nom_article`,`description`,`date_debut_encheres`,`date_fin_encheres`,`prix_initial`,`prix_vente`,`no_utilisateur`,`no_categorie` FROM `articles_vendus`";
-	private static final String SELECT_BY_UTILISATEUR = null;
+	private static final String SELECT_BY_UTILISATEUR = "SELECT `no_article`, `nom_article`, `description`, `date_debut_encheres`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie` FROM `articles_vendus` WHERE `no_utilisateur`=?";
+	private static final String SELECT_ALL_BY_CATEGORIE = "SELECT * FROM `articles_vendus` WHERE `no_categorie`=?";
 	
 	@Override
 	public void insert(ArticleVendu article) throws BusinessException {
@@ -74,7 +73,7 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	}
 	
 	
-	/////Faire liste puis mettre à jour
+
 	public ArticleVendu selectByUtilisateur (int no_utilisateur) throws BusinessException {
 		ArticleVendu av = null;
 		
@@ -88,19 +87,22 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.addError(Errors.LECTURE_LISTE_ECHEC);
+			be.addError("error dans selectByUtilisateur");
 			throw be;
 		}
 
 		return av;
 	}
 	
-	public List<ArticleVendu> getListByNom (String nom_article) throws BusinessException {
+	
+	
+	
+	public List<ArticleVendu> getListByCategorie (int no_categorie) throws BusinessException {
 		List<ArticleVendu> listeArticle = new ArrayList<ArticleVendu>();
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			Statement stmt = cnx.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_ALL_BY_NOM);
+			ResultSet rs = stmt.executeQuery(SELECT_ALL_BY_CATEGORIE);
 		
 			while (rs.next()) {
 				listeArticle.add(articleBuilder(rs));
@@ -109,7 +111,7 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.addError("Erreur getListArticleVendu DAO");
+			be.addError("Erreur getListByCategorie DAO");
 			throw be;
 		}
 
@@ -138,21 +140,6 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 		return listeArticle;
 	}
 		
-	/*private ArticleVendu articleBuilder(ResultSet rs) throws SQLException, BusinessException {
-		ArticleVendu av = new ArticleVendu();
-		UtilisateurDAO utilisateurDAO =DAOFactory.getUtilisateurDAO();
-		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();
-			av.setNo_article(rs.getInt("no_article"));
-			av.setNom_article(rs.getString("nom_article"));
-			av.setDescription(rs.getString("description"));
-			av.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
-			av.setDate_fin_encheres(rs.getDate("date_fin-encheres").toLocalDate());
-			av.setPrix_initial(rs.getInt("prix_initial"));
-			av.setPrix_vente(rs.getInt("prix_vente"));
-			av.setUtilisateur(utilisateurDAO.selectByNoUtilisateur(rs.getInt("no_utilisateur")));
-			av.setCategorie(categorieDAO.selectByNoCategorie(rs.getInt("no_categorie")));		
-		return av;
-		}*/
 	
 	
 	private ArticleVendu articleBuilder(ResultSet rs) throws SQLException, BusinessException {
@@ -214,12 +201,6 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	
 	
 
-
-	@Override
-	public void deleteAll(int no_article) throws BusinessException {
-		
-		
-	}
 
 	
 	
