@@ -34,14 +34,17 @@ public class ModificationUtilisateurServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.getRequestDispatcher("/WEB-INF/modificationUtilisateur.jsp").forward(request, response);
+	
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		int no_utilisateur = (int) session.getAttribute("idUser");
+		System.out.println(no_utilisateur);
 	    String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -51,11 +54,11 @@ public class ModificationUtilisateurServlet extends HttpServlet {
 		String code_postal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
 		String mot_de_passe = request.getParameter("motdepasse");
-	    int no_utilisateur = Integer.parseInt(request.getParameter("idpersonne"));
 		
+	    
+	
 	    try {
 	    	Utilisateur u = UtilisateurManager.getUtilisateursManager().modifierUnUtilisateur( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,no_utilisateur);
-	    	HttpSession session = request.getSession();
 	    	session.setAttribute("user",u);
 	    	request.getRequestDispatcher("/WEB-INF/accueilUtilisateur.jsp").forward(request, response);
 	    } catch (BusinessException e) {

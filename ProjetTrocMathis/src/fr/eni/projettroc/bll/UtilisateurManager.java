@@ -71,7 +71,9 @@ public class UtilisateurManager {
 		}
 	}
    
- 
+ public Utilisateur rechercherParPseudo(String utilisateur) throws BusinessException{
+	 return utilisateurDAO.selectByPseudo(utilisateur);
+ }
 
        public Utilisateur validerAjoutPersonne( String pseudo,String nom,String prenom,String email,String telephone,
 		   String rue,String code_postal,String ville,String mot_de_passe,int credit) throws BusinessException{
@@ -93,7 +95,8 @@ public class UtilisateurManager {
 	   u.setVille(ville);
 	   u.setMot_de_passe(mot_de_passe);
 	   u.setCredit(credit);
-	   utilisateurDAO.insertUtilisateur(u);
+	   int id =  utilisateurDAO.insertUtilisateur(u);
+	   u.setNo_utilisateur(id);
 	   return u;
    }else {
 	   throw be;

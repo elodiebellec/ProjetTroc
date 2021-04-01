@@ -11,7 +11,7 @@ public Utilisateur find(String pseudo, String mot_de_passe, String email)throws 
 
 public Utilisateur selectByNoUtilisateur(int no_utilisateur)throws BusinessException;
 
-public void insertUtilisateur(Utilisateur utilisateur)throws BusinessException;
+public int insertUtilisateur(Utilisateur utilisateur)throws BusinessException;
 
 public Utilisateur selectByPseudo(String pseudo)throws BusinessException;
 

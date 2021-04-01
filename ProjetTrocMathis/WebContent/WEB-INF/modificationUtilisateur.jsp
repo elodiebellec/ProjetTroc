@@ -99,7 +99,7 @@
  <span><button type="submit" class="btn btn-primary">Supprimer mon compte</button></span>
    </form>
    </div>
-   
+ 
    </div>
    
    </div>

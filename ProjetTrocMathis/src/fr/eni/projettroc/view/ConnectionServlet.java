@@ -44,12 +44,16 @@ public class ConnectionServlet extends HttpServlet {
 		String pseudo = request.getParameter("login");
 		String mot_de_passe = request.getParameter("mdp");
 		String email = request.getParameter("login");
+		String no_user = "5";
 		
 		//Appelle a la BLL
 		try {
 			Utilisateur u = UtilisateurManager.getUtilisateursManager().validerLaConnection(pseudo, mot_de_passe , email);
+	        int  userId =  u.getNo_utilisateur();
 			//Transmettre les informations pour la page de welcome
 			HttpSession session = request.getSession();
+			 session.setAttribute("idUser", userId);
+			session.setAttribute("iduser2", no_user );
 			session.setAttribute("user", u);
 			request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, resp);
 		} catch (BusinessException e) {
@@ -57,6 +61,9 @@ public class ConnectionServlet extends HttpServlet {
 			request.setAttribute("errors", e.getErrors());
 			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, resp);
 		}
+		/*user user = bypseudo(pseudo)
+			user=    	user.getID*/
+				
 	}
 
 	/**
