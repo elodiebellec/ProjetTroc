@@ -3,12 +3,13 @@ package fr.eni.projettroc.dao;
 import java.sql.Connection;
 
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
+import com.mysql.cj.conf.ConnectionPropertiesTransform;
 
 
 import fr.eni.projettroc.bo.Utilisateur;
@@ -21,15 +22,15 @@ import fr.eni.projettroc.exception.Errors;
 
 public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	
-	private static final String CONNECTION = "select pseudo, mot_de_passe, nom, prenom, email, telephone,"
+	private static final String CONNECTION = "select no_utilisateur,pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String SELECT = "select * from utilisateurs where pseudo=?";
-	
 
-	private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
+	private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
+	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
+    private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
+    private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
 
-	
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(rs.getString("pseudo"));
@@ -57,6 +58,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 			
 			if(rs.next()) {
 				Utilisateur u = new Utilisateur();
+				u.setNo_utilisateur(rs.getInt("no_utilisateur"));
 				u.setPseudo(rs.getString("pseudo"));
 				u.setNom(rs.getString("nom"));
 				u.setPrenom(rs.getString("prenom"));
@@ -68,7 +70,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 				u.setCredit(rs.getInt("credit"));
 				return u;
 			}else {
-				//Utilisateur non trouvÃ©
+				//Utilisateur non trouvÃƒÂ©
 				BusinessException be = new BusinessException();
 				be.addError("Pseudo ou Mot de passe inconnu");
 				throw be;
@@ -82,7 +84,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 
 	}
 	
-	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException{
+	public int insertUtilisateur(Utilisateur utilisateur) throws BusinessException{
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			PreparedStatement requete = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			requete.setString(1, utilisateur.getPseudo());
@@ -100,6 +102,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 			ResultSet rs = requete.getGeneratedKeys();
 			if (rs.next()) {
 				utilisateur.setNo_utilisateur(rs.getInt(1));
+				
 			}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -107,14 +110,14 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 				be.addError("erreur");
 				throw be;
 			}
-
+   return utilisateur.getNo_utilisateur();
 	}
 	
 
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException{
 		Utilisateur utilisateur = null;
 		try(Connection cnx = ConnectionProvider.getConnection()){
-		PreparedStatement requete = cnx.prepareStatement(SELECT);
+		PreparedStatement requete = cnx.prepareStatement(SELECT_BY_PSEUDO);
 		requete.setString(1, pseudo);
 		ResultSet rs = requete.executeQuery();
 		
@@ -132,21 +135,21 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	}
 
 
-	
-	
-	@Override
+
+
 	public Utilisateur selectByNoUtilisateur (int no_utilisateur) throws BusinessException {
+
 		Utilisateur utilisateur = null;
-		//Connexion à la base de données et try pour que la connexion se ferme automatiquement.
+		//Connexion Ã  la base de donnÃ©es et try pour que la connexion se ferme automatiquement.
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			//requete
 			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
-			// on sélectionne l'utilisateur dont le numéro est renseigné dans la requête
+			// on sÃ©lectionne l'utilisateur dont le numÃ©ro est renseignÃ© dans la requÃªte
 			requete.setInt(1, no_utilisateur);
 			ResultSet rs = requete.executeQuery();
 
 			if (rs.next()) {
-				//appelle de la fonction utilisateurBuilder qui permet de récupérer toutes les colonnes de la table utilisateur
+				//appelle de la fonction utilisateurBuilder qui permet de rÃ©cupÃ©rer toutes les colonnes de la table utilisateur
 				utilisateur = utilisateurBuilder(rs);
 			}
 		} catch (Exception e) {
@@ -155,9 +158,60 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 			be.addError("Erreur selectByNoUtilisateur");
 			throw be;
 		}
-		//Je retourne l'utilisateur sélectionné
+		//Je retourne l'utilisateur sÃ©lectionnÃ©
 		return utilisateur;
 	}
+
+
+	private Utilisateur builderUtilisateur(ResultSet rs)throws SQLException {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCode_postal(rs.getString("code_Postal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setMot_de_passe(rs.getString("mot_de_passe"));
+		return utilisateur;
+	}
+	
+	 public void update(Utilisateur utilisateur)throws BusinessException{
+	       
+	        try(Connection cnx = ConnectionProvider.getConnection()){
+	            PreparedStatement requete = cnx.prepareStatement(UPDATE_UTILISATEUR);
+	            requete.setString(1, utilisateur.getPseudo());
+				requete.setString(2, utilisateur.getNom());
+				requete.setString(3, utilisateur.getPrenom());
+				requete.setString(4, utilisateur.getEmail());
+				requete.setString(5, utilisateur.getTelephone());
+				requete.setString(6, utilisateur.getRue());
+				requete.setString(7, utilisateur.getCode_postal());
+				requete.setString(8, utilisateur.getVille());
+				requete.setString(9, utilisateur.getMot_de_passe());
+	            requete.setInt(10, utilisateur.getNo_utilisateur());
+
+	            requete.executeUpdate();
+	        }catch (Exception e){
+	  
+	            throw new BusinessException();
+	        }
+	    }
+	    public void delete(int no_utilisateur) throws BusinessException {
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+				PreparedStatement stmt = cnx.prepareStatement(DELECT_UTILISATEUR);
+				stmt.setInt(1, no_utilisateur);
+				stmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+				BusinessException be = new BusinessException();
+				be.addError(Errors.SUPPRESSION_ARTICLE_ERREUR);
+				throw be;
+			}
+
+		}
 
  }
 

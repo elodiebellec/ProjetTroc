@@ -1,5 +1,7 @@
 package fr.eni.projettroc.bll;
 
+
+
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.UtilisateurDAO;
@@ -22,12 +24,42 @@ public class UtilisateurManager {
 	   utilisateurDAO = DAOFactory.getUtilisateurDAO();
    }
    
+   
    public static UtilisateurManager getUtilisateursManager() {
 		if (instance == null) {
 			instance = new UtilisateurManager();
 		}
 		return instance;
 	}
+   
+   
+   public Utilisateur modifierUnUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,
+   String rue,String code_postal,String ville,String mot_de_passe,int no_utilisateur) throws BusinessException{
+	   BusinessException be = new BusinessException();
+	Utilisateur u = null;
+	boolean isValidPseudo = validatePseudo(pseudo, be);
+	boolean isValidPwd = validatePassword(mot_de_passe, be);
+	boolean isValidIdentite = validateIdentit�(nom, prenom, email, rue, ville, code_postal, telephone, be);
+
+	if(isValidPseudo && isValidPwd && isValidIdentite) {
+		u =new Utilisateur();
+		
+		u.setPseudo(pseudo);
+		u.setNom(nom);
+		u.setPrenom(prenom);
+		u.setEmail(email);
+		u.setTelephone(telephone);
+		u.setRue(rue);
+		u.setCode_postal(code_postal);
+		u.setVille(ville);
+		u.setMot_de_passe(mot_de_passe);
+		u.setNo_utilisateur(no_utilisateur);
+		utilisateurDAO.update(u);
+		return u;
+		}else {
+			throw be;
+}
+}
    
    public Utilisateur validerLaConnection(String pseudo, String mot_de_passe, String email)throws BusinessException{
 	   BusinessException be = new BusinessException();
@@ -40,9 +72,12 @@ public class UtilisateurManager {
 			throw be;
 		}
 	}
-
    
-     public Utilisateur validerAjoutPersonne(String pseudo,String nom,String prenom,String email,String telephone,
+ public Utilisateur rechercherParPseudo(String utilisateur) throws BusinessException{
+	 return utilisateurDAO.selectByPseudo(utilisateur);
+ }
+
+       public Utilisateur validerAjoutPersonne( String pseudo,String nom,String prenom,String email,String telephone,
 		   String rue,String code_postal,String ville,String mot_de_passe,int credit) throws BusinessException{
 	   BusinessException be = new BusinessException();
 	   Utilisateur u = null;
@@ -62,7 +97,8 @@ public class UtilisateurManager {
 	   u.setVille(ville);
 	   u.setMot_de_passe(mot_de_passe);
 	   u.setCredit(credit);
-	   utilisateurDAO.insertUtilisateur(u);
+	   int id =  utilisateurDAO.insertUtilisateur(u);
+	   u.setNo_utilisateur(id);
 	   return u;
    }else {
 	   throw be;
@@ -72,6 +108,11 @@ public class UtilisateurManager {
      public Utilisateur afficherPersonne(String pseudo) throws BusinessException{
     	 return utilisateurDAO.selectByPseudo(pseudo);
      }
+     
+     public void supprimerUtilisateur(int no_utilsateur)throws BusinessException {
+ 		utilisateurDAO.delete(no_utilsateur);
+ 		
+ 	}
    
 
      private boolean validatePseudo(String pseudo, BusinessException be) {
@@ -162,12 +203,14 @@ public class UtilisateurManager {
 		}
 		if (!mot_de_passe.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,12}")) {
 			be.addError(
-					"Mot de passe doit contenir entre 8 et 12 caract�res (1 chiffre, 1 majuscule, 1 caract�re sp�cial)");
+					"Mot de passe doit contenir entre 6 et 12 caract�res (1 chiffre, 1 majuscule, 1 caract�re sp�cial)");
+
 			return false;
 		}
 
 		return true;
 	}
+
 
 
 
