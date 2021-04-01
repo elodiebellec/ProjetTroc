@@ -13,13 +13,13 @@ public interface ArticleVenduDAO {
 	
 	public void update(ArticleVendu article) throws BusinessException;
 	
-	public void deleteAll(int no_article) throws BusinessException;
-	
 	public void deleteArticle(int no_article) throws BusinessException;
 	
-	public List<ArticleVendu> getListByNom (String nom_article) throws BusinessException;
+	public List<ArticleVendu> getListByCategorie (int no_categorie) throws BusinessException;
 
 	public List<ArticleVendu> getListArticle() throws BusinessException;
+	
+	
 	
 	
 
