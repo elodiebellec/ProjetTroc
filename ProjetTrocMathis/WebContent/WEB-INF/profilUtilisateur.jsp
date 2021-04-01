@@ -19,6 +19,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link" href="./VendreUnArticle">Nouvelle Vente
+					</a></li>
 					<li class="nav-item active"><a class="nav-link" href="./AccueilUtilisateur">Accueil
 					</a></li>
 					<li class="nav-item active"><a class="nav-link" href="./Deconnexion">Se deconnecter
@@ -70,14 +72,19 @@
             <td>${user.code_postal}</td>
              <td>${user.ville}</td>
             <td>${user.credit}</td>
+            
           </tr>
         </tbody>
       </table>
     </div>
+      <form action="./ModificationUtilisateur" method="get">
+		<input type="submit" value="Modifier" class="btn btn-primary">
+</form>
+            
   </body>
   <footer>
   </footer>
-  
+
   
   <script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
