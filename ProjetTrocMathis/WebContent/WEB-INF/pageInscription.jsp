@@ -7,7 +7,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="template/head.html" %>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="ENI Ecole">
+<meta name="author" content="ENI Ecole">
+
+<title>Projet TROC</title>
+
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/pageinscription.css" rel="stylesheet">
+<link rel="icon" href="images/favicon.ico">
+
 </head>
 
 <body>
@@ -41,16 +56,19 @@
 			</div>
 		
 		</c:if>
+		<header>
+		<h1>Mon profil</h1>
 
+<form action="./Inscription" method="post">
+<div class="card-body">
+<div class="container">
 <div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
-				<div class="card-body">
-					<form action="./Inscription" method="post">
-					
-  <div class="form-group">
+<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
+
+ <div class="form-group">
     <label for="pseudo">Pseudo</label>
     <input type="text" class="form-control" id="pseudo" name="pseudo" aria-describedby="pseudoHelp" placeholder="Entrer votre pseudo">
-    <small id="pseudoHelp" class="form-text text-muted">Ne communiquer jamais votre pseudo</small>
+  
  </div>
   <div class="form-group">
     <label for="password">Mot De Passe</label>
@@ -67,14 +85,18 @@
     <label for="prenom">Prenom</label>
     <input type="text" class="form-control" id="identite" name="prenom" aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
   </div> 
+  </div>
+   <div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
    <div class="form-group">
     <label for="email">Email</label>
     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Entrer votre Email">
   </div> 
+  
   <div class="form-group">
     <label for="telephone">Telephone</label>
     <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Entrer votre telephone">
   </div>
+ 
      <div class="form-group">
     <label for="rue">Rue</label>
     <input type="text" class="form-control" id="rue" name="rue" placeholder="Entrer votre rue">
@@ -88,20 +110,21 @@
     <input type="text" class="form-control" id="ville" name="ville" placeholder="Entrer votre ville">
   </div>
  
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Accepter les conditions</label>
+  
   </div>
-  <button type="submit" class="btn btn-primary">Créer</button>
+   </div>
+   </div>
+   </div>
+  <button type="submit" class="btn btn-primary">Créer</button> 
   </form>
+ 
+ 
   <form action="./Accueil" method="get">
  <span><button type="submit" class="btn btn-primary">Annuler</button></span>
+  
    </form>
-   </div>
    
-   </div>
-   
-   </div>
+   </header>
    
 		
 	

@@ -1,0 +1,54 @@
+@charset "ISO-8859-1";
+body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 150px;
+  }
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+.pagination {
+  margin-bottom: 30px;
+}
+
+.footer-demodule
+{
+	margin-top: 15px;
+}
+.demo
+{
+	margin-top: 15px;
+}
+
+.support
+{
+	float: right;
+}
+.obligatoire
+{
+	color:blue;
+	font-weight: bolder;
+	font-size: larger;
+}
+
+.groupecoco input{
+	margin-right: 130px;
+	font-size: 1,8em;
+	
+	
+}
+
+.groupecoco{
+	padding-bottom: 2em; 
+}
+
+.boutoncreate{
+
+	
+}
