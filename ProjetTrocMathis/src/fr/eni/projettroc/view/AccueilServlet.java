@@ -42,7 +42,7 @@ public class AccueilServlet extends HttpServlet {
 				listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();				
 				request.setAttribute("listeCategories", listeCategories);
 				//Récupérer une liste des articles en vente
-				listeArticleVendu = ArticleVenduManager.getArticleVenduManager().tousLesArticles();				
+				listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();				
 				request.setAttribute("listeArticleVendu", listeArticleVendu);
 				//Afficher les articles vendus
 				
