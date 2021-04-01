@@ -95,7 +95,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Enregistrer</button>
   </form>
-  <form action="./Accueil" method="get">
+  <form action="./SuppressionUtilisateur" method="get">
  <span><button type="submit" class="btn btn-primary">Supprimer mon compte</button></span>
    </form>
    </div>
