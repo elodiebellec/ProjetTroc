@@ -1,5 +1,7 @@
 package fr.eni.projettroc.bll;
 
+
+
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.UtilisateurDAO;
@@ -106,6 +108,11 @@ public class UtilisateurManager {
      public Utilisateur afficherPersonne(String pseudo) throws BusinessException{
     	 return utilisateurDAO.selectByPseudo(pseudo);
      }
+     
+     public void supprimerUtilisateur(int no_utilsateur)throws BusinessException {
+ 		utilisateurDAO.delete(no_utilsateur);
+ 		
+ 	}
    
 
      private boolean validatePseudo(String pseudo, BusinessException be) {

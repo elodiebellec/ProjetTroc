@@ -78,12 +78,7 @@
       <form action="./ModificationUtilisateur" method="get">
 		<input type="submit" value="Modifier" class="btn btn-primary">
 </form>
-            <a href="${pageContext.request.contextPath}/ModificationUtilisateur?param=${user.no_utilisateur}"
-													class="badge" title="Editer la liste"><i
-													class="material-icons">create</i></a>
-													<div class="text-center col-2 offset-3"></div>
-			<a class="btn" href="${pageContext.request.contextPath}/ModificationUtilisateur?paramId=${user.pseudo}" title="Clear">
-			<span class="material-icons">clear</span></a>
+            
   </body>
   <footer>
   </footer>

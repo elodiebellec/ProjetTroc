@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.mysql.cj.conf.ConnectionPropertiesTransform;
 
+
 import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.exception.BusinessException;
@@ -27,7 +28,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
 	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
     private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
-	
+    private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
 	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(rs.getString("pseudo"));
@@ -190,6 +191,19 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	            throw new BusinessException();
 	        }
 	    }
+	    public void delete(int no_utilisateur) throws BusinessException {
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+				PreparedStatement stmt = cnx.prepareStatement(DELECT_UTILISATEUR);
+				stmt.setInt(1, no_utilisateur);
+				stmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+				BusinessException be = new BusinessException();
+				be.addError(Errors.SUPPRESSION_ARTICLE_ERREUR);
+				throw be;
+			}
+
+		}
  }
 
 
