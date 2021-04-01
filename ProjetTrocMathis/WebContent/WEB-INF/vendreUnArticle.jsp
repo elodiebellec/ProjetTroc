@@ -90,38 +90,69 @@
 					</a>
 				</div>
 			</div>
-	
 
 
-	<div class="form-group">
-		<div class="form-row">
-			<label class="col-md-2" for="miseAPrix">Mise à prix : </label>
-			<div class="col-md-8">
-				<input type="number" class="form-control" id="miseAPrix">
+
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="miseAPrix">Mise à prix : </label>
+					<div class="col-md-8">
+						<input type="number" class="form-control" id="miseAPrix">
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
 
-	<div class="form-group">
-		<div class="form-row">
-			<label class="col-md-2" for="debutEnchere">Début de l'enchère
-				: </label>
-			<div class="col-md-8">
-				<input class="form-control" type="date" id="debutEnchere" required
-					name="debutEnchere">
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="debutEnchere">Début de
+						l'enchère : </label>
+					<div class="col-md-8">
+						<input class="form-control" type="date" id="debutEnchere" required
+							name="debutEnchere">
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
 
-	<div class="form-group">
-		<div class="form-row">
+			<div class="form-group">
+				<div class="form-row">
 
-			<label class="col-md-2" for="finEnchere">Fin de l'enchère : </label>
-			<div class="col-md-8">
-				<input class="form-control" type="date" id="finEnchere" required
-					name="finEnchere">
+					<label class="col-md-2" for="finEnchere">Fin de l'enchère :
+					</label>
+					<div class="col-md-8">
+						<input class="form-control" type="date" id="finEnchere" required
+							name="finEnchere">
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
+
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="rue">Rue : </label>
+					<div class="col-md-8">
+						<input class="form-control" id="rue" type="text" required
+							name="rue">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="codePostal">Code Postal : </label>
+					<div class="col-md-8">
+						<input class="form-control" id="codePostal" type="text" required
+							name="codePostal">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="ville">Ville : </label>
+					<div class="col-md-8">
+						<input class="form-control" id="ville" type="text" required
+							name="ville">
+					</div>
+				</div>
+			</div>
 </body>
 </html>
