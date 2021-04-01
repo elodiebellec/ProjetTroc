@@ -44,23 +44,17 @@
 				<br>
 				
 		<form action="./Accueil" method="post">
-			 <input type="text" name="barre" id="barre" value= "recherche..." />
-			
-			<br> <br>		
-			
-			<select class="form-select" aria-label="Default select example">
-			 
+			 <input type="text" name="barre" id="barre" value= "recherche..." />			
+			<br> <br>				
+			<select name="categorieSelect" class="form-select" aria-label="Default select example">			 
 			 	 <c:forEach var="c" items="${listeCategories}">
-					 <option>${c.libelle}</option>
+					 <option value="${c.no_categorie}">${c.libelle}</option>
 				</c:forEach>
 			</select>
 			<br> <br>		
-			 <input type="button" onclick="rechercher() " value="Rechercher" />
-			
+			 <input type="submit" value="Rechercher" />			
 		</form>
-			<br>
-		
-			
+			<br>			
 			<c:forEach var="c" items="${listeArticleVendu}">
 				<div class="card h-100">
 					 <p>${c.nom_article}</p>
