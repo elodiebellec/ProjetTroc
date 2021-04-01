@@ -44,7 +44,7 @@
 				<br>
 				
 		<form action="./Accueil" method="post">
-			 <input type="text" name="barre" id="barre" value= "recherche..." />			
+			 <input type="text" name="nomSelect" id="nomSelect" value= "recherche..." />			
 			<br> <br>				
 			<select name="categorieSelect" class="form-select" aria-label="Default select example">			 
 			 	 <c:forEach var="c" items="${listeCategories}">
@@ -58,10 +58,8 @@
 			<c:forEach var="c" items="${listeArticleVendu}">
 				<div class="card h-100">
 					 <p>${c.nom_article}</p>
-					 <p>Prix : ${c.prix_initial} points</p>
-				
-       				 <p>Fin de l'enchère : ${c.date_fin_encheres}</p>
-      				
+					 <p>Prix : ${c.prix_initial} points</p>				
+       				 <p>Fin de l'enchère : ${c.date_fin_encheres}</p>      				
 					 <p>Vendeur : ${c.utilisateur.pseudo}</p>
 				</div>
 				<br>
