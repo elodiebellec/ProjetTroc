@@ -8,11 +8,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.eclipse.jdt.internal.compiler.ast.CastExpression;
 
 import fr.eni.projettroc.bll.ArticleVenduManager;
 import fr.eni.projettroc.bll.CategorieManager;
 import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Categorie;
+import fr.eni.projettroc.exception.BusinessException;
 
 /**
  * Servlet implementation class accueil
@@ -20,7 +24,9 @@ import fr.eni.projettroc.bo.Categorie;
 @WebServlet("/Accueil")
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	public List<Categorie> listeCategories; 
+	List<ArticleVendu> listeArticleVendu;
+	List<ArticleVendu> listeArticleFiltree;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -33,25 +39,24 @@ public class AccueilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-			List<Categorie> listeCategories;
-			List<ArticleVendu> listeArticleVendu;
-			ArticleVendu articleAffiche;
-			try {
-				//Afficher la liste des catégorie
-				listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();				
-				request.setAttribute("listeCategories", listeCategories);
-				//Récupérer une liste des articles en vente
-				listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();				
-				request.setAttribute("listeArticleVendu", listeArticleVendu);
-				//Afficher les articles vendus
-				
-			} catch (fr.eni.projettroc.exception.BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+		request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
 		
+		try {
+			
+			//Afficher la liste des catégorie
+			listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();
+			session.setAttribute("listeCategories", listeCategories);
+			//Afficher articles vendus
+			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			session.setAttribute("listeArticleVendu", listeArticleVendu);
+			//Récupérer une liste des articles par catégorie				
+			//listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(1);				
+		
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		
 		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 	
@@ -62,8 +67,25 @@ public class AccueilServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+		//Récupérer la catégorie sélectionnée
+		String categorieSelect = request.getParameter("categorieSelect");
+		int numCategorie = Integer.parseInt(categorieSelect);
+		System.out.println(numCategorie);
+		//Afficher les articles vendus par catégorie
+		try {
+			listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(numCategorie);
+			session.setAttribute("listeArticleVendu", listeArticleFiltree);	
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+			
+		
+		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+		
+	
 	}
 
 }
