@@ -8,17 +8,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.projettroc.bll.UtilisateurManager;
+import fr.eni.projettroc.bo.Utilisateur;
+import fr.eni.projettroc.dao.UtilisateurDAO;
+import fr.eni.projettroc.exception.BusinessException;
+
 /**
- * Servlet implementation class MonCompte
+ * Servlet implementation class SuppressionUtilisateurServlet
  */
-@WebServlet("/MonCompte")
-public class MonCompteServlet extends HttpServlet {
+@WebServlet("/SuppressionUtilisateur")
+public class SuppressionUtilisateurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MonCompteServlet() {
+    public SuppressionUtilisateurServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,8 +33,19 @@ public class MonCompteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, response);
-	    
+		HttpSession session = request.getSession();
+		int no_utilisateur = (int) session.getAttribute("idUser");
+	
+		try {
+			UtilisateurManager.getUtilisateursManager().supprimerUtilisateur(no_utilisateur);
+			session.invalidate();
+			
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 	}
 
 	/**
@@ -37,8 +53,7 @@ public class MonCompteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 	}
 
-	}
-
-
+}

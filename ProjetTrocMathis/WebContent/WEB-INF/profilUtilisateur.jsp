@@ -72,14 +72,19 @@
             <td>${user.code_postal}</td>
              <td>${user.ville}</td>
             <td>${user.credit}</td>
+            
           </tr>
         </tbody>
       </table>
     </div>
+      <form action="./ModificationUtilisateur" method="get">
+		<input type="submit" value="Modifier" class="btn btn-primary">
+</form>
+            
   </body>
   <footer>
   </footer>
-  
+
   
   <script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
