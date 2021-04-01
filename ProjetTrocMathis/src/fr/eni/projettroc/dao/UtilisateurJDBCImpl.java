@@ -143,7 +143,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 		//Connexion à la base de données et try pour que la connexion se ferme automatiquement.
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			//requete
-			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
+			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_No);
 			// on sélectionne l'utilisateur dont le numéro est renseigné dans la requête
 			requete.setInt(1, no_utilisateur);
 			ResultSet rs = requete.executeQuery();

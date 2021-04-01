@@ -53,9 +53,10 @@ public class InscriptionServlet extends HttpServlet {
 				String code_postal = request.getParameter("codepostal");
 				String ville = request.getParameter("ville");
 				String mot_de_passe = request.getParameter("motdepasse");
+				String mot_de_passe_confirmation = request.getParameter("motdepasseconfirmation");
 				int credit =100;
 	try {
-		Utilisateur u = UtilisateurManager.getUtilisateursManager().validerAjoutPersonne( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,credit);
+		Utilisateur u = UtilisateurManager.getUtilisateursManager().validerAjoutPersonne( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,mot_de_passe_confirmation, credit);
 		 int userId = u.getNo_utilisateur();
 		 System.out.println(userId);
 		HttpSession session = request.getSession();
