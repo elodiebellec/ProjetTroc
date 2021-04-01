@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.projettroc.bll.ArticleVenduManager;
 import fr.eni.projettroc.bll.CategorieManager;
 import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Categorie;
@@ -41,8 +42,8 @@ public class AccueilServlet extends HttpServlet {
 				listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();				
 				request.setAttribute("listeCategories", listeCategories);
 				//Récupérer une liste des articles en vente
-				//listeArticleVendu = ArticleVenduManager.getArticleManager().tousLesArticles();				
-				//request.setAttribute("listeCategories", listeCategories);
+				listeArticleVendu = ArticleVenduManager.getArticleVenduManager().tousLesArticles();				
+				request.setAttribute("listeArticleVendu", listeArticleVendu);
 				//Afficher les articles vendus
 				
 			} catch (fr.eni.projettroc.exception.BusinessException e) {

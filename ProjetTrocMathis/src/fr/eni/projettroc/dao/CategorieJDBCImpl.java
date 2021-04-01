@@ -4,6 +4,7 @@ package fr.eni.projettroc.dao;
 
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,7 @@ import fr.eni.projettroc.exception.BusinessException;
 public class CategorieJDBCImpl implements CategorieDAO{
 	
 	private static final String SELECT_ALL = "SELECT `no_categorie`,`libelle` FROM `categories`";
+	private static final String SELECT_BY_NO = "SELECT `no_categorie`,`libelle` FROM `categories` WHERE `no_categorie`=?";
 
 	private Categorie categorieBuilder(ResultSet rs) throws SQLException {
 		Categorie categorie = new Categorie();
@@ -35,7 +37,6 @@ public class CategorieJDBCImpl implements CategorieDAO{
 			Statement stmt = cnx.createStatement();
 			ResultSet rs = stmt.executeQuery(SELECT_ALL);
 
-			// Parcours la liste des enregistrements, et rassembler par id du repas
 		
 			while (rs.next()) {
 				listeCategorie.add(categorieBuilder(rs));
@@ -52,9 +53,31 @@ public class CategorieJDBCImpl implements CategorieDAO{
 		return listeCategorie;
 	}
 	
-	public Categorie selectByNoCategorie(int int1) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+
+	
+	@Override
+	public Categorie selectByNoCategorie (int no_categorie) throws BusinessException {
+		Categorie categorie = null;
+		//Connexion à la base de données et try pour que la connexion se ferme automatiquement.
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			//requete
+			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
+			// on sélectionne l'utilisateur dont le numéro est renseigné dans la requête
+			requete.setInt(1, no_categorie);
+			ResultSet rs = requete.executeQuery();
+
+			if (rs.next()) {
+				//appelle de la fonction utilisateurBuilder qui permet de récupérer toutes les colonnes de la table utilisateur
+				categorie = categorieBuilder(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur selectByNoCategorie");
+			throw be;
+		}
+		//Je retourne l'utilisateur sélectionné
+		return categorie;
 	}
 	
 	

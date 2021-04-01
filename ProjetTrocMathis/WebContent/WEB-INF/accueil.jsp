@@ -59,12 +59,20 @@
 			
 		</form>
 			<br>
+		
 			
-			<div class="card h-100">
-				<c:forEach var="c" items="${listeCategories}">
-					 <option>${c.libelle}</option>
-				</c:forEach>
-			</div>
+			<c:forEach var="c" items="${listeArticleVendu}">
+				<div class="card h-100">
+					 <p>${c.nom_article}</p>
+					 <p>Prix : ${c.prix_initial} points</p>
+				
+       				 <p>Fin de l'enchère : ${c.date_fin_encheres}</p>
+      				
+					 <p>Vendeur : ${c.utilisateur.pseudo}</p>
+				</div>
+				<br>
+			</c:forEach>
+			
 		</div>
 		
 	</div>

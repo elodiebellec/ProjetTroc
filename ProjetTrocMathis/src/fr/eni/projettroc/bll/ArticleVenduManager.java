@@ -5,6 +5,7 @@ package fr.eni.projettroc.bll;
 import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
+import fr.eni.projettroc.bo.Categorie;
 import fr.eni.projettroc.dao.ArticleVenduDAO;
 import fr.eni.projettroc.dao.DAOFactory;
 
@@ -33,18 +34,12 @@ public class ArticleVenduManager {
 	   articleVenduDAO.insert(articleVendu);
    }
    
+   public List<ArticleVendu> tousLesArticles() throws BusinessException{
+		
+		return articleVenduDAO.getListArticle();
+	}	   
    
-   
-   
-   
-   
-   
-   
-   /*public List<Categorie> toutesLesCategorie() throws BusinessException{
-		//Aucune vérification
-		//Seulement l'appel à la couche DAL
-		return categorieDAO.getListCategories();
-	}	*/
+  
    
   
    
