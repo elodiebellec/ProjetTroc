@@ -50,6 +50,7 @@
 					
 						<input class="form-control" id="article" type="text" required
 							name="article">
+							
 					</div>
 				</div>
 			</div>
@@ -59,7 +60,7 @@
 					<label class="col-md-2" for="description">Description : </label>
 					<div class="col-md-8">
 						<textarea class="form-control" id="description" required
-							name="description" rows="5" cols="30"></textarea>
+							name="description" rows="5" cols="30" value=$(articleVendu.description)></textarea>
 					</div>
 				</div>
 			</div>
@@ -170,8 +171,8 @@
 
 
 				<div class="container">
-					<button type="button" class="col-md-2"
-						class="btn btn-outline-secondary mb-2">Enregistrer</button>
+					<input type="submit" class="col-md-2"
+						class="btn btn-outline-secondary mb-2" value="Enregistrer">
 					<button type="button" class="col-md-2"
 						class="btn btn-outline-secondary mb-2">Annuler</button>
 				</div>
