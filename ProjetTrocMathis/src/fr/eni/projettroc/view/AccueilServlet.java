@@ -24,75 +24,90 @@ import fr.eni.projettroc.exception.BusinessException;
 @WebServlet("/Accueil")
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public List<Categorie> listeCategories; 
+	public List<Categorie> listeCategories;
 	public List<ArticleVendu> listeArticleVendu;
 	public List<ArticleVendu> listeArticleFiltree;
 	public List<ArticleVendu> listeArticleParNom;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AccueilServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
-		
-		try {
-			
-			//Afficher la liste des catégorie
-			listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();
-			session.setAttribute("listeCategories", listeCategories);
-			//Afficher articles vendus
-			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
-			session.setAttribute("listeArticleVendu", listeArticleVendu);
-			//Récupérer une liste des articles par catégorie				
-			//listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(1);				
-		
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		
-		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-	
-	
+	public AccueilServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
-		//Récupérer le numéro de catégorie sélectionnée
+		HttpSession session = request.getSession();
+
+		try {
+
+			// Afficher la liste des catégorie
+			listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();
+			session.setAttribute("listeCategories", listeCategories);
+			// Afficher articles vendus
+			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			session.setAttribute("listeArticleVendu", listeArticleVendu);
+			// Récupérer une liste des articles par catégorie
+			// listeArticleVendu =
+			// ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(1);
+
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		// Récupérer le numéro de catégorie sélectionnée
 		String categorieSelect = request.getParameter("categorieSelect");
 		int numCategorie = Integer.parseInt(categorieSelect);
-		System.out.println(numCategorie);
-		//Récupérer le nom de l'article filtré
+		System.out.println(categorieSelect);
+
+		// Récupérer le nom de l'article filtré
 		String nomSelect = request.getParameter("nomSelect");
+				
 		System.out.println(nomSelect);
-		//Afficher les articles vendus par catégorie
+		// Afficher les articles vendus par catégorie
 		try {
-			listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(numCategorie);
-			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleFiltree, nomSelect);
+			// Si l'utilisateur sélectionne toutes les catégories, pas de filtre par
+			// catégorie
+			// On récupère le libellé de la catégorie avec le numéro de catégorie du
+			// formulaire
+			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {
+				listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			} else {
+				listeArticleFiltree = ArticleVenduManager.getArticleVenduManager()
+						.listeArticlesParCategorie(numCategorie);
+			}
+			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleFiltree,
+					nomSelect);
 			session.setAttribute("listeArticleVendu", listeArticleParNom);
 			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
 			session.setAttribute("listeCategories", listeCategories);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-			
-		
+		}
+
 		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-		
-	
+
 	}
 
 }
