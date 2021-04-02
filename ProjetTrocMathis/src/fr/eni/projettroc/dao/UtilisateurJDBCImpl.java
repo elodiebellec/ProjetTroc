@@ -27,7 +27,9 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
 
 	private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
+
 	private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
+
     private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
     private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
 
@@ -143,7 +145,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO{
 		//Connexion à la base de données et try pour que la connexion se ferme automatiquement.
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			//requete
-			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_No);
+			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
 			// on sélectionne l'utilisateur dont le numéro est renseigné dans la requête
 			requete.setInt(1, no_utilisateur);
 			ResultSet rs = requete.executeQuery();
