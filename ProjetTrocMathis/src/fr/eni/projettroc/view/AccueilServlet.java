@@ -25,8 +25,9 @@ import fr.eni.projettroc.exception.BusinessException;
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public List<Categorie> listeCategories; 
-	List<ArticleVendu> listeArticleVendu;
-	List<ArticleVendu> listeArticleFiltree;
+	public List<ArticleVendu> listeArticleVendu;
+	public List<ArticleVendu> listeArticleFiltree;
+	public List<ArticleVendu> listeArticleParNom;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -69,14 +70,20 @@ public class AccueilServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-		//Récupérer la catégorie sélectionnée
+		//Récupérer le numéro de catégorie sélectionnée
 		String categorieSelect = request.getParameter("categorieSelect");
 		int numCategorie = Integer.parseInt(categorieSelect);
 		System.out.println(numCategorie);
+		//Récupérer le nom de l'article filtré
+		String nomSelect = request.getParameter("nomSelect");
+		System.out.println(nomSelect);
 		//Afficher les articles vendus par catégorie
 		try {
 			listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(numCategorie);
-			session.setAttribute("listeArticleVendu", listeArticleFiltree);	
+			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleFiltree, nomSelect);
+			session.setAttribute("listeArticleVendu", listeArticleParNom);
+			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			session.setAttribute("listeCategories", listeCategories);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
