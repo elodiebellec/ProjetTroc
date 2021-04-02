@@ -23,13 +23,8 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	private static final String CONNECTION = "select no_utilisateur,pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
-
-	private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
-
-
-
-	private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
-
+    private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
+    private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
     private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
     private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
     private static final String SELECT_PERSONNE = "SELECT pseudo FROM utilisateurs";
@@ -145,7 +140,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 		// automatiquement.
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			// requete
-			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_No);
+			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
 			// on sélectionne l'utilisateur dont le numéro est renseigné dans la requête
 			requete.setInt(1, no_utilisateur);
 			ResultSet rs = requete.executeQuery();
@@ -204,41 +199,10 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 			}
 
 
-	public void update(Utilisateur utilisateur) throws BusinessException {
-
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement requete = cnx.prepareStatement(UPDATE_UTILISATEUR);
-			requete.setString(1, utilisateur.getPseudo());
-			requete.setString(2, utilisateur.getNom());
-			requete.setString(3, utilisateur.getPrenom());
-			requete.setString(4, utilisateur.getEmail());
-			requete.setString(5, utilisateur.getTelephone());
-			requete.setString(6, utilisateur.getRue());
-			requete.setString(7, utilisateur.getCode_postal());
-			requete.setString(8, utilisateur.getVille());
-			requete.setString(9, utilisateur.getMot_de_passe());
-			requete.setInt(10, utilisateur.getNo_utilisateur());
-
-			requete.executeUpdate();
-		} catch (Exception e) {
-
-			throw new BusinessException();
-		}
-	}
-
-	public void delete(int no_utilisateur) throws BusinessException {
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = cnx.prepareStatement(DELECT_UTILISATEUR);
-			stmt.setInt(1, no_utilisateur);
-			stmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-			BusinessException be = new BusinessException();
-			be.addError(Errors.SUPPRESSION_ARTICLE_ERREUR);
-			throw be;
-		}
 
 	}
+
+
 
 	public List<Utilisateur> getListeUtilisateur() throws BusinessException {
 		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>();
