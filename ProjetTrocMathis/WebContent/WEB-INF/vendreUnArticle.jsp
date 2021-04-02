@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page errorPage="error.jsp" isErrorPage="false"%>
+<%@ page session="true" %>
 
 
 <!DOCTYPE html>
@@ -89,7 +90,7 @@
 						<select class="form-select" aria-label="Default select example"
 							id="categorie" required name="categorie">
 							<c:forEach var="c" items="${listeCategories}">
-								<option>${c.libelle}</option>
+								<option value="${c.no_categorie}">${c.libelle}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -153,7 +154,7 @@
 							<label class="col-md-2" for="rue">Rue : </label>
 							<div class="col-md-8">
 								<input class="form-control" id="rue" type="text" required
-									name="rue">
+									name="rue" value="${sessionScope.user.rue}">
 							</div>
 						</div>
 					</div>
@@ -163,7 +164,7 @@
 							<label class="col-md-2" for="codePostal">Code Postal : </label>
 							<div class="col-md-8">
 								<input class="form-control" id="codePostal" type="text" required
-									name="codePostal">
+									name="codePostal" value="${sessionScope.user.code_postal}" >
 							</div>
 						</div>
 					</div>
@@ -173,7 +174,7 @@
 							<label class="col-md-2" for="ville">Ville : </label>
 							<div class="col-md-8">
 								<input class="form-control" id="ville" type="text" required
-									name="ville">
+									name="ville" value="${sessionScope.user.ville}" >
 							</div>
 						</div>
 					</div>

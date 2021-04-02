@@ -35,7 +35,7 @@ public class CategorieManager {
 		return categorieDAO.getListCategories();
 	}	
    
-  
+    
    
 
 
