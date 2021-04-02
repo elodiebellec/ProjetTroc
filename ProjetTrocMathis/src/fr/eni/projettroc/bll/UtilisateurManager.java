@@ -39,7 +39,7 @@ public class UtilisateurManager {
 	Utilisateur u = null;
 	boolean isValidPseudo = validatePseudo(pseudo, be);
 	boolean isValidPwd = validatePassword(mot_de_passe, be);
-	boolean isValidIdentite = validateIdentit�(nom, prenom, email, rue, ville, code_postal, telephone, be);
+	boolean isValidIdentite = validateIdentite(nom, prenom, email, rue, ville, code_postal, telephone, be);
 
 	if(isValidPseudo && isValidPwd && isValidIdentite) {
 		u =new Utilisateur();

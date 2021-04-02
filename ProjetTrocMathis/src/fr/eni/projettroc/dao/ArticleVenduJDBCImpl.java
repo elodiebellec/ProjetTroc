@@ -97,12 +97,14 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	
 	
 	
-	public List<ArticleVendu> getListByCategorie (int no_categorie) throws BusinessException {
+	@Override
+	public List<ArticleVendu> getListByCategorie(int no_categorie) throws BusinessException {
 		List<ArticleVendu> listeArticle = new ArrayList<ArticleVendu>();
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			Statement stmt = cnx.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_ALL_BY_CATEGORIE);
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL_BY_CATEGORIE);
+			stmt.setInt(1, no_categorie);
+			ResultSet rs = stmt.executeQuery();
 		
 			while (rs.next()) {
 				listeArticle.add(articleBuilder(rs));
@@ -117,6 +119,7 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 
 		return listeArticle;
 	}
+		
 	
 	@Override
 	public List<ArticleVendu> getListArticle() throws BusinessException {
