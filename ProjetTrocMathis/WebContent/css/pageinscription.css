@@ -43,3 +43,11 @@ header h1{
 	width: 5em;
 	padding-top : 0.6em;
 }
+
+.boutonsubmit{
+	margin: 0 auto;
+	width: 30em;
+}
+.boutonsubmit button{
+	margin-right : 10em;
+}

@@ -115,16 +115,18 @@
    </div>
    </div>
    </div>
-  <button type="submit" class="btn btn-primary">Créer</button> 
+   <div class="boutonsubmit">
+  <button type="submit" class="btn btn-primary btn-lg ">Créer</button> 
+  
+  </div>
   </form>
  
+ <a href="${pageContext.servletContext.contextPath}/Accueil"><input type="button" class="btn btn-primary btn-lg " value="Annuler"></a>
  
-  <form action="./Accueil" method="get">
- <span><button type="submit" class="btn btn-primary">Annuler</button></span>
-  
-   </form>
+ 
    
    </header>
+  
    
 		
 	
