@@ -5,13 +5,15 @@
 <%@ page errorPage="error.jsp" isErrorPage="false" %>
 
 
+
 <!DOCTYPE html>
 <html>
-
+<head>
 <%@ include file="template/head.html" %>
+</head>
 
 <body>
->
+
 						
 <!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -42,9 +44,13 @@
 			
 				<h2>Filtres :</h2>
 				<br>
-				
+			
+
 		<form action="./Accueil" method="post">
-			 <input type="text" name="nomSelect" id="nomSelect" value= "recherche..." />			
+			<div class="form-group fg--search" class="form">
+				<button type="submit" value="Rechercher" class="search-button"><img src="image/search.png"></button>			
+				<input type="search" placeholder="Le nom de l'article contient"  class="search-field" name="nomSelect" id="nomSelect" value= "" />
+			</div>		
 			<br> <br>				
 			<select name="categorieSelect" class="form-select" aria-label="Default select example">			 
 			 	 <c:forEach var="c" items="${listeCategories}">
@@ -54,12 +60,13 @@
 			<br> <br>		
 			 <input type="submit" value="Rechercher" />			
 		</form>
-			<br>			
+			<br>
+			<c:set var="now" value ="<%=new java.util.Date()%>" />	
 			<c:forEach var="c" items="${listeArticleVendu}">
-				<div class="card h-100">
+				<div class="card h-100">				
 					 <p>${c.nom_article}</p>
 					 <p>Prix : ${c.prix_initial} points</p>				
-       				 <p>Fin de l'enchère : ${c.date_fin_encheres}</p>      				
+       				 <p>Fin de l'enchère : ${c.date_fin_encheres}</p>	       				
 					 <p>Vendeur : ${c.utilisateur.pseudo}</p>
 				</div>
 				<br>
