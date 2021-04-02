@@ -1,4 +1,5 @@
 @charset "ISO-8859-1";
+@charset "ISO-8859-1";
 
 body {
   padding-top: 54px;
@@ -40,7 +41,7 @@ body {
 
 header h1{
 	margin: 0 auto;
-	width: 5em;
+	width: 10em;
 	padding-top : 0.6em;
 }
 
@@ -49,13 +50,13 @@ header h1{
 	width: 60em;
 }
 .boutonsubmit button{
-	margin-left : 8em;
-	width : 10em;
+	margin-left : 4em;
+	width : 12em;
 	font-size : 1em;
 }
 .boutonsubmit input{
     margin-left : 25em;
-	width : 10em;
+	width : 12em;
 	
 
 }
