@@ -20,7 +20,7 @@ import fr.eni.projettroc.exception.Errors;
 
 public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	
-	private static final String INSERT = "INSERT INTO `articles_vendus`(`no_article`, `nom_article`, `description`, `date_debut_encheres`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie`) VALUES (?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT = "INSERT INTO `articles_vendus`(`nom_article`, `description`, `date_debut_encheres`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie`) VALUES (?,?,?,?,?,?,?,?)";
 	private static final String DELETE_BY_NO = "DELETE FROM `articles_vendus` WHERE `no_article`=?";
 	private static final String UPDATE = "UPDATE `articles_vendus` SET `no_article`=?,`nom_article`=?,`description`=?,`date_debut_encheres`=?,`date_fin_encheres`=?,`prix_initial`=?,`prix_vente`=?,`no_utilisateur`=?,`no_categorie`=? WHERE `no_article`=?";
 	private static final String SELECT_ALL = "SELECT `no_article`,`nom_article`,`description`,`date_debut_encheres`,`date_fin_encheres`,`prix_initial`,`prix_vente`,`no_utilisateur`,`no_categorie` FROM `articles_vendus`";
@@ -97,12 +97,14 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	
 	
 	
-	public List<ArticleVendu> getListByCategorie (int no_categorie) throws BusinessException {
+	@Override
+	public List<ArticleVendu> getListByCategorie(int no_categorie) throws BusinessException {
 		List<ArticleVendu> listeArticle = new ArrayList<ArticleVendu>();
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			Statement stmt = cnx.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_ALL_BY_CATEGORIE);
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL_BY_CATEGORIE);
+			stmt.setInt(1, no_categorie);
+			ResultSet rs = stmt.executeQuery();
 		
 			while (rs.next()) {
 				listeArticle.add(articleBuilder(rs));
@@ -117,6 +119,7 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 
 		return listeArticle;
 	}
+		
 	
 	@Override
 	public List<ArticleVendu> getListArticle() throws BusinessException {
@@ -158,13 +161,13 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 		articleVendu.setPrix_initial(rs.getInt("prix_initial"));
 		articleVendu.setPrix_vente(rs.getInt("prix_vente"));
 		if(rs.getInt("no_utilisateur") != 0) {
-			//L'instance utilisateur récupère les données de utilisateurDAO
+			//L'instance utilisateur rï¿½cupï¿½re les donnï¿½es de utilisateurDAO
 			utilisateur = utilisateurDAO.selectByNoUtilisateur(rs.getInt("no_utilisateur"));
 			articleVendu.setUtilisateur(utilisateur);
 		}
 		
 		if(rs.getInt("no_categorie") != 0) {
-			//L'instance utilisateur récupère les données de utilisateurDAO
+			//L'instance utilisateur rï¿½cupï¿½re les donnï¿½es de utilisateurDAO
 			categorie = categorieDAO.selectByNoCategorie(rs.getInt("no_categorie"));
 			articleVendu.setCategorie(categorie);
 		}

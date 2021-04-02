@@ -25,12 +25,18 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
 
 	private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
-	private static final String SELECT_BY_No = "SELECT no_utilisateur FROM utilissateurs WHERE no_utilisateur=?";
-	private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
-	private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
-	private static final String SELECT_PERSONNE = "SELECT * FROM utilisateurs";
 
-	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception {
+
+
+	private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
+
+    private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
+    private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
+    private static final String SELECT_PERSONNE = "SELECT pseudo FROM utilisateurs";
+	
+    
+    
+    public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setPseudo(rs.getString("pseudo"));
 		utilisateur.setNom(rs.getString("nom"));
@@ -159,20 +165,44 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 
-	private Utilisateur builderUtilisateur(ResultSet rs) throws SQLException {
-		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
-		utilisateur.setPseudo(rs.getString("pseudo"));
-		utilisateur.setNom(rs.getString("nom"));
-		utilisateur.setPrenom(rs.getString("prenom"));
-		utilisateur.setEmail(rs.getString("email"));
-		utilisateur.setTelephone(rs.getString("telephone"));
-		utilisateur.setRue(rs.getString("rue"));
-		utilisateur.setCode_postal(rs.getString("code_Postal"));
-		utilisateur.setVille(rs.getString("ville"));
-		utilisateur.setMot_de_passe(rs.getString("mot_de_passe"));
-		return utilisateur;
-	}
+
+
+
+	
+	
+	 public void update(Utilisateur utilisateur)throws BusinessException{
+	       
+	        try(Connection cnx = ConnectionProvider.getConnection()){
+	            PreparedStatement requete = cnx.prepareStatement(UPDATE_UTILISATEUR);
+	            requete.setString(1, utilisateur.getPseudo());
+				requete.setString(2, utilisateur.getNom());
+				requete.setString(3, utilisateur.getPrenom());
+				requete.setString(4, utilisateur.getEmail());
+				requete.setString(5, utilisateur.getTelephone());
+				requete.setString(6, utilisateur.getRue());
+				requete.setString(7, utilisateur.getCode_postal());
+				requete.setString(8, utilisateur.getVille());
+				requete.setString(9, utilisateur.getMot_de_passe());
+	            requete.setInt(10, utilisateur.getNo_utilisateur());
+
+	            requete.executeUpdate();
+	        }catch (Exception e){
+	  
+	            throw new BusinessException();
+	        }
+	    }
+	    public void delete(int no_utilisateur) throws BusinessException {
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+				PreparedStatement stmt = cnx.prepareStatement(DELECT_UTILISATEUR);
+				stmt.setInt(1, no_utilisateur);
+				stmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+				BusinessException be = new BusinessException();
+				be.addError(Errors.SUPPRESSION_ARTICLE_ERREUR);
+				throw be;
+			}
+
 
 	public void update(Utilisateur utilisateur) throws BusinessException {
 
