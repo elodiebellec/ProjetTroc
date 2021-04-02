@@ -71,7 +71,7 @@
 								<label for="pseudo">Pseudo</label> <input type="text"
 									class="form-control" id="pseudo" name="pseudo"
 									aria-describedby="pseudoHelp" placeholder="Entrer votre pseudo">
-                             </div>
+							</div>
 							<div class="form-group">
 								<label for="password">Ancien Mot De Passe</label> <input
 									type="password" class="form-control" id="ancienmotdepasse"
@@ -99,9 +99,9 @@
 									aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
 							</div>
 							<div class="form-group">
-							  <p>Crédit : ${user.credit}</p>
+								<p>Crédit : ${user.credit}</p>
 							</div>
-							
+
 						</div>
 						<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
 							<div class="form-group">
@@ -131,26 +131,18 @@
 									class="form-control" id="ville" name="ville"
 									placeholder="Entrer votre ville">
 							</div>
-							</div>
-							<div class="boutonsubmit">
-								<button type="submit" class="btn btn-primary">Enregistrer</button>
-								<a href="${pageContext.servletContext.contextPath}/SuppressionUtilisateur"><input
-									type="button" class="btn btn-primary  " value="Supprimer mon compte"></a>
-
-					
-
+						</div>
+						<div class="boutonsubmit">
+							<button type="submit" class="btn btn-primary">Enregistrer</button>
+							<a
+								href="${pageContext.servletContext.contextPath}/SuppressionUtilisateur"><input
+								type="button" class="btn btn-primary  "
+								value="Supprimer mon compte"></a>
 						</div>
 					</div>
 				</div>
-				</div>
-		
-			
+			</div>
 		</form>
-
 	</header>
-
-
-
-
 </body>
 </html>
