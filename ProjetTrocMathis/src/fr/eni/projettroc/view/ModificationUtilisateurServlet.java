@@ -44,6 +44,7 @@ public class ModificationUtilisateurServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		int no_utilisateur = (int) session.getAttribute("idUser");
+		String ancien_mot_de_passe = (String) session.getAttribute("idMdp");
 		System.out.println(no_utilisateur);
 	    String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
@@ -54,11 +55,12 @@ public class ModificationUtilisateurServlet extends HttpServlet {
 		String code_postal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
 		String mot_de_passe = request.getParameter("motdepasse");
+		String saisieancienmotdepasse = request.getParameter("ancienmotdepasse");
 		
 	    
 	
 	    try {
-	    	Utilisateur u = UtilisateurManager.getUtilisateursManager().modifierUnUtilisateur( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,no_utilisateur);
+	    	Utilisateur u = UtilisateurManager.getUtilisateursManager().modifierUnUtilisateur( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,ancien_mot_de_passe,no_utilisateur,saisieancienmotdepasse);
 	    	session.setAttribute("user",u);
 	    	request.getRequestDispatcher("/WEB-INF/accueilUtilisateur.jsp").forward(request, response);
 	    } catch (BusinessException e) {

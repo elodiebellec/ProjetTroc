@@ -58,8 +58,10 @@ public class InscriptionServlet extends HttpServlet {
 	try {
 		Utilisateur u = UtilisateurManager.getUtilisateursManager().validerAjoutPersonne( pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe,mot_de_passe_confirmation, credit);
 		 int userId = u.getNo_utilisateur();
+		 String mdpId = mot_de_passe;
 		 System.out.println(userId);
 		HttpSession session = request.getSession();
+		    session.setAttribute("idMdp", mdpId);
 		   session.setAttribute("idUser", userId);
 		   session.setAttribute("user",u);
 		request.getRequestDispatcher("/WEB-INF/accueilUtilisateur.jsp").forward(request, response);

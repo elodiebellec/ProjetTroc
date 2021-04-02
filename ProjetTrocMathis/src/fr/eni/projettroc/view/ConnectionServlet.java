@@ -50,9 +50,11 @@ public class ConnectionServlet extends HttpServlet {
 		try {
 			Utilisateur u = UtilisateurManager.getUtilisateursManager().validerLaConnection(pseudo, mot_de_passe , email);
 	        int  userId =  u.getNo_utilisateur();
+	        String mdpId = mot_de_passe;
 			//Transmettre les informations pour la page de welcome
 			HttpSession session = request.getSession();
-			 session.setAttribute("idUser", userId);
+			session.setAttribute("idMdp", mdpId);
+			session.setAttribute("idUser", userId);
 			session.setAttribute("iduser2", no_user );
 			session.setAttribute("user", u);
 			request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, resp);

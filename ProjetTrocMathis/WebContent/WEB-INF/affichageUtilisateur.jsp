@@ -42,38 +42,63 @@
 	
 	
 	
-    <div class="container">
-      <h1>Profil de Elodie</h1>
-      <table class="table table-dark">
-        <thead>
-          <tr>
-            <th>Pseudo</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Email</th>
-            <th>Telephone</th>
-            <th>Rue</th>
-            <th>Code Postal</th>
-            <th>Ville</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>${users.pseudo}</td>
-            <td>${users.nom}</td>
-            <td>${users.prenom}</td>
-            <td>${users.email}</td>
-            <td>${users.telephone}</td>
-            <td>${users.rue}</td>
-            <td>${users.code_postal}</td>
-             <td>${users.ville}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </body>
-  <footer>
-  </footer>
+ <div class="card-body" >
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-4 col-md-6 col-sm-6 portfolio-item">
+			
+
+					<h1 class="h1personne">Profil de ${users.pseudo}</h1>
+
+
+					<table class="table table-hover">
+					
+						<tr>
+							<th scope="row"></th>
+							<td>Nom :</td>
+							<td>${users.nom}</td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td>Prenom :</td>
+							<td>${users.prenom}</td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td>Email :</td>
+							<td>${users.email}</td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td>Telephone :</td>
+							<td>${users.telephone}</td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td>Rue :</td>
+							<td>${users.rue}</td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td>Code Postal :</td>
+							<td>${users.code_postal}</td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td>Ville :</td>
+							<td>${users.ville}</td>
+						</tr>
+						
+					</table>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
   
   
   <script src="vendor/jquery/jquery.min.js"></script>
