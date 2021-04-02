@@ -1,0 +1,61 @@
+@charset "ISO-8859-1";
+
+body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+.pagination {
+  margin-bottom: 30px;
+}
+
+.footer-demodule
+{
+	margin-top: 15px;
+}
+.demo
+{
+	margin-top: 15px;
+}
+
+.support
+{
+	float: right;
+}
+.obligatoire
+{
+	color:blue;
+	font-weight: bolder;
+	font-size: larger;
+}
+
+header h1{
+	margin: 0 auto;
+	width: 5em;
+	padding-top : 0.6em;
+}
+
+.boutonsubmit{
+	margin: 0 auto;
+	width: 60em;
+}
+.boutonsubmit button{
+	margin-left : 8em;
+	width : 10em;
+	font-size : 1em;
+}
+.boutonsubmit input{
+    margin-left : 25em;
+	width : 10em;
+	
+
+}

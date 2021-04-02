@@ -33,6 +33,10 @@ public class CategorieManager {
 		//Aucune vérification
 		//Seulement l'appel à la couche DAL
 		return categorieDAO.getListCategories();
+	}
+
+   public Categorie categorieParNumero(int no_categorie)throws BusinessException {	
+	   return categorieDAO.selectByNoCategorie(no_categorie);
 	}	
    
     

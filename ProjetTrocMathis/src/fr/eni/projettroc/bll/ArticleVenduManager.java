@@ -53,12 +53,16 @@ public class ArticleVenduManager {
 			throws BusinessException {
 		List<ArticleVendu> listeParNom = new ArrayList<ArticleVendu>();
 		for (ArticleVendu articleVendu : listeArticle) {
-			if (nom.equals(articleVendu.getNom_article())) {
+
+			if(articleVendu.getNom_article().toUpperCase().contains(nom.toUpperCase())) {
+
 				listeParNom.add(articleVendu);
 			}
 		}
 		return listeParNom;
 	}
+
+	
 
 	private boolean validerNomArticle(String nom_article, BusinessException be) {
 		nom_article = nom_article.trim();

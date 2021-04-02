@@ -3,6 +3,12 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
  */
+* {
+	/* Reset browser's padding and margin */
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
 body {
   padding-top: 54px;
@@ -40,4 +46,51 @@ body {
 	color:blue;
 	font-weight: bolder;
 	font-size: larger;
+}
+
+
+.boutonmodif{
+	font-size : 1em;
+	margin-left : 9em;
+	
+}
+
+.h1profil{
+	margin-left:4em;
+	font-size: 1.8em;
+	margin-bottom: 1em;
+}
+
+.h1personne{
+	margin-left:2.5em;
+	font-size: 1.8em;
+	margin-bottom: 1em;
+}
+
+/*------------barre de recherche avec loupe ----------------*/
+.form {
+	display: flex;
+	flex-direction: row;
+}
+
+.search-field {
+	width: 100%;
+	padding: 10px 35px 10px 15px;
+	border:1px solid;
+	border-radius: 50px;
+	outline: none;
+}
+
+.search-button {
+	background: transparent;
+	border: none;
+	outline: none;
+	margin-left: -33px;
+}
+
+.search-button img {
+	width: 20px;
+	height: 20px;
+	object-fit: cover;
+
 }
