@@ -1,6 +1,7 @@
 package fr.eni.projettroc.bo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class ArticleVendu {
@@ -69,6 +70,7 @@ public class ArticleVendu {
 	}
 
 	public LocalDate getDate_fin_encheres() {
+	
 		return date_fin_encheres;
 	}
 
