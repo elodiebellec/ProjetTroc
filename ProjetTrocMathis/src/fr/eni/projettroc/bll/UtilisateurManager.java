@@ -2,6 +2,8 @@ package fr.eni.projettroc.bll;
 
 
 
+import java.util.List;
+
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.UtilisateurDAO;
@@ -78,14 +80,15 @@ public class UtilisateurManager {
  }
 
        public Utilisateur validerAjoutPersonne( String pseudo,String nom,String prenom,String email,String telephone,
-		   String rue,String code_postal,String ville,String mot_de_passe,int credit) throws BusinessException{
+		   String rue,String code_postal,String ville,String mot_de_passe,String mot_de_passe_confirmation ,int credit) throws BusinessException{
 	   BusinessException be = new BusinessException();
 	   Utilisateur u = null;
+	   boolean isPseudoInexistant = pseudoIdentique(pseudo, be);
 	   boolean isValidPseudo = validatePseudo(pseudo, be);
 	   boolean isValidPwd = validatePassword(mot_de_passe, be);
 	   boolean isValidIdentite = validateIdentite(nom, prenom, email, rue, ville, code_postal, telephone, be);
-	   
-	   if(isValidPseudo && isValidPwd && isValidIdentite) {
+	   boolean isValidSecondPassword = validateSecondPassword(mot_de_passe, mot_de_passe_confirmation, be);
+	   if(isValidPseudo && isValidPwd && isValidIdentite && isValidSecondPassword && isPseudoInexistant) {
 	   u = new Utilisateur();
 	   u.setPseudo(pseudo);
 	   u.setNom(nom);
@@ -109,10 +112,34 @@ public class UtilisateurManager {
     	 return utilisateurDAO.selectByPseudo(pseudo);
      }
      
+   
+     
+     
      public void supprimerUtilisateur(int no_utilsateur)throws BusinessException {
  		utilisateurDAO.delete(no_utilsateur);
  		
  	}
+    
+     
+     
+     private boolean pseudoIdentique(String pseudo, BusinessException be)  {
+     List<Utilisateur> utilisateur = null;
+	try {
+		utilisateur = utilisateurDAO.getListeUtilisateur();
+	} catch (BusinessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+     for(Utilisateur u : utilisateur) {
+    	 if(pseudo.equals(u.getPseudo())) {
+    		 be.addError("Pseudo deja utiliser");
+    		 return false; 
+    	 }
+    }
+    
+    
+     return true; 
+}
    
 
      private boolean validatePseudo(String pseudo, BusinessException be) {
@@ -204,17 +231,28 @@ public class UtilisateurManager {
 		if (!mot_de_passe.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,12}")) {
 			be.addError(
 					"Mot de passe doit contenir entre 6 et 12 caract�res (1 chiffre, 1 majuscule, 1 caract�re sp�cial)");
-
 			return false;
 		}
-
+		
 		return true;
 	}
 
 
+		private boolean validateSecondPassword(String mot_de_passe,String mot_de_passe_confirmation, BusinessException be){	
+			if(!mot_de_passe.equals( mot_de_passe_confirmation)){
+				be.addError(
+						"Les deux mot de passe doivent etre identique");
+				return false;
+			}
 
-
+		return true;
+	}
 }
+
+
+
+
+
 
 
 

@@ -2,6 +2,9 @@ package fr.eni.projettroc.dao;
 
 
 import fr.eni.projettroc.exception.BusinessException;
+
+import java.util.List;
+
 import fr.eni.projettroc.bo.Utilisateur;
 
 public interface UtilisateurDAO {
@@ -18,4 +21,6 @@ public Utilisateur selectByPseudo(String pseudo)throws BusinessException;
 public void update(Utilisateur utilisateur)throws BusinessException;
 
 public void delete(int id) throws BusinessException;
+
+public List<Utilisateur> getListeUtilisateur() throws BusinessException;
 }
