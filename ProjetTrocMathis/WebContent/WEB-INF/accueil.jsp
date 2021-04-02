@@ -65,13 +65,20 @@
 			 <input type="submit" value="Rechercher" />			
 		</form>
 			<br>
-			<c:set var="now" value ="<%=new java.util.Date()%>" />	
 			<c:forEach var="c" items="${listeArticleVendu}">
 				<div class="card h-100">				
 					 <p>${c.nom_article}</p>
 					 <p>Prix : ${c.prix_initial} points</p>				
        				 <p>Fin de l'enchère : ${c.date_fin_encheres}</p>	       				
 					 <p>Vendeur : ${c.utilisateur.pseudo}</p>
+
+				</div>
+				<br>
+			</c:forEach>
+			
+			<c:forEach var="c" items="${listeEncheresEnCOurs}">
+				<div class="card h-100">				
+					 <p>${c.libelle}</p>				 
 
 				</div>
 				<br>

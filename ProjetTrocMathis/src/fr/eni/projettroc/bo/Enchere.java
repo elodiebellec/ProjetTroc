@@ -56,6 +56,10 @@ import java.time.LocalDate;
 		this.article.setNo_article(no_Article);
 	}
 	
+	public void setArticle(ArticleVendu article) {
+		this.article = article;
+	}
+	
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;

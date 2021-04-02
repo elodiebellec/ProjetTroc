@@ -200,6 +200,12 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 			}
 			 
 		}
+
+	@Override
+	public ArticleVendu selectByNoArticle(int noArticle) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	
 	

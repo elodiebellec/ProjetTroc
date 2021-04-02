@@ -8,9 +8,10 @@
 <%@ include file="template/head.html"%>
 
 <body>
-	>
 
-	<!-- Navigation -->
+						
+<!-- Navigation -->
+
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="#">ENI Encheres</a>
@@ -22,9 +23,9 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a class="nav-link"
-						href="./MonCompte">Mon compte </a>
+						href="./Inscription">S'inscrire </a>
 					<li class="nav-item active"><a class="nav-link"
-						href="./Deconnexion">Se deconnecter </a></li>
+						href="./Connexion">Se connecter </a></li>
 				</ul>
 			</div>
 		</div>
@@ -36,22 +37,42 @@
 
 		<!-- Page Heading -->
 		<h1 class="my-2">Liste des enchères</h1>
-		<form action="./AffichageUtilisateur" method="post">
-			<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-				<div class="card h-100">
+		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
 
-					<div class="form-group"></div>
-				</div>
-				<div class="form-group">
-					<label for="password">Pseudo </label> <input class="form-control"
-						id="psd" required name="psd" type="text">
-					<button type="submit" class="btn btn-primary btn-lg btn-block"
-						id="belodie" name="belodie">Rechercher</button>
+			
+				<h2>Filtres :</h2>
+				<br>
+			
 
-				</div>
-
-			</div>
+		<form action="./Accueil" method="post">
+			<div class="form-group fg--search" class="form">
+				<button type="submit" value="Rechercher" class="search-button"><img src="image/search.png"></button>			
+				<input type="search" placeholder="Le nom de l'article contient"  class="search-field" name="nomSelect" id="nomSelect" value= "" />
+			</div>		
+			<br> <br>				
+			<select name="categorieSelect" class="form-select" aria-label="Default select example">			 
+			 	 <c:forEach var="c" items="${listeCategories}">
+					 <option value="${c.no_categorie}">${c.libelle}</option>
+				</c:forEach>
+			</select>
+			<br> <br>		
+			 <input type="submit" value="Rechercher" />			
 		</form>
+			<br>
+			<c:set var="now" value ="<%=new java.util.Date()%>" />	
+			<c:forEach var="c" items="${listeArticleVendu}">
+				<div class="card h-100">				
+					 <p>${c.nom_article}</p>
+					 <p>Prix : ${c.prix_initial} points</p>				
+       				 <p>Fin de l'enchère : ${c.date_fin_encheres}</p>	       				
+					 <p>Vendeur : ${c.utilisateur.pseudo}</p>
+
+				</div>
+				<br>
+			</c:forEach>
+
+		</div>
+
 	</div>
 	<!-- /.container -->
 

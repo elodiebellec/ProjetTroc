@@ -14,8 +14,10 @@ import org.eclipse.jdt.internal.compiler.ast.CastExpression;
 
 import fr.eni.projettroc.bll.ArticleVenduManager;
 import fr.eni.projettroc.bll.CategorieManager;
+import fr.eni.projettroc.bll.EnchereManager;
 import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Categorie;
+import fr.eni.projettroc.bo.Enchere;
 import fr.eni.projettroc.exception.BusinessException;
 
 /**
@@ -25,6 +27,7 @@ import fr.eni.projettroc.exception.BusinessException;
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public List<Categorie> listeCategories;
+	public List<Enchere> listeEncheresEnCOurs;
 	public List<ArticleVendu> listeArticleVendu;
 	public List<ArticleVendu> listeArticleFiltree;
 	public List<ArticleVendu> listeArticleParNom;
@@ -49,8 +52,11 @@ public class AccueilServlet extends HttpServlet {
 		try {
 
 			// Afficher la liste des catégorie
-			listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();
+			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
+			//Afficher la liste des enchères
+			listeEncheresEnCOurs = EnchereManager.getEnchereManager().toutesLesEncheres();
+			session.setAttribute("listeEncheresEnCOurs", listeEncheresEnCOurs);
 			// Afficher articles vendus
 			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
 			session.setAttribute("listeArticleVendu", listeArticleVendu);
