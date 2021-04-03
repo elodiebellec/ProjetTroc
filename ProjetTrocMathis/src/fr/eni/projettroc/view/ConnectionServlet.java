@@ -44,7 +44,7 @@ public class ConnectionServlet extends HttpServlet {
 		String pseudo = request.getParameter("login");
 		String mot_de_passe = request.getParameter("mdp");
 		String email = request.getParameter("login");
-		String no_user = "5";
+		
 		
 		//Appelle a la BLL
 		try {
@@ -55,7 +55,6 @@ public class ConnectionServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("idMdp", mdpId);
 			session.setAttribute("idUser", userId);
-			session.setAttribute("iduser2", no_user );
 			session.setAttribute("user", u);
 			request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, resp);
 		} catch (BusinessException e) {

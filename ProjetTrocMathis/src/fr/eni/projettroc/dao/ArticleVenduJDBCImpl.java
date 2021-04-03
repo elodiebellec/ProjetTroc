@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,6 +153,8 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 		
 		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();
 		Categorie categorie = new Categorie();
+		
+		
 		
 		articleVendu.setNo_article(rs.getInt("no_article"));
 		articleVendu.setNom_article(rs.getString("nom_article"));

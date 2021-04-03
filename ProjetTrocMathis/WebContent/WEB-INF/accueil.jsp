@@ -2,9 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page errorPage="error.jsp" isErrorPage="false"%>
 
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -66,10 +66,11 @@
 		</form>
 			<br>
 			<c:forEach var="c" items="${listeArticleVendu}">
-				<div class="card h-100">				
+				<div class="card h-100">	
+	
 					 <p>${c.nom_article}</p>
 					 <p>Prix : ${c.prix_initial} points</p>				
-       				 <p>Fin de l'enchère : ${c.date_fin_encheres}</p>	       				
+       				 <p>Fin de l'enchère : <tags:localDate date="${c.date_fin_encheres}"/></p>	       				
 					 <p>Vendeur : ${c.utilisateur.pseudo}</p>
 
 				</div>

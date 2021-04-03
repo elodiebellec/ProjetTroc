@@ -38,5 +38,9 @@ public class BusinessException extends Exception {
 	public BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
+	
+	public boolean hasErreurs() {
+		return this.errors.size() > 0;
+	}
 
 }

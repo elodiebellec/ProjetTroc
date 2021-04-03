@@ -3,7 +3,6 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-4-col-portfolio/blob/master/LICENSE)
  */
-
 * {
 	/* Reset browser's padding and margin */
 	margin: 0;
@@ -12,38 +11,39 @@
 }
 
 body {
-	padding-top: 54px;
+  padding-top: 54px;
 }
 
-@media ( min-width : 992px) {
-	body {
-		padding-top: 56px;
-	}
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
 }
 
 .portfolio-item {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .pagination {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
-.footer-demodule {
+.footer-demodule
+{
+	margin-top: 15px;
+}
+.demo
+{
 	margin-top: 15px;
 }
 
-.demo {
-	margin-top: 15px;
-}
-
-.support {
+.support
+{
 	float: right;
 }
-
-.obligatoire {
-	color: blue;
-
+.obligatoire
+{
+	color:blue;
 	font-weight: bolder;
 	font-size: larger;
 }
@@ -92,4 +92,5 @@ body {
 	width: 20px;
 	height: 20px;
 	object-fit: cover;
+
 }
