@@ -65,7 +65,7 @@
 			 <input type="submit" value="Rechercher" />			
 		</form>
 			<br>
-			<c:forEach var="c" items="${listeArticleVendu}">
+			<c:forEach var="c" items="${listeArticleEnCours}">
 				<div class="card h-100">	
 	
 					 <p>${c.nom_article}</p>
@@ -77,13 +77,6 @@
 				<br>
 			</c:forEach>
 			
-			<c:forEach var="c" items="${listeEncheresEnCOurs}">
-				<div class="card h-100">				
-					 <p>${c.libelle}</p>				 
-
-				</div>
-				<br>
-			</c:forEach>
 
 		</div>
 

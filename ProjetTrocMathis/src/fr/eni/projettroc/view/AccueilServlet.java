@@ -27,10 +27,11 @@ import fr.eni.projettroc.exception.BusinessException;
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public List<Categorie> listeCategories;
-	public List<Enchere> listeEncheresEnCOurs;
-	public List<ArticleVendu> listeArticleVendu;
+	public List<ArticleVendu> listeArticleEnCours;
 	public List<ArticleVendu> listeArticleFiltree;
 	public List<ArticleVendu> listeArticleParNom;
+	public List<Enchere> listeEnchereFiltre;
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -54,21 +55,14 @@ public class AccueilServlet extends HttpServlet {
 			// Afficher la liste des catégorie
 			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
-			//Afficher la liste des enchères
-			listeEncheresEnCOurs = EnchereManager.getEnchereManager().toutesLesEncheres();
-			session.setAttribute("listeEncheresEnCOurs", listeEncheresEnCOurs);
-			// Afficher articles vendus
-			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
-			session.setAttribute("listeArticleVendu", listeArticleVendu);
-			// Récupérer une liste des articles par catégorie
-			// listeArticleVendu =
-			// ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(1);
+			//Récupérer la liste des enchères en cours pour afficher l'article correspondant
+			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().touslesArticlesEnchereEnCours();
+			session.setAttribute("listeArticleEnCours", listeArticleEnCours);
 
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 
 	}
@@ -97,15 +91,15 @@ public class AccueilServlet extends HttpServlet {
 			// On récupère le libellé de la catégorie avec le numéro de catégorie du
 			// formulaire
 			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {
-				listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticles();
+				listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().touslesArticlesEnchereEnCours();
 			} else {
-				listeArticleFiltree = ArticleVenduManager.getArticleVenduManager()
-						.listeArticlesParCategorie(numCategorie);
+				listeArticleEnCours = ArticleVenduManager.getArticleVenduManager()
+						.listeArticlesParCategorie(ArticleVenduManager.getArticleVenduManager().touslesArticlesEnchereEnCours(), numCategorie);
 			}
-			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleFiltree,
+			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleEnCours,
 					nomSelect);
-			session.setAttribute("listeArticleVendu", listeArticleParNom);
-			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			session.setAttribute("listeArticleEnCours", listeArticleEnCours);
+			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticles();
 			session.setAttribute("listeCategories", listeCategories);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block

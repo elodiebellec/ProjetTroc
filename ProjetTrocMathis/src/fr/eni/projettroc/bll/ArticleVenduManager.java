@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
+import fr.eni.projettroc.bo.Enchere;
 import fr.eni.projettroc.dao.ArticleVenduDAO;
 import fr.eni.projettroc.dao.DAOFactory;
 
@@ -44,10 +45,31 @@ public class ArticleVenduManager {
 	public void deleteArticle(int no_article) throws BusinessException {
 		articleVenduDAO.deleteArticle(no_article);
 	}
+	
+	/*--------------Méthodes pour les filtres de la page d'accueil --------------------------*/
+	
+	public List<ArticleVendu> listeParDateEnchere(List<ArticleVendu> listeArticle, int no_categorie) throws BusinessException {
+		List<ArticleVendu> listeParCategorie = new ArrayList<ArticleVendu>();
+		for (ArticleVendu articleVendu : listeArticle) {
+			if(no_categorie == articleVendu.getCategorie().getNo_categorie()) {
 
-	public List<ArticleVendu> listeArticlesParCategorie(int no_categorie) throws BusinessException {
-		return articleVenduDAO.getListByCategorie(no_categorie);
+				listeParCategorie.add(articleVendu);
+			}
+		}
+		return listeParCategorie;
 	}
+
+	public List<ArticleVendu> listeArticlesParCategorie(List<ArticleVendu> listeArticle, int no_categorie) throws BusinessException {
+		List<ArticleVendu> listeParCategorie = new ArrayList<ArticleVendu>();
+		for (ArticleVendu articleVendu : listeArticle) {
+			if(no_categorie == articleVendu.getCategorie().getNo_categorie()) {
+
+				listeParCategorie.add(articleVendu);
+			}
+		}
+		return listeParCategorie;
+	}
+	
 
 	public List<ArticleVendu> listeArticlesParNom(List<ArticleVendu> listeArticle, String nom)
 			throws BusinessException {
@@ -61,6 +83,29 @@ public class ArticleVenduManager {
 		}
 		return listeParNom;
 	}
+	
+	
+	/*--------------Fin méthodes pour les filtres de la page d'accueil --------------------------*/
+	
+	
+	public ArticleVendu articleParNumero(int noArticle)  throws BusinessException {
+		return articleVenduDAO.selectByNoArticle(noArticle);
+	}
+	
+	public List<ArticleVendu> touslesArticlesEnchereEnCours() throws BusinessException{
+		   List<ArticleVendu> listeArticles = articleVenduDAO.getListArticle();
+		   List<ArticleVendu> listeArticlesEnchereEnCours = new ArrayList<ArticleVendu>();
+		   LocalDate today = LocalDate.now();
+		   for (ArticleVendu article : listeArticles) {
+			if(today.compareTo(article.getDate_fin_encheres()) != 1) {
+				listeArticlesEnchereEnCours.add(article);
+			}
+		}
+		   
+			return listeArticlesEnchereEnCours;
+		}
+	   
+	  
 
 	
 

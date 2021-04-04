@@ -27,6 +27,7 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	private static final String SELECT_ALL = "SELECT `no_article`,`nom_article`,`description`,`date_debut_encheres`,`date_fin_encheres`,`prix_initial`,`prix_vente`,`no_utilisateur`,`no_categorie` FROM `articles_vendus`";
 	private static final String SELECT_BY_UTILISATEUR = "SELECT `no_article`, `nom_article`, `description`, `date_debut_encheres`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie` FROM `articles_vendus` WHERE `no_utilisateur`=?";
 	private static final String SELECT_ALL_BY_CATEGORIE = "SELECT * FROM `articles_vendus` WHERE `no_categorie`=?";
+	private static final String SELECT_BY_NO = "SELECT * FROM `articles_vendus` WHERE `no_article`=?";
 	
 	@Override
 	public void insert(ArticleVendu article) throws BusinessException {
@@ -204,10 +205,29 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 			 
 		}
 
-	@Override
-	public ArticleVendu selectByNoArticle(int noArticle) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public ArticleVendu selectByNoArticle(int no_article) throws BusinessException {
+
+		ArticleVendu article = null;
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
+		
+			requete.setInt(1, no_article);
+			ResultSet rs = requete.executeQuery();
+
+			if (rs.next()) {
+				article = articleBuilder(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur selectByNoArticle");
+			throw be;
+		}
+
+		return article;
 	}
 		
 	
