@@ -27,10 +27,10 @@ import fr.eni.projettroc.exception.BusinessException;
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public List<Categorie> listeCategories;
+	public List<ArticleVendu> listeArticles;
 	public List<ArticleVendu> listeArticleEnCours;
-	public List<ArticleVendu> listeArticleFiltree;
+	public List<ArticleVendu> listeArticleCategorie;
 	public List<ArticleVendu> listeArticleParNom;
-	public List<Enchere> listeEnchereFiltre;
 
 
 	/**
@@ -55,8 +55,9 @@ public class AccueilServlet extends HttpServlet {
 			// Afficher la liste des catégorie
 			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
-			//Récupérer la liste des enchères en cours pour afficher l'article correspondant
-			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().touslesArticlesEnchereEnCours();
+			//Récupérer la liste des article en cours de vente
+			listeArticles = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticles, "");
 			session.setAttribute("listeArticleEnCours", listeArticleEnCours);
 
 		} catch (BusinessException e) {
@@ -86,21 +87,22 @@ public class AccueilServlet extends HttpServlet {
 		System.out.println(nomSelect);
 		// Afficher les articles vendus par catégorie
 		try {
+			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticles();
 			// Si l'utilisateur sélectionne toutes les catégories, pas de filtre par
 			// catégorie
 			// On récupère le libellé de la catégorie avec le numéro de catégorie du
 			// formulaire
-			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {
-				listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().touslesArticlesEnchereEnCours();
+			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {				
+				listeArticleCategorie = listeArticleEnCours;
 			} else {
-				listeArticleEnCours = ArticleVenduManager.getArticleVenduManager()
-						.listeArticlesParCategorie(ArticleVenduManager.getArticleVenduManager().touslesArticlesEnchereEnCours(), numCategorie);
+				listeArticleCategorie = ArticleVenduManager.getArticleVenduManager()
+						.listeArticlesParCategorie(ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticleEnCours, ""), numCategorie);
 			}
-			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleEnCours,
+			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleCategorie,
 					nomSelect);
-			session.setAttribute("listeArticleEnCours", listeArticleEnCours);
-			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticles();
-			session.setAttribute("listeCategories", listeCategories);
+			session.setAttribute("listeArticleEnCours", listeArticleParNom);
+			
+			session.getAttribute("listeCategories");
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

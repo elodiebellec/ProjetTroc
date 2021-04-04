@@ -48,17 +48,11 @@ public class ArticleVenduManager {
 	
 	/*--------------Méthodes pour les filtres de la page d'accueil --------------------------*/
 	
-	public List<ArticleVendu> listeParDateEnchere(List<ArticleVendu> listeArticle, int no_categorie) throws BusinessException {
-		List<ArticleVendu> listeParCategorie = new ArrayList<ArticleVendu>();
-		for (ArticleVendu articleVendu : listeArticle) {
-			if(no_categorie == articleVendu.getCategorie().getNo_categorie()) {
-
-				listeParCategorie.add(articleVendu);
-			}
-		}
-		return listeParCategorie;
+	public List<ArticleVendu> listeArticlesParNoUtilisateur(int noUtilisateur) throws BusinessException {
+		return articleVenduDAO.getListByNoUtilisateur(noUtilisateur);
 	}
-
+	
+	
 	public List<ArticleVendu> listeArticlesParCategorie(List<ArticleVendu> listeArticle, int no_categorie) throws BusinessException {
 		List<ArticleVendu> listeParCategorie = new ArrayList<ArticleVendu>();
 		for (ArticleVendu articleVendu : listeArticle) {
@@ -84,29 +78,46 @@ public class ArticleVenduManager {
 		return listeParNom;
 	}
 	
-	
-	/*--------------Fin méthodes pour les filtres de la page d'accueil --------------------------*/
-	
+	public List<ArticleVendu> listeArticleParPeriode(List<ArticleVendu> listeArticles, String periode) throws BusinessException{
+		   List<ArticleVendu> listeArticlesParPeriode = new ArrayList<ArticleVendu>();
+		   LocalDate today = LocalDate.now();
+		   switch (periode) {
+				case "AVANT_DEBUT":
+					for (ArticleVendu article : listeArticles) {
+						if(today.compareTo(article.getDate_debut_encheres()) == 1) {
+							listeArticlesParPeriode.add(article);
+						}
+					}
+					break;
+				case "APRES_FIN":
+					for (ArticleVendu article : listeArticles) {
+						if(today.compareTo(article.getDate_fin_encheres()) == 1) {
+							listeArticlesParPeriode.add(article);
+						}	
+					}
+					break;
+				case "EN_COURS":
+					for (ArticleVendu article : listeArticles) {
+						if(today.compareTo(article.getDate_debut_encheres()) != 1 && today.compareTo(article.getDate_fin_encheres()) != 1) {
+							listeArticlesParPeriode.add(article);
+						}
+					}
+					break;		
+				default:
+					listeArticlesParPeriode = listeArticles;
+					break;
+			}
+		   
+		   return listeArticlesParPeriode;
+	}
+		   
+	   
+	/*--------------Fin méthodes pour les filtres de la page d'accueil --------------------------*/  
+
 	
 	public ArticleVendu articleParNumero(int noArticle)  throws BusinessException {
 		return articleVenduDAO.selectByNoArticle(noArticle);
 	}
-	
-	public List<ArticleVendu> touslesArticlesEnchereEnCours() throws BusinessException{
-		   List<ArticleVendu> listeArticles = articleVenduDAO.getListArticle();
-		   List<ArticleVendu> listeArticlesEnchereEnCours = new ArrayList<ArticleVendu>();
-		   LocalDate today = LocalDate.now();
-		   for (ArticleVendu article : listeArticles) {
-			if(today.compareTo(article.getDate_fin_encheres()) != 1) {
-				listeArticlesEnchereEnCours.add(article);
-			}
-		}
-		   
-			return listeArticlesEnchereEnCours;
-		}
-	   
-	  
-
 	
 
 	private boolean validerNomArticle(String nom_article, BusinessException be) {

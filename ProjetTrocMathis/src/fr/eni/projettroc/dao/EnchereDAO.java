@@ -9,6 +9,8 @@ import fr.eni.projettroc.exception.BusinessException;
 public interface EnchereDAO {
 
 	public List<Enchere> getListEnchere() throws BusinessException;
+
+	List<Enchere> getListByNoUtilisateur(int no_utilisateur) throws BusinessException;
 	
 
 	}
