@@ -9,6 +9,7 @@ public interface EnchereDAO {
 
 	List<Enchere> getListEnchere() throws BusinessException;
 
+	public void insert(Enchere enchere) throws BusinessException;
 	}
 
 
