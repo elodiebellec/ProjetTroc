@@ -57,51 +57,28 @@ public class VendreUnArticleServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 //R�cup�rer les donn�es du formulaire
         request.setCharacterEncoding("UTF-8");
-        String nomArticle = request.getParameter("nomArticle");
-        System.out.println(nomArticle);
-        String description = request.getParameter("description");
-        System.out.println(description);
-       int  no_categorie = Integer.parseInt(request.getParameter("categorie"));
-        System.out.println(no_categorie);
-        int prixInitial = Integer.parseInt(request.getParameter("prixInitial"));
-        System.out.println(prixInitial);
-        String dateDebutEncheres = request.getParameter("dateDebutEncheres");
-        System.out.println(dateDebutEncheres);
-        String dateFinEncheres = request.getParameter("dateFinEncheres");
-        System.out.println(dateFinEncheres);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDateDebutEncheres = LocalDate.parse(dateDebutEncheres, formatter);
-        LocalDate localDateFinEncheres  = LocalDate.parse(dateFinEncheres, formatter);
-        
-        // Mettre dans la BDD
-        ArticleVendu articleVendu = new ArticleVendu();
-        Categorie categorie = new Categorie();
-        categorie.setNo_categorie(no_categorie);
-        
-        articleVendu.setNom_article(nomArticle);
-        articleVendu.setDescription(description);
-        articleVendu.setCategorie(categorie);
-        articleVendu.setPrix_initial(prixInitial);
-        
-        articleVendu.setDate_debut_encheres(localDateDebutEncheres);
-        articleVendu.setDate_fin_encheres(localDateFinEncheres);
-      
-        
         HttpSession session = request.getSession();
-        Utilisateur user = (Utilisateur) session.getAttribute("user");
-        articleVendu.setUtilisateur(user);
-      
-       
-     
-       	
-		try {
-			ArticleVenduManager.getArticleVenduManager().insererArticle(articleVendu);
+        int no_user = (int) session.getAttribute("idUser");
+        String nom_article = request.getParameter("nomArticle");
+        String description = request.getParameter("description"); 
+        int  no_categorie = Integer.parseInt(request.getParameter("categorie")); 
+        int prix_initial = Integer.parseInt(request.getParameter("prixInitial"));
+        String dateDebutEncheres = request.getParameter("dateDebutEncheres");
+        String dateFinEncheres = request.getParameter("dateFinEncheres");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date_debut_encheres = LocalDate.parse(dateDebutEncheres, formatter);
+        LocalDate date_fin_encheres  = LocalDate.parse(dateFinEncheres, formatter);
+    
+        try {
+			ArticleVenduManager.getArticleVenduManager().validetAjoutArticle(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial,  no_categorie, no_user);
+			request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			request.setAttribute("errors", e.getErrors());
+			request.getRequestDispatcher("/WEB-INF/vendreUnArticle.jsp").forward(request, response);
 		}
 
-		doGet(request, response);
 	}
 
 }

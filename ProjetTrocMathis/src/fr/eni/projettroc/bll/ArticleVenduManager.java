@@ -1,10 +1,13 @@
 package fr.eni.projettroc.bll;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
+import fr.eni.projettroc.bo.Categorie;
+import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.ArticleVenduDAO;
 import fr.eni.projettroc.dao.DAOFactory;
 
@@ -28,9 +31,10 @@ public class ArticleVenduManager {
 		return instance;
 	}
 
-	public void insererArticle(ArticleVendu articleVendu) throws BusinessException { 
-		articleVenduDAO.insert(articleVendu);
-	}
+	/*
+	 * public void insererArticle(ArticleVendu articleVendu) throws
+	 * BusinessException { articleVenduDAO.insert(articleVendu); }
+	 */
 
 	public List<ArticleVendu> listeArticles() throws BusinessException {
 
@@ -54,7 +58,7 @@ public class ArticleVenduManager {
 		List<ArticleVendu> listeParNom = new ArrayList<ArticleVendu>();
 		for (ArticleVendu articleVendu : listeArticle) {
 
-			if(articleVendu.getNom_article().toUpperCase().contains(nom.toUpperCase())) {
+			if (articleVendu.getNom_article().toUpperCase().contains(nom.toUpperCase())) {
 
 				listeParNom.add(articleVendu);
 			}
@@ -62,8 +66,38 @@ public class ArticleVenduManager {
 		return listeParNom;
 	}
 
-	
 
+	public ArticleVendu validetAjoutArticle(String nom_article, String description, LocalDate date_debut_encheres,
+			LocalDate date_fin_encheres, int prix_initial, int no_categorie, int no_user) throws BusinessException {
+		BusinessException be = new BusinessException();
+		ArticleVendu articleVendu = null;
+		boolean isValiderNomArticle = validerNomArticle(nom_article, be);
+		boolean isValiderDescription = validerDescription(description, be);
+		boolean isValiderPrixInitial = validerPrixInitial(prix_initial, be);
+		boolean isValiderDate = validerDate(date_debut_encheres, date_fin_encheres, be);
+		if (isValiderNomArticle && isValiderPrixInitial && isValiderDate && isValiderDescription ) {
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setNo_utilisateur(no_user);
+
+			Categorie categorie = new Categorie();
+			categorie.setNo_categorie(no_categorie);
+
+			articleVendu = new ArticleVendu();
+			articleVendu.setNom_article(nom_article);
+			articleVendu.setDescription(description);
+			articleVendu.setPrix_initial(prix_initial);
+			articleVendu.setDate_debut_encheres(date_debut_encheres);
+			articleVendu.setDate_fin_encheres(date_fin_encheres);
+			articleVendu.setCategorie(categorie);
+			articleVendu.setUtilisateur(utilisateur);
+			articleVenduDAO.insert(articleVendu);
+
+			return articleVendu;
+		} else {
+			throw be;
+
+		}
+	}
 	private boolean validerNomArticle(String nom_article, BusinessException be) {
 		nom_article = nom_article.trim();
 		if (nom_article == null) {
@@ -75,7 +109,7 @@ public class ArticleVenduManager {
 			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private boolean validerDescription(String description, BusinessException be) {
@@ -89,7 +123,7 @@ public class ArticleVenduManager {
 			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private boolean validerPrixInitial(int prix_initial, BusinessException be) {
@@ -97,7 +131,7 @@ public class ArticleVenduManager {
 			be.addError("La mise à prix doit être supérieure à zéro");
 			return false;
 		}
-		return false;
+		return true;
 	}
 
 	private boolean validerDate(LocalDate date_debut_encheres, LocalDate date_fin_encheres, BusinessException be) {
@@ -116,49 +150,7 @@ public class ArticleVenduManager {
 			return false;
 		}
 
-		return false;
+		return true;
 	}
 
-	/* public ArticleVendu validetAjoutArticle(String nom_article, String description, 
-			LocalDate date_debut_encheres, LocalDate date_fin_encheres, int prix_initial, int prix_vente, String categorie)
-			throws BusinessException {
-		BusinessException be = new BusinessException();
-		ArticleVendu articleVendu = null;
-		boolean isValiderNomArticle = validerNomArticle(nom_article, be);
-		boolean isValiderDescription = validerDescription(description, be);
-		boolean isValiderPrixInitial = validerPrixInitial(prix_initial, be);
-		boolean isValiderDate = validerDate(date_debut_encheres, date_fin_encheres, be);
-
-		if (isValiderPrixInitial && isValiderDescription && isValiderPrixInitial && isValiderDate) {
-			articleVendu = new ArticleVendu();
-			articleVendu.setNom_article(nom_article);
-			articleVendu.setDescription(description);
-			articleVendu.setPrix_initial(prix_initial);
-			articleVendu.setDate_debut_encheres(date_debut_encheres);
-			articleVendu.setDate_fin_encheres(date_fin_encheres);
-			articleVenduDAO.insert(articleVendu);
-			
-			return articleVendu;
-		} else {
-			throw be;
-		}
-
-		
-		 * validerNomArticle(nom_article, be); validerDescription(description, be);
-		 * validerPrixInitial(prix_initial, be); validerDate(date_debut_encheres,
-		 * date_fin_encheres, be);
-		 * 
-		 * ArticleVendu articleVendu = null;
-		 * 
-		 * if (!be.hasErreurs()) { articleVendu = new ArticleVendu();
-		 * articleVendu.setNom_article(nom_article);
-		 * articleVendu.setDescription(description);
-		 * articleVendu.setDate_debut_encheres(date_debut_encheres);
-		 * articleVendu.setDate_fin_encheres(date_fin_encheres);
-		 * articleVendu.setPrix_initial(prix_initial);
-		 * articleVenduDAO.insert(articleVendu); return articleVendu; } else { throw be;
-		 * }
-		 */
-
-	}
-
+}
