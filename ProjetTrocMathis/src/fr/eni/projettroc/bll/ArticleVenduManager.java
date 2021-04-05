@@ -15,7 +15,7 @@ import fr.eni.projettroc.exception.BusinessException;
 
 public class ArticleVenduManager {
 
-	// Attribut pour représenter la couche DAL
+	// Attribut pour reprï¿½senter la couche DAL
 	private ArticleVenduDAO articleVenduDAO;
 
 	private static ArticleVenduManager instance;
@@ -67,7 +67,7 @@ public class ArticleVenduManager {
 	}
 
 
-	public ArticleVendu validetAjoutArticle(String nom_article, String description, LocalDate date_debut_encheres,
+	public ArticleVendu valideAjoutArticle(String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, int prix_initial, int no_categorie, int no_user) throws BusinessException {
 		BusinessException be = new BusinessException();
 		ArticleVendu articleVendu = null;
@@ -105,7 +105,7 @@ public class ArticleVenduManager {
 			return false;
 		}
 		if (nom_article.trim().isEmpty() || nom_article.trim().length() > 30) {
-			be.addError("Le nom de l'article ne doit pas dépasser 30 caractères");
+			be.addError("Le nom de l'article ne doit pas dï¿½passer 30 caractï¿½res");
 			return false;
 		}
 
@@ -119,7 +119,7 @@ public class ArticleVenduManager {
 			return false;
 		}
 		if (description.trim().isEmpty() || description.trim().length() > 30) {
-			be.addError("La description ne doit pas dépasser 300 caractères");
+			be.addError("La description ne doit pas dï¿½passer 300 caractï¿½res");
 			return false;
 		}
 
@@ -128,7 +128,7 @@ public class ArticleVenduManager {
 
 	private boolean validerPrixInitial(int prix_initial, BusinessException be) {
 		if (prix_initial < 0) {
-			be.addError("La mise à prix doit être supérieure à zéro");
+			be.addError("La mise ï¿½ prix doit ï¿½tre supï¿½rieure ï¿½ zï¿½ro");
 			return false;
 		}
 		return true;
@@ -141,16 +141,23 @@ public class ArticleVenduManager {
 		}
 
 		if (date_debut_encheres.isBefore(LocalDate.now())) {
-			be.addError("La date ne peut pas être antérieure à la date du jour");
+			be.addError("La date ne peut pas ï¿½tre antï¿½rieure ï¿½ la date du jour");
 			return false;
 		}
 
 		if (date_fin_encheres.isBefore(date_debut_encheres)) {
-			be.addError("La date de fin doit être supérieure à la date de début des enchères");
+			be.addError("La date de fin doit ï¿½tre supï¿½rieure ï¿½ la date de dï¿½but des enchï¿½res");
 			return false;
 		}
 
 		return true;
+	}
+	
+	public ArticleVendu recuperArticle(int no_article) throws BusinessException{
+		
+	
+		
+		return articleVenduDAO.selectByNumero(no_article);
 	}
 
 }

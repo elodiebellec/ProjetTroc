@@ -54,62 +54,39 @@
 		<!-- Page Heading -->
 		<h1 class="my-2">Détail vente</h1>
 
-		<div class="form-group">
-			<div class="form-row">
 
-				<input class="form-control" id="nomArticle" type="text" required
-					name="nomArticle"
-				<!--   value="${sessionScope.detailVente.nomArticle}"-->
-				>
-			</div>
+		<div class="form-group">
+			<div class="form-row">${articlejsp.nom_article}</div>
 		</div>
 
 		<div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="description">Description : </label>
-				<div class="col-md-8">
-					<textarea class="form-control" id="description" required
-						name="description" rows="5" cols="30"></textarea>
-				</div>
+				<div class="col-md-8" class="card">${articlejsp.description}</div>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="categorie">Categorie </label>
-				<div class="col-md-8">
-					<select class="form-select" aria-label="Default select example"
-						id="categorie" required name="categorie">
-						<c:forEach var="c" items="${listeCategories}">
-							<option value="${c.no_categorie}">${c.libelle}</option>
-						</c:forEach>
-					</select>
-				</div>
+				<div class="col-md-8">${articlejsp.categorie.libelle}</div>
+
 			</div>
 		</div>
+
 
 		<div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="meilleureOffre"> Meilleure
 					Offre : </label>
-				<div class="col-md-8">
-
-					<!-- <input class="form-control" id="nomArticle" type="text" required
-							name="nomArticle"> -->
-
-				</div>
+				<div class="col-md-8">${articlejsp.prix_vente}</div>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="miseAPrix"> Mise à prix : </label>
-				<div class="col-md-8">
-
-					<!-- <input class="form-control" id="nomArticle" type="text" required
-							name="nomArticle"> -->
-
-				</div>
+				<div class="col-md-8">${articlejsp.prix_initial}</div>
 			</div>
 		</div>
 
@@ -117,12 +94,7 @@
 			<div class="form-row">
 				<label class="col-md-2" for="finEnchere"> Fin de l'enchère:
 				</label>
-				<div class="col-md-8">
-
-					<!-- <input class="form-control" id="nomArticle" type="text" required
-							name="nomArticle"> -->
-
-				</div>
+				<div class="col-md-8">${articlejsp.date_fin_encheres}</div>
 			</div>
 		</div>
 
@@ -131,37 +103,43 @@
 				<label class="col-md-2" for="retrait"> Retrait : </label>
 				<div class="col-md-8">
 
-					<!-- <input class="form-control" id="nomArticle" type="text" required
-							name="nomArticle"> -->
+					${articlejsp.utilisateur.rue } <br>
+					${articlejsp.utilisateur.code_postal} &nbsp;
+					${articlejsp.utilisateur.ville }
 
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="vendeur"> Vendeur : </label>
-					<div class="col-md-8">
-
-					<!-- <input class="form-control" id="nomArticle" type="text" required
-							name="nomArticle"> -->	
-
-					</div>
-				</div>
+			<div class="form-row">
+				<label class="col-md-2" for="vendeur"> Vendeur : </label>
+				<div class="col-md-8">${articlejsp.utilisateur.nom }</div>
 			</div>
-			
+		</div>
+
+
+
+		<c:if test="${!isProprietaireArticle}">
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="maProposition"> Ma proposition : </label>
-					<div class="col-md-8">
-
-					<!-- <input class="form-control" id="nomArticle" type="text" required
-							name="nomArticle"> -->	
-
-					</div>
+					<label class="col-md-2" for="maProposition"> Je suis
+						l'acheteur </label>
+					<div class="col-md-8"></div>
 				</div>
 			</div>
-			
-			
+
+		</c:if>
+
+		<c:if test="${isProprietaireArticle}">
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="maProposition"> Je suis le
+						vendeur </label>
+					<div class="col-md-8"></div>
+				</div>
+			</div>
+
+		</c:if>
 </body>
 </html>
