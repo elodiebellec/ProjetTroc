@@ -74,7 +74,6 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		
 
 		// Récupérer l'ID de l'utilisateur connecté (si déconnecté, on le renvoie sur la
 		// page d'accueil)
@@ -113,7 +112,8 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 
 		try {
 			List<Enchere> listeEncheres = EnchereManager.getEnchereManager().toutesLesEncheres();
-			List<Enchere> listeEncheresParUtilisateur = EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser);
+			List<Enchere> listeEncheresParUtilisateur = EnchereManager.getEnchereManager()
+					.toutesLesEncheresParUtilisateur(idUser);
 			// listeArticleEnCours =
 			// ArticleVenduManager.getArticleVenduManager().listeArticles();
 			// -------------- filtre par type de transaction----------------//
@@ -123,22 +123,26 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 				if ("ENCOURSENCHERE_NULL_NULL".equals(checkboxAchat)
 						|| "ENCOURSENCHERE_ENCHEREUTILISATEUR_NULL".equals(checkboxAchat)) {
 					// toutes les encheres encours
-					listeEnchereFiltree = EnchereManager.getEnchereManager()
-							.listeEnchereParPeriode(listeEncheres, "EN_COURS");
+					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(listeEncheres,
+							"EN_COURS");
 				} else if ("NULL_ENCHEREUTILISATEUR_ENCHEREREMPORTEE".equals(checkboxAchat)) {
 					// les encheres encours et passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(listeEncheresParUtilisateur, "TOUTES");
+					listeEnchereFiltree = EnchereManager.getEnchereManager()
+							.listeEnchereParPeriode(listeEncheresParUtilisateur, "TOUTES");
 				} else if ("NULL_ENCHEREUTILISATEUR_NULL".equals(checkboxAchat)) {
 					// les encheres encours de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(listeEncheresParUtilisateur, "EN_COURS");
+					listeEnchereFiltree = EnchereManager.getEnchereManager()
+							.listeEnchereParPeriode(listeEncheresParUtilisateur, "EN_COURS");
 				} else if ("NULL_NULL_ENCHEREREMPORTEE".equals(checkboxAchat)) {
 					// les encheres passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(listeEncheresParUtilisateur, "APRES_FIN");
+					listeEnchereFiltree = EnchereManager.getEnchereManager()
+							.listeEnchereParPeriode(listeEncheresParUtilisateur, "APRES_FIN");
 				} else {
 					// toutes les encheres encours + les encheres passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager()
-							.listeEnchereParPeriode(listeEncheres, "EN_COURS");
-					listeEnchereUtilisateur = EnchereManager.getEnchereManager().listeEnchereParPeriode(listeEncheresParUtilisateur, "APRES_FIN");
+					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(listeEncheres,
+							"EN_COURS");
+					listeEnchereUtilisateur = EnchereManager.getEnchereManager()
+							.listeEnchereParPeriode(listeEncheresParUtilisateur, "APRES_FIN");
 					listeEnchereFiltree.addAll(listeEnchereUtilisateur);
 				}
 
@@ -154,9 +158,9 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 			// catégorie.
 			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {
 				listeArticleCategorie = listeArticles;
-				listeArticleCategorie = ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(
-						ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticles, ""),
-						numCategorie);
+			} else {
+				listeArticleCategorie = ArticleVenduManager.getArticleVenduManager()
+						.listeArticlesParCategorie(listeArticles, numCategorie);
 			}
 			// -------------- filtre par npm d'objet -------------------------//
 			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleCategorie,
