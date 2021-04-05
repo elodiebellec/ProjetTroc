@@ -19,8 +19,8 @@ import fr.eni.projettroc.exception.BusinessException;
 
 public class EnchereJDBCImpl implements EnchereDAO{
 	
-	private static final String SELECT_ALL = "SELECT * FROM `encheres`;";
-	private static final String SELECT_ALL_BY_UTILISATEUR = null;
+	private static final String SELECT_ALL = "SELECT * FROM `encheres`";
+	private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `encheres` WHERE `no_utilisateur`=?";
 
 	private Enchere enchereBuilder(ResultSet rs) throws SQLException, BusinessException {
 		Enchere enchere = new Enchere();
@@ -53,29 +53,29 @@ public class EnchereJDBCImpl implements EnchereDAO{
 	
 	@Override
 	public List<Enchere> getListEnchere() throws BusinessException {
-		List<Enchere> listeEncheres = new ArrayList<Enchere>();
+		List<Enchere> listeEcheres = new ArrayList<Enchere>();
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			Statement stmt = cnx.createStatement();
 			ResultSet rs = stmt.executeQuery(SELECT_ALL);
 
-			// Parcours la liste des enregistrements, et rassembler par id du repas
-			Enchere enchereCourante = new Enchere();
+		
 			while (rs.next()) {
-					enchereCourante = enchereBuilder(rs);
-					listeEncheres.add(enchereCourante);
+				listeEcheres.add(enchereBuilder(rs));
 				}
 				
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.addError("Connexion impossible");
+			be.addError("Erreur getListEnchere DAO");
 			throw be;
 		}
 
-		return listeEncheres;
+		return listeEcheres;
 	}
+	
+	
 	
 	@Override
 	public List<Enchere> getListByNoUtilisateur(int no_utilisateur) throws BusinessException {
@@ -83,7 +83,7 @@ public class EnchereJDBCImpl implements EnchereDAO{
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL_BY_UTILISATEUR);
-			stmt.setInt(1, no_utilisateur);
+			stmt.setInt(1, no_utilisateur);;
 			ResultSet rs = stmt.executeQuery();
 		
 			while (rs.next()) {

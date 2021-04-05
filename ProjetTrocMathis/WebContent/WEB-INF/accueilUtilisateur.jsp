@@ -39,31 +39,35 @@
 					<input type="search" placeholder="Le nom de l'article contient"
 						class="search-field" name="nomSelect" id="nomSelect" value="" />
 				</div>
-				<br> <br> <select name="categorieSelect"
+				<br> <select name="categorieSelect"
 					class="form-select" aria-label="Default select example">
 					<c:forEach var="c" items="${listeCategories}">
 						<option value="${c.no_categorie}">${c.libelle}</option>
 					</c:forEach>
-				</select> <br> <br> <input type="submit" value="Rechercher" />
+				</select> 
+				<br><br>
 
 				<div>
-					<input type="radio" name="typeAffichage" value="achat">
+					<input type="radio" name="typeTransaction" value="achat" checked>
 					<label for="achat"> Achats</label><br> 
-						<input type="checkbox" name="typeEnchere" value="encours"> enchères ouvertes<br>      
-        				<input type="checkbox" name="typeEnchere" value="enchereUtilisateur"> mes enchères<br>      
-        				<input type="checkbox" name="typeEnchere" value="remportee"> mes enchères remportées<br>      
+						<input type="checkbox" name="encoursEnchere" value="encoursEnchere" checked> enchères ouvertes<br>      
+        				<input type="checkbox" name="enchereUtilisateur" value="enchereUtilisateur"> mes enchères<br>      
+        				<input type="checkbox" name="enchereRemportee" value="enchereRemportee"> mes enchères remportées<br>      
 				</div>
-
+					<br>
 				<div>
-					<input type="radio" name="typeAffichage" value="vente">
+					<input type="radio" name="typeTransaction" value="vente">
 					<label for="vente"> Mes ventes</label><br> 
-						<input type="checkbox" name="typeAchat" value="encours"> mes ventes en cours<br>      
-        				<input type="checkbox" name="typeAchat" value="futur"> ventes non débutées<br>      
-        				<input type="checkbox" name="typeAchat" value="termine"> ventes terminées<br>     
+						<input type="checkbox" name="encoursVente" value="encoursVente"> mes ventes en cours<br>      
+        				<input type="checkbox" name="futureVente" value="futureVente"> ventes non débutées<br>      
+        				<input type="checkbox" name="venteTerminee" value="venteTerminee"> ventes terminées<br>     
 				</div>
+				
+				 <br>
+				 <input type="submit" value="Rechercher" />
 			</form>
 			<br>
-			<c:forEach var="c" items="${listeArticleEnCours}">
+			<c:forEach var="c" items="${listeArticles}">
 				<div class="card h-100">
 
 					<p>${c.nom_article}</p>
