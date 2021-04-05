@@ -1,20 +1,19 @@
-<%@page import="fr.eni.projettroc.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page errorPage="error.jsp" isErrorPage="false"%>
-<%@ page session="true" %>
-
 
 <!DOCTYPE html>
 <html>
 
-<%@ include file="template/head.html"%>
 
 <head>
-
+<%@ include file="template/head.html"%>
 <title>Nouvelle vente</title>
 </head>
+
+
+
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
@@ -35,6 +34,7 @@
 		</div>
 	</nav>
 
+	
 	<c:if test="${!empty errors}">
 		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
 			<div class="card h-100 alert">
@@ -115,7 +115,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="prixInitial">Mise Ã  prix : </label>
+					<label class="col-md-2" for="prixInitial">Mise à prix : </label>
 					<div class="col-md-8">
 						<input type="number" class="form-control" id="prixInitial" required
 							name="prixInitial">
@@ -125,8 +125,8 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="dateDebutEncheres">DÃ©but de
-						l'enchÃ¨re : </label>
+					<label class="col-md-2" for="dateDebutEncheres">Début de
+						l'enchère : </label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateDebutEncheres" required
 							name="dateDebutEncheres">
@@ -137,7 +137,7 @@
 			<div class="form-group">
 				<div class="form-row">
 
-					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchÃ¨re :
+					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchère :
 					</label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateFinEncheres" required
