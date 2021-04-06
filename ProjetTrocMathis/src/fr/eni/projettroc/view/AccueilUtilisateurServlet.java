@@ -25,10 +25,10 @@ import fr.eni.projettroc.exception.BusinessException;
 public class AccueilUtilisateurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public List<Categorie> listeCategories;
-	public List<ArticleVendu> listeArticles;
-	public List<ArticleVendu> listeArticleEnCours;
+	public List<ArticleVendu> listeArticlesUtilisateur;
 	public List<ArticleVendu> listeArticleCategorie;
 	public List<ArticleVendu> listeArticleParNom;
+	public List<ArticleVendu> listeArticleFiltree;
 	public List<Enchere> listeEnchereFiltree;
 	public List<Enchere> listeEnchereUtilisateur;
 
@@ -53,10 +53,9 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
 			// Récupérer la liste des enchères ouvertes de l'utilisateur
-			listeArticles = ArticleVenduManager.getArticleVenduManager().listeArticles();
-			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticles,
-					"");
-			session.setAttribute("listeArticles", listeArticleEnCours);
+			listeArticleFiltree = ArticleVenduManager.getArticleVenduManager()
+					.listeArticleParPeriode(ArticleVenduManager.getArticleVenduManager().listeArticles(), "");
+			session.setAttribute("listeArticles", listeArticleFiltree);
 
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
@@ -111,42 +110,46 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 		System.out.println("nom article : " + nomSelect);
 
 		try {
+
 			// -------------- filtre par type de transaction----------------//
+			// ---------------------ACHATS-----------------------------------//
 			if ("achat".equals(typeTransaction)) {
-				// Liste d'enchères de l'utilisateur connecté
 				// filtrer les enchères par période (checkbox)
 				if ("ENCOURSENCHERE_NULL_NULL".equals(checkboxAchat)
 						|| "ENCOURSENCHERE_ENCHEREUTILISATEUR_NULL".equals(checkboxAchat)) {
 					// toutes les encheres encours
-					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(EnchereManager.getEnchereManager().toutesLesEncheres(),
-							"EN_COURS");
+					listeEnchereFiltree = EnchereManager.getEnchereManager()
+							.listeEnchereParPeriode(EnchereManager.getEnchereManager().toutesLesEncheres(), "EN_COURS");
 				} else if ("NULL_ENCHEREUTILISATEUR_ENCHEREREMPORTEE".equals(checkboxAchat)) {
 					// les encheres encours et passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager()
-							.listeEnchereParPeriode(EnchereManager.getEnchereManager()
-									.toutesLesEncheresParUtilisateur(idUser), "TOUTES");
+					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(
+							EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser), "TOUTES");
 				} else if ("NULL_ENCHEREUTILISATEUR_NULL".equals(checkboxAchat)) {
 					// les encheres encours de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager()
-							.listeEnchereParPeriode(EnchereManager.getEnchereManager()
-									.toutesLesEncheresParUtilisateur(idUser), "EN_COURS");
+					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(
+							EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser), "EN_COURS");
 				} else if ("NULL_NULL_ENCHEREREMPORTEE".equals(checkboxAchat)) {
 					// les encheres passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager()
-							.listeEnchereParPeriode(EnchereManager.getEnchereManager()
-									.toutesLesEncheresParUtilisateur(idUser), "APRES_FIN");
+					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(
+							EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser), "APRES_FIN");
 				} else {
 					// toutes les encheres encours + les encheres passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(EnchereManager.getEnchereManager().toutesLesEncheres(),
-							"EN_COURS");
-					listeEnchereUtilisateur = EnchereManager.getEnchereManager()
-							.listeEnchereParPeriode(EnchereManager.getEnchereManager()
-									.toutesLesEncheresParUtilisateur(idUser), "APRES_FIN");
+					listeEnchereFiltree = EnchereManager.getEnchereManager()
+							.listeEnchereParPeriode(EnchereManager.getEnchereManager().toutesLesEncheres(), "EN_COURS");
+					listeEnchereUtilisateur = EnchereManager.getEnchereManager().listeEnchereParPeriode(
+							EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser), "APRES_FIN");
 					listeEnchereFiltree.addAll(listeEnchereUtilisateur);
 				}
 
 				// Récupérer la liste des articles correspondants à la liste des enchères
-				listeArticles = EnchereManager.getEnchereManager().ArticlesdeListeEncheres(listeEnchereFiltree);
+				listeArticleFiltree = EnchereManager.getEnchereManager().ArticlesdeListeEncheres(listeEnchereFiltree);
+			} else {
+				// ---------------------VENTES-----------------------------------//
+				listeArticlesUtilisateur = ArticleVenduManager.getArticleVenduManager()
+						.listeArticlesParNoUtilisateur(idUser);
+				// filtrer les articles par période (checkbox)
+				listeArticleFiltree =  ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticlesUtilisateur, checkboxVente);
+
 			}
 
 			// -------------- filtre par catégorie -------------------------//
@@ -156,10 +159,10 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 			// Si l'utilisateur sélectionne toutes les catégories, pas de filtre par
 			// catégorie.
 			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {
-				listeArticleCategorie = listeArticles;
+				listeArticleCategorie = listeArticleFiltree;
 			} else {
 				listeArticleCategorie = ArticleVenduManager.getArticleVenduManager()
-						.listeArticlesParCategorie(listeArticles, numCategorie);
+						.listeArticlesParCategorie(listeArticleFiltree, numCategorie);
 			}
 			// -------------- filtre par npm d'objet -------------------------//
 			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleCategorie,
