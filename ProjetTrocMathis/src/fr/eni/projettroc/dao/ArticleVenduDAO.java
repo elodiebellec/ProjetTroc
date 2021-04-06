@@ -18,15 +18,11 @@ public interface ArticleVenduDAO {
 	public List<ArticleVendu> getListByCategorie (int no_categorie) throws BusinessException;
 
 	public List<ArticleVendu> getListArticle() throws BusinessException;
-	
-	
-	
-	
 
-	
+	public ArticleVendu selectByNoArticle(int noArticle)  throws BusinessException;
 
-	
+	public ArticleVendu selectByUtilisateur (int no_utilisateur) throws BusinessException;
 
-	
+	List<ArticleVendu> getListByNoUtilisateur(int no_utilisateur) throws BusinessException;
 
 }
