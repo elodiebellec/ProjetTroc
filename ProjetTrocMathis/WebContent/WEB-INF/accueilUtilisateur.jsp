@@ -5,6 +5,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
+<%@page import="fr.eni.projettroc.bo.Utilisateur"%>
 
 <!DOCTYPE html>
 <html>
@@ -16,8 +17,8 @@
 
 	<!-- Navigation -->
 
-<%@ include file="template/navBarConnectee.html"%>
 
+<%@ include file="template/navBarConnectee.html"%>
 
 	<!-- Page Content -->
 	<div class="container">
@@ -70,20 +71,20 @@
 			<c:forEach var="c" items="${listeArticles}">
 				<div class="card h-100">
 
-					<p>${c.nom_article}</p>
+					<p><a href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
+				title="Article"><i>${c.nom_article}</i></a></p>
 					<p>Prix : ${c.prix_initial} points</p>
 					<p>
 						Fin de l'enchère :
 						<tags:localDate date="${c.date_fin_encheres}" />
 					</p>
 					<p>Vendeur : ${c.utilisateur.pseudo}</p>
+					<p><a href="${pageContext.request.contextPath}/AffichageUtilisateur?param=${c.utilisateur.no_utilisateur}"
+				title="Article"><i>${c.utilisateur.pseudo}</i></a></p>
 
 				</div>
 				<br>
-				<a
-		       href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
-				class="badge" title="Supprimer la liste"><i
-				class="material-icons">delete</i></a>
+				
 				
 			</c:forEach>
 
