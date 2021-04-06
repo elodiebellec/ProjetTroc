@@ -80,6 +80,11 @@
 
 				</div>
 				<br>
+				<a
+		       href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
+				class="badge" title="Supprimer la liste"><i
+				class="material-icons">delete</i></a>
+				
 			</c:forEach>
 
 
