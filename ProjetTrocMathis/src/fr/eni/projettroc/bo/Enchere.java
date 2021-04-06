@@ -52,14 +52,14 @@ import java.time.LocalDate;
 		return article;
 	}
 
-	public void setNoArticle(int no_Article) {
-		this.article.setNo_article(no_Article);
-	}
+
 	
 	public void setArticle(ArticleVendu article) {
 		this.article = article;
 	}
 	
+
+
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
