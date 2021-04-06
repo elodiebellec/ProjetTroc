@@ -27,7 +27,9 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	private static final String SELECT_ALL = "SELECT `no_article`,`nom_article`,`description`,`date_debut_encheres`,`date_fin_encheres`,`prix_initial`,`prix_vente`,`no_utilisateur`,`no_categorie` FROM `articles_vendus`";
 	private static final String SELECT_BY_UTILISATEUR = "SELECT `no_article`, `nom_article`, `description`, `date_debut_encheres`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie` FROM `articles_vendus` WHERE `no_utilisateur`=?";
 	private static final String SELECT_ALL_BY_CATEGORIE = "SELECT * FROM `articles_vendus` WHERE `no_categorie`=?";
-	private static final String SELECT_BY_NUMERO = "SELECT * FROM `articles_vendus` WHERE `no_article` = ?";
+	private static final String SELECT_BY_NO = "SELECT * FROM `articles_vendus` WHERE `no_article`=?";
+	private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `articles_vendus` WHERE `no_utilisateur`= ?";
+
 	
 	@Override
 	public int insert(ArticleVendu article) throws BusinessException {
@@ -61,28 +63,6 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 
 	}
 	
-	
-	public ArticleVendu selectByNumero(int numero) throws BusinessException {
-		ArticleVendu article = null;
-		
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NUMERO);
-			requete.setInt(1, numero);
-			ResultSet rs = requete.executeQuery();
-			
-			while (rs.next()) {
-				article = articleBuilder(rs);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			BusinessException be = new BusinessException();
-			be.addError("Erreur");
-			throw be;
-		}
-		
-		return article;
-	}
 	
 	@Override
 	public void deleteArticle(int no_Article) throws BusinessException {
@@ -141,6 +121,30 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
 			be.addError("Erreur getListByCategorie DAO");
+			throw be;
+		}
+
+		return listeArticle;
+	}
+	
+	
+	@Override
+	public List<ArticleVendu> getListByNoUtilisateur(int no_utilisateur) throws BusinessException {
+		List<ArticleVendu> listeArticle = new ArrayList<ArticleVendu>();
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL_BY_UTILISATEUR);
+			stmt.setInt(1, no_utilisateur);
+			ResultSet rs = stmt.executeQuery();
+		
+			while (rs.next()) {
+				listeArticle.add(articleBuilder(rs));
+				}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur getListByNoUtilisateur DAO");
 			throw be;
 		}
 
@@ -229,7 +233,36 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 			}
 			 
 		}
+
+	
+	public ArticleVendu selectByNoArticle(int no_article) throws BusinessException {
+
+		ArticleVendu article = null;
 		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
+		
+			requete.setInt(1, no_article);
+			ResultSet rs = requete.executeQuery();
+
+			if (rs.next()) {
+				article = articleBuilder(rs);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur selectByNoArticle");
+			throw be;
+		}
+
+		return article;
+	}
+	
+	
+	
+
+	
 	
 	
 

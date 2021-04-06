@@ -137,18 +137,15 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	public Utilisateur selectByNoUtilisateur(int no_utilisateur) throws BusinessException {
 
 		Utilisateur utilisateur = null;
-		// Connexion à la base de données et try pour que la connexion se ferme
-		// automatiquement.
+		
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			// requete
+			
 			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
-			// on sélectionne l'utilisateur dont le numéro est renseigné dans la requête
+		
 			requete.setInt(1, no_utilisateur);
 			ResultSet rs = requete.executeQuery();
 
 			if (rs.next()) {
-				// appelle de la fonction utilisateurBuilder qui permet de récupérer toutes
-				// les colonnes de la table utilisateur
 				utilisateur = utilisateurBuilder(rs);
 			}
 		} catch (Exception e) {
@@ -157,7 +154,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 			be.addError("Erreur selectByNoUtilisateur");
 			throw be;
 		}
-		// Je retourne l'utilisateur sélectionné
+
 		return utilisateur;
 	}
 

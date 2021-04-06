@@ -40,7 +40,7 @@ public class VendreUnArticleServlet extends HttpServlet {
 		
 		try {
 			// Afficher la liste des catégories
-			listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();
+			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			request.setAttribute("listeCategories", listeCategories);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block

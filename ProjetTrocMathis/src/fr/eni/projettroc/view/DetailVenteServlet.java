@@ -30,7 +30,7 @@ public class DetailVenteServlet extends HttpServlet {
 		int no_article = Integer.parseInt(request.getParameter("id_article")) ;
 		
 		try {
-			ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recuperArticle(no_article);
+			ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
 			request.setAttribute("articlejsp", article);
 			
 			// récupérer l'utisateur de l'article
