@@ -70,21 +70,6 @@
 			<c:forEach var="c" items="${listeArticles}">
 				<div class="card h-100">
 
-
-					<div class="form-group"></div>
-				</div>
-				<div class="form-group">
-					<label for="password">Pseudo </label> <input class="form-control"
-						id="psd" required name="psd" type="text">
-					<button type="submit" class="btn btn-primary btn-lg btn-block"
-						id="belodie" name="belodie">Rechercher</button>
-						
-						<a
-								href="${pageContext.servletContext.contextPath}/Enchere"><input
-								type="button" class="btn btn-primary  "
-								value="Supprimer mon compte"></a>
-						
-
 					<p>${c.nom_article}</p>
 					<p>Prix : ${c.prix_initial} points</p>
 					<p>
@@ -92,7 +77,6 @@
 						<tags:localDate date="${c.date_fin_encheres}" />
 					</p>
 					<p>Vendeur : ${c.utilisateur.pseudo}</p>
-
 
 				</div>
 				<br>

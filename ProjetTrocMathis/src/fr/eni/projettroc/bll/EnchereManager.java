@@ -1,33 +1,45 @@
 package fr.eni.projettroc.bll;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
+import fr.eni.projettroc.bo.Categorie;
 import fr.eni.projettroc.bo.Enchere;
 import fr.eni.projettroc.bo.Utilisateur;
-import fr.eni.projettroc.dao.ArticleVenduDAO;
+import fr.eni.projettroc.dao.CategorieDAO;
+
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.EnchereDAO;
 import fr.eni.projettroc.exception.BusinessException;
 
 public class EnchereManager {
 
+	//Attribut pour repr√©senter la couche DAL
+
 	private EnchereDAO enchereDAO;
 
-	private static EnchereManager instance;
 
-	private EnchereManager() {
-		enchereDAO = DAOFactory.getEnchereDAO();
-	}
+   private static EnchereManager instance;
+   
+   private EnchereManager() {
+	   enchereDAO = DAOFactory.getEnchereDAO();
+   }
+   
+   public static EnchereManager getEnchereManager() {
 
-	public static EnchereManager getEnchereManager() {
 		if (instance == null) {
 			instance = new EnchereManager();
 		}
 		return instance;
 	}
+
+
+
+
+	
 
 
    
@@ -36,7 +48,7 @@ public class EnchereManager {
 		return enchereDAO.getListEnchere();
 	}
 
-   /*--------------MÈthodes pour les filtres de la page d'accueil --------------------------*/
+   /*--------------M√©thodes pour les filtres de la page d'accueil --------------------------*/
    
    public List<Enchere> toutesLesEncheresParUtilisateur (int no_utilisateur) throws BusinessException {
 	   return enchereDAO.getListByNoUtilisateur(no_utilisateur);
@@ -117,7 +129,7 @@ public class EnchereManager {
 	}*/
    
    
-	/*--------------Fin mÈthodes pour les filtres de la page d'accueil --------------------------*/  
+	/*--------------Fin m√©thodes pour les filtres de la page d'accueil --------------------------*/  
 
 
 

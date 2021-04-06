@@ -23,12 +23,13 @@ import fr.eni.projettroc.exception.Errors;
 public class EnchereJDBCImpl implements EnchereDAO{
 	
 
+
 	private static final String SELECT_ALL = "SELECT `no_enchere`,`date_enchere`,`montant_enchere`,`no_article`,`no_utilisateur` FROM `encheres`;";
     private static final String INSERT = "insert into encheres (date_enchere, montant_enchere, no_article, no_utilisateur) values(?,?,?,?)";
-	
- 
 
 	private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `encheres` WHERE `no_utilisateur`=?";
+
+
 
 	private Enchere enchereBuilder(ResultSet rs) throws SQLException, BusinessException {
 
