@@ -91,27 +91,48 @@ public class ArticleVenduManager {
 		   List<ArticleVendu> listeArticlesParPeriode = new ArrayList<ArticleVendu>();
 		   LocalDate today = LocalDate.now();
 		   switch (periode) {
-				case "AVANT_DEBUT":
+				case "NULL_FUTUREVENTE_NULL":
 					for (ArticleVendu article : listeArticles) {
 						if(today.compareTo(article.getDate_debut_encheres()) == 1) {
 							listeArticlesParPeriode.add(article);
 						}
 					}
 					break;
-				case "APRES_FIN":
+				case "NULL_NULL_VENTETERMINEE":
 					for (ArticleVendu article : listeArticles) {
 						if(today.compareTo(article.getDate_fin_encheres()) == 1) {
 							listeArticlesParPeriode.add(article);
 						}	
 					}
 					break;
-				case "EN_COURS":
+				case "ENCOURSVENTE_NULL_NULL":
 					for (ArticleVendu article : listeArticles) {
 						if(today.compareTo(article.getDate_debut_encheres()) != 1 && today.compareTo(article.getDate_fin_encheres()) != 1) {
 							listeArticlesParPeriode.add(article);
 						}
 					}
-					break;		
+					break;
+				case "ENCOURSVENTE_FUTUREVENTE_NULL":
+					for (ArticleVendu article : listeArticles) {
+						if(today.compareTo(article.getDate_debut_encheres()) == 1 || (today.compareTo(article.getDate_debut_encheres()) != 1 && today.compareTo(article.getDate_fin_encheres()) != 1)) {
+							listeArticlesParPeriode.add(article);
+						}
+					}
+					break;
+				case "NULL_FUTUREVENTE_VENTETERMINEE":
+					for (ArticleVendu article : listeArticles) {
+						if(today.compareTo(article.getDate_debut_encheres()) == 1 || today.compareTo(article.getDate_fin_encheres()) == 1) {
+							listeArticlesParPeriode.add(article);
+						}
+					}
+					break;
+				case "ENCOURSVENTE_NULL_VENTETERMINEE":
+					for (ArticleVendu article : listeArticles) {
+						if((today.compareTo(article.getDate_debut_encheres()) != 1 && today.compareTo(article.getDate_fin_encheres()) != 1) || today.compareTo(article.getDate_fin_encheres()) == 1) {
+							listeArticlesParPeriode.add(article);
+						}
+					}
+					break;
 				default:
 					listeArticlesParPeriode = listeArticles;
 					break;
