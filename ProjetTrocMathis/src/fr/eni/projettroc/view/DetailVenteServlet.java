@@ -2,16 +2,18 @@ package fr.eni.projettroc.view;
 
 import java.io.IOException;
 import java.time.LocalDate;
+
+import java.util.Date;
+
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import fr.eni.projettroc.bll.ArticleVenduManager;
 import fr.eni.projettroc.bll.EnchereManager;
 import fr.eni.projettroc.bo.ArticleVendu;
@@ -58,7 +60,18 @@ public class DetailVenteServlet extends HttpServlet {
 
 			request.setAttribute("isProprietaireArticle",  isProprietaireArticle);
 			
-		
+
+			
+			// Comparaison des dates d'enchères
+			
+			LocalDate date_debut_encheres = article.getDate_debut_encheres();
+			LocalDate date_jour = LocalDate.now();
+			
+			
+			boolean isDateOk = date_debut_encheres.isAfter(date_jour);
+				
+			
+			request.setAttribute("isDateModifiable", isDateOk );
 			
 			
 		} catch (BusinessException e) {

@@ -103,9 +103,11 @@
 					<label class="col-md-2" for="photoArticle">Photo de
 						l'article : </label>
 					<div class="col-md-8">
+					
+						<button type="button" class="btn btn-light">UPLOADER</button>
 
-						<input type="file" id="image" required name="image"
-							accept="image/png, image/jpeg">
+					<!--	<input type="file" id="image" required name="image"
+							accept="image/png, image/jpeg"> -->
 					</div>
 
 				</div>
