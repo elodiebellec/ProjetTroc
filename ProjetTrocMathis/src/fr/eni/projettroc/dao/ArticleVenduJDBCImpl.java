@@ -1,4 +1,3 @@
-
 package fr.eni.projettroc.dao;
 
 import java.sql.Connection;
@@ -257,20 +256,6 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 		}
 
 		return article;
-	}
-	
-	
-	
-
-	
-	
-	
-
-
-	
-	
-
-	
-	
+	}	
 
 }
