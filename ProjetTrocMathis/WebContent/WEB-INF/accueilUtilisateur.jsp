@@ -70,7 +70,8 @@
 			<c:forEach var="c" items="${listeArticles}">
 				<div class="card h-100">
 
-					<p>${c.nom_article}</p>
+					<p><a href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
+				title="Article"><i>${c.nom_article}</i></a></p>
 					<p>Prix : ${c.prix_initial} points</p>
 					<p>
 						Fin de l'enchère :
@@ -80,6 +81,8 @@
 
 				</div>
 				<br>
+				
+				
 			</c:forEach>
 
 
