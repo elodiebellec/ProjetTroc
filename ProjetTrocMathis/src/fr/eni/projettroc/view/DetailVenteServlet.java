@@ -41,10 +41,10 @@ public class DetailVenteServlet extends HttpServlet {
 			ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
 			session.setAttribute("articlejsp", article);
 			
-			// récupérer l'utisateur de l'article
+			// rÃ©cupÃ©rer l'utisateur de l'article
 			Utilisateur utilisateurArticle = article.getUtilisateur();
 			
-			//récupérer l'utilisateur connecté (en session)
+			//rÃ©cupÃ©rer l'utilisateur connectÃ© (en session)
 			Utilisateur utilisateurConnecte =(Utilisateur) request.getSession().getAttribute("user");
 	
 			
@@ -52,8 +52,10 @@ public class DetailVenteServlet extends HttpServlet {
 			
 			boolean isProprietaireArticle = utilisateurArticle.getNo_utilisateur() == utilisateurConnecte.getNo_utilisateur();
 	
+
 			// on le passe à la jsp
 			 
+
 			request.setAttribute("isProprietaireArticle",  isProprietaireArticle);
 			
 		
