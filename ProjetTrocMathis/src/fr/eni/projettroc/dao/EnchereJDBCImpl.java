@@ -21,7 +21,7 @@ import fr.eni.projettroc.exception.Errors;
 public class EnchereJDBCImpl implements EnchereDAO{
 	
 	private static final String SELECT_ALL = "SELECT `no_enchere`,`date_enchere`,`montant_enchere`,`no_article`,`no_utilisateur` FROM `encheres`;";
-    private static final String INSERT = "insert into encheres (no_enchere, date_enchere, montant_enchere, no_article, no_utlisateur) values(?,?,?,?,?)";
+    private static final String INSERT = "insert into encheres (date_enchere, montant_enchere, no_article, no_utilisateur) values(?,?,?,?)";
 	
     
     private Enchere enchereBuilder(ResultSet rs) throws SQLException {
@@ -29,7 +29,7 @@ public class EnchereJDBCImpl implements EnchereDAO{
 		enchere.setNo_enchere(rs.getInt("no_enchere"));
 		enchere.setDate_enchere(rs.getDate("date_enchere").toLocalDate());
 		enchere.setMontant_enchere(rs.getInt("montant_enchere"));
-		enchere.setNoArticle(rs.getInt("no_article"));		
+		enchere.setNo_enchere(rs.getInt("no_article"));		
 		//enchere.setUtilisateur(rs.getInt("no_utilisateur"));
 		return enchere;
 	}
@@ -79,7 +79,7 @@ public class EnchereJDBCImpl implements EnchereDAO{
 		}
 	} catch (Exception e) {
 		e.printStackTrace();
-		BusinessException be = new BusinessException();
+		BusinessException be = new BusinessException(e.getMessage());
 		be.addError(Errors.INSERT_OBJET_ECHEC);
 		throw be;
 	}

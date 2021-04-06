@@ -1,17 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@page import="fr.eni.projettroc.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page errorPage="error.jsp" isErrorPage="false"%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 
-<%@ include file="template/head.html"%>
+<head>
+<%@ include file="template/head.html" %>
+</head>
 
 <body>
-	>
 
-	<!-- Navigation -->
+						
+<!-- Navigation -->
+
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="#">ENI Encheres</a>
@@ -31,34 +36,43 @@
 		</div>
 	</nav>
 
-
 	<!-- Page Content -->
 	<div class="container">
 
+		<form action="./Enchere" method="post">
+			<div class="card-body">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
 		<!-- Page Heading -->
-		<h1 class="my-2">Liste des ench�res</h1>
-		<form action="./AffichageUtilisateur" method="post">
-			<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-				<div class="card h-100">
+		<h1 class="my-2">Liste des enchères</h1>
+		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
 
-					<div class="form-group"></div>
+		<h1>PC Gamer pour travailler</h1>
+		
+		<p>Categorie : Informatique</p>
+		
+		<p> Mise a prix  100 points </p>
+			
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-4" for="prixInitial">Mise à prix : </label>
+					<div class="col-md-8">
+						<input type="number" class="form-control" id="prixenchere" required
+							name="prixenchere">
+					</div>
+					<button type="submit" class="btn btn-primary">Enchérir</button>
+					
 				</div>
-				<div class="form-group">
-					<label for="password">Pseudo </label> <input class="form-control"
-						id="psd" required name="psd" type="text">
-					<button type="submit" class="btn btn-primary btn-lg btn-block"
-						id="belodie" name="belodie">Rechercher</button>
-						
-						<a
-								href="${pageContext.servletContext.contextPath}/Enchere"><input
-								type="button" class="btn btn-primary  "
-								value="Supprimer mon compte"></a>
-						
-
-				</div>
-
 			</div>
-		</form>
+	</div>
+	</div>
+	</div>
+	</div>
+	
+
+		</div>
+</form>
 	</div>
 	<!-- /.container -->
 
