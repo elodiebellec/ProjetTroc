@@ -27,7 +27,7 @@ public class DetailVenteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int no_article = Integer.parseInt(request.getParameter("param")) ;
+		int no_article = Integer.parseInt(request.getParameter("id_article")) ;
 		
 		try {
 			ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
