@@ -140,11 +140,21 @@
 
 		</c:if>
 
-		<c:if test="${isProprietaireArticle}">
+		<c:if test="${isProprietaireArticle && isDateModifiable}">
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="maProposition"> Je suis le
-						vendeur </label>
+					<button type="button" class="btn btn-light">Modifier la vente</button>
+					<div class="col-md-8"></div>
+				</div> 
+			</div>
+
+		</c:if>
+		
+
+		<c:if test="${isProprietaireArticle && !isDateModifiable}">
+			<div class="form-group">
+				<div class="form-row">
+				<div>L'enchère a déjà commencé, vous ne pouvez pas la modifier</div>	
 					<div class="col-md-8"></div>
 				</div> 
 			</div>
