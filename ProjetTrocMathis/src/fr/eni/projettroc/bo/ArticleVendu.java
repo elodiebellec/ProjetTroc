@@ -143,12 +143,6 @@ public class ArticleVendu {
 		if (no_article != other.no_article)
 			return false;
 		return true;
-	}
-	
-	
-	
-	
-	
-	
+	}	
 
 }
