@@ -29,9 +29,10 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	private static final String SELECT_ALL_BY_CATEGORIE = "SELECT * FROM `articles_vendus` WHERE `no_categorie`=?";
 	private static final String SELECT_BY_NO = "SELECT * FROM `articles_vendus` WHERE `no_article`=?";
 	private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `articles_vendus` WHERE `no_utilisateur`= ?";
+
 	
 	@Override
-	public void insert(ArticleVendu article) throws BusinessException {
+	public int insert(ArticleVendu article) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, article.getNom_article());
@@ -57,8 +58,11 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 			be.addError(Errors.INSERT_OBJET_ECHEC);
 			throw be;
 		}
+		
+		return article.getNo_article();
 
 	}
+	
 	
 	@Override
 	public void deleteArticle(int no_Article) throws BusinessException {
@@ -254,6 +258,9 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 
 		return article;
 	}
+	
+	
+	
 
 	
 	

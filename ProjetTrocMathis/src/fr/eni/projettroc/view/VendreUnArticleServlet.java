@@ -70,8 +70,17 @@ public class VendreUnArticleServlet extends HttpServlet {
         LocalDate date_fin_encheres  = LocalDate.parse(dateFinEncheres, formatter);
     
         try {
-			ArticleVenduManager.getArticleVenduManager().validetAjoutArticle(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial,  no_categorie, no_user);
-			request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+        	
+        	
+			ArticleVendu articleVendu = ArticleVenduManager.getArticleVenduManager().valideAjoutArticle(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial,  no_categorie, no_user);
+		//	request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+			
+			
+			
+			request.getRequestDispatcher("/DetailVente?id_article=" + articleVendu.getNo_article()).forward(request, response);
+		
+			
+			
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

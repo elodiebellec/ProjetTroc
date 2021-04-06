@@ -33,6 +33,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
     
     public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
 		utilisateur.setPseudo(rs.getString("pseudo"));
 		utilisateur.setNom(rs.getString("nom"));
 		utilisateur.setPrenom(rs.getString("prenom"));

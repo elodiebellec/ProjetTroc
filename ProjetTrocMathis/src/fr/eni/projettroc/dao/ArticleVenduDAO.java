@@ -9,7 +9,7 @@ import fr.eni.projettroc.exception.BusinessException;
 
 public interface ArticleVenduDAO {
 	
-	public void insert(ArticleVendu article) throws BusinessException;
+	public int insert(ArticleVendu article) throws BusinessException;
 	
 	public void update(ArticleVendu article) throws BusinessException;
 	
