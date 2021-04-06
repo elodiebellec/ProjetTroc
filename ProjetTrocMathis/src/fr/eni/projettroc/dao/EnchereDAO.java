@@ -13,6 +13,7 @@ public interface EnchereDAO {
 	List<Enchere> getListByNoUtilisateur(int no_utilisateur) throws BusinessException;
 	
 
+	public void insert(Enchere enchere) throws BusinessException;
 	}
 
 

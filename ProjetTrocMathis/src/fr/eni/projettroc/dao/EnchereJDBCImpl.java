@@ -8,21 +8,31 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Categorie;
 import fr.eni.projettroc.bo.Enchere;
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.exception.BusinessException;
+import fr.eni.projettroc.exception.Errors;
 
 
 
 
 public class EnchereJDBCImpl implements EnchereDAO{
 	
-	private static final String SELECT_ALL = "SELECT * FROM `encheres`";
+
+
+	private static final String SELECT_ALL = "SELECT `no_enchere`,`date_enchere`,`montant_enchere`,`no_article`,`no_utilisateur` FROM `encheres`;";
+    private static final String INSERT = "insert into encheres (date_enchere, montant_enchere, no_article, no_utilisateur) values(?,?,?,?)";
+
 	private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `encheres` WHERE `no_utilisateur`=?";
 
+
+
 	private Enchere enchereBuilder(ResultSet rs) throws SQLException, BusinessException {
+
 		Enchere enchere = new Enchere();
 		
 		UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
@@ -34,6 +44,10 @@ public class EnchereJDBCImpl implements EnchereDAO{
 		enchere.setNo_enchere(rs.getInt("no_enchere"));
 		enchere.setDate_enchere(rs.getDate("date_enchere").toLocalDate());
 		enchere.setMontant_enchere(rs.getInt("montant_enchere"));
+
+		enchere.setNo_enchere(rs.getInt("no_article"));		
+		//enchere.setUtilisateur(rs.getInt("no_utilisateur"));
+
 		
 		if(rs.getInt("no_article") != 0) {
 			//L'instance utilisateur r�cup�re les donn�es de utilisateurDAO
@@ -47,6 +61,7 @@ public class EnchereJDBCImpl implements EnchereDAO{
 			enchere.setUtilisateur(utilisateur);
 		}
 				
+
 		return enchere;
 	}
 
@@ -101,5 +116,31 @@ public class EnchereJDBCImpl implements EnchereDAO{
 	}
 	
 	
+	public void insert(Enchere enchere) throws BusinessException{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement requete = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			requete.setDate(1,java.sql.Date.valueOf(enchere.getDate_enchere()));
+			requete.setInt(2, enchere.getMontant_enchere());
+			requete.setInt(3, enchere.getArticle().getNo_article());
+			requete.setInt(4, enchere.getUtilisateur().getNo_utilisateur());
+			requete.executeUpdate();
+		ResultSet rs = requete.getGeneratedKeys();
+		if (rs.next()) {
+			enchere.setNo_enchere(rs.getInt(1));
+		} else {
+			BusinessException be = new BusinessException();
+			be.addError(Errors.INSERT_OBJET_ECHEC);
+			throw be;
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		BusinessException be = new BusinessException(e.getMessage());
+		be.addError(Errors.INSERT_OBJET_ECHEC);
+		throw be;
+	}
+
+
+		
+}
 	
 }
