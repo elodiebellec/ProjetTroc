@@ -57,7 +57,7 @@
 
 	<!-- Page Content -->
 	<div class="container">
-
+     <form action="./DetailVente" method="post">
 		<!-- Page Heading -->
 		<h1 class="my-2">Détail vente</h1>
 
@@ -86,7 +86,9 @@
 			<div class="form-row">
 				<label class="col-md-2" for="meilleureOffre"> Meilleure
 					Offre : </label>
-				<div class="col-md-8">${articlejsp.prix_vente} pts par </div>
+
+				<div class="col-md-8">${montantmaximum} De ${usermax}</div>
+
 			</div>
 		</div>
 
@@ -158,7 +160,23 @@
 					<div class="col-md-8"></div>
 				</div> 
 			</div>
+			
+			
+				
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-4" for="prixInitial">Mise à prix : </label>
+					<div class="col-md-8">
+						<input type="number" class="form-control" id="prixenchere" required
+							name="prixenchere">
+					</div>
+					<button type="submit" class="btn btn-primary">Enchérir</button>
+					
+				</div>
+			</div>
+			</c:if>
+			</form>
 
-		</c:if>
+		
 </body>
 </html>
