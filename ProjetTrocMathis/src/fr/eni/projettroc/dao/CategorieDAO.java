@@ -8,9 +8,8 @@ import fr.eni.projettroc.exception.BusinessException;
 
 public interface CategorieDAO {
 
-	public Categorie selectByNoCategorie(int int1) throws BusinessException;
-
-	List<Categorie> getListCategories() throws BusinessException;
+	public List<Categorie> getListCategories() throws BusinessException;
+	public Categorie selectByNoCategorie (int no_categorie) throws BusinessException;
 
 	}
 

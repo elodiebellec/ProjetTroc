@@ -6,8 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
+
+import fr.eni.projettroc.bo.Enchere;
+
 import fr.eni.projettroc.bo.Categorie;
 import fr.eni.projettroc.bo.Utilisateur;
+
 import fr.eni.projettroc.dao.ArticleVenduDAO;
 import fr.eni.projettroc.dao.DAOFactory;
 
@@ -15,7 +19,7 @@ import fr.eni.projettroc.exception.BusinessException;
 
 public class ArticleVenduManager {
 
-	// Attribut pour représenter la couche DAL
+	// Attribut pour reprÃ©senter la couche DAL
 	private ArticleVenduDAO articleVenduDAO;
 
 	private static ArticleVenduManager instance;
@@ -48,10 +52,25 @@ public class ArticleVenduManager {
 	public void deleteArticle(int no_article) throws BusinessException {
 		articleVenduDAO.deleteArticle(no_article);
 	}
-
-	public List<ArticleVendu> listeArticlesParCategorie(int no_categorie) throws BusinessException {
-		return articleVenduDAO.getListByCategorie(no_categorie);
+	
+	/*--------------MÃ©thodes pour les filtres de la page d'accueil --------------------------*/
+	
+	public List<ArticleVendu> listeArticlesParNoUtilisateur(int noUtilisateur) throws BusinessException {
+		return articleVenduDAO.getListByNoUtilisateur(noUtilisateur);
 	}
+	
+	
+	public List<ArticleVendu> listeArticlesParCategorie(List<ArticleVendu> listeArticle, int no_categorie) throws BusinessException {
+		List<ArticleVendu> listeParCategorie = new ArrayList<ArticleVendu>();
+		for (ArticleVendu articleVendu : listeArticle) {
+			if(no_categorie == articleVendu.getCategorie().getNo_categorie()) {
+
+				listeParCategorie.add(articleVendu);
+			}
+		}
+		return listeParCategorie;
+	}
+	
 
 	public List<ArticleVendu> listeArticlesParNom(List<ArticleVendu> listeArticle, String nom)
 			throws BusinessException {
@@ -65,6 +84,49 @@ public class ArticleVenduManager {
 		}
 		return listeParNom;
 	}
+	
+	public List<ArticleVendu> listeArticleParPeriode(List<ArticleVendu> listeArticles, String periode) throws BusinessException{
+		   List<ArticleVendu> listeArticlesParPeriode = new ArrayList<ArticleVendu>();
+		   LocalDate today = LocalDate.now();
+		   switch (periode) {
+				case "AVANT_DEBUT":
+					for (ArticleVendu article : listeArticles) {
+						if(today.compareTo(article.getDate_debut_encheres()) == 1) {
+							listeArticlesParPeriode.add(article);
+						}
+					}
+					break;
+				case "APRES_FIN":
+					for (ArticleVendu article : listeArticles) {
+						if(today.compareTo(article.getDate_fin_encheres()) == 1) {
+							listeArticlesParPeriode.add(article);
+						}	
+					}
+					break;
+				case "EN_COURS":
+					for (ArticleVendu article : listeArticles) {
+						if(today.compareTo(article.getDate_debut_encheres()) != 1 && today.compareTo(article.getDate_fin_encheres()) != 1) {
+							listeArticlesParPeriode.add(article);
+						}
+					}
+					break;		
+				default:
+					listeArticlesParPeriode = listeArticles;
+					break;
+			}
+		   
+		   return listeArticlesParPeriode;
+	}
+		   
+	   
+	/*--------------Fin mÃ©thodes pour les filtres de la page d'accueil --------------------------*/  
+
+
+	
+	public ArticleVendu articleParNumero(int noArticle)  throws BusinessException {
+		return articleVenduDAO.selectByNoArticle(noArticle);
+	}
+	
 
 
 	public ArticleVendu validetAjoutArticle(String nom_article, String description, LocalDate date_debut_encheres,
@@ -105,7 +167,7 @@ public class ArticleVenduManager {
 			return false;
 		}
 		if (nom_article.trim().isEmpty() || nom_article.trim().length() > 30) {
-			be.addError("Le nom de l'article ne doit pas dépasser 30 caractères");
+			be.addError("Le nom de l'article ne doit pas dÃ©passer 30 caractÃ¨res");
 			return false;
 		}
 
@@ -119,7 +181,7 @@ public class ArticleVenduManager {
 			return false;
 		}
 		if (description.trim().isEmpty() || description.trim().length() > 30) {
-			be.addError("La description ne doit pas dépasser 300 caractères");
+			be.addError("La description ne doit pas dÃ©passer 300 caractÃ¨res");
 			return false;
 		}
 
@@ -128,7 +190,7 @@ public class ArticleVenduManager {
 
 	private boolean validerPrixInitial(int prix_initial, BusinessException be) {
 		if (prix_initial < 0) {
-			be.addError("La mise à prix doit être supérieure à zéro");
+			be.addError("La mise Ã  prix doit Ãªtre supÃ©rieure Ã  zÃ©ro");
 			return false;
 		}
 		return true;
@@ -141,12 +203,12 @@ public class ArticleVenduManager {
 		}
 
 		if (date_debut_encheres.isBefore(LocalDate.now())) {
-			be.addError("La date ne peut pas être antérieure à la date du jour");
+			be.addError("La date ne peut pas Ãªtre antÃ©rieure Ã  la date du jour");
 			return false;
 		}
 
 		if (date_fin_encheres.isBefore(date_debut_encheres)) {
-			be.addError("La date de fin doit être supérieure à la date de début des enchères");
+			be.addError("La date de fin doit Ãªtre supÃ©rieure Ã  la date de dÃ©but des enchÃ¨res");
 			return false;
 		}
 

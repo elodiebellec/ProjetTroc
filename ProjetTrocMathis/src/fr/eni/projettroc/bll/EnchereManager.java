@@ -1,6 +1,8 @@
 package fr.eni.projettroc.bll;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Enchere;
@@ -27,7 +29,55 @@ public class EnchereManager {
 		return instance;
 	}
 
-	
+
+   
+   public List<Enchere> toutesLesEncheres() throws BusinessException{
+		
+		return enchereDAO.getListEnchere();
+	}
+
+   /*--------------Méthodes pour les filtres de la page d'accueil --------------------------*/
+   
+   public List<Enchere> toutesLesEncheresParUtilisateur (int no_utilisateur) throws BusinessException {
+	   return enchereDAO.getListByNoUtilisateur(no_utilisateur);
+   }
+   
+   public List<Enchere> listeEnchereParPeriode(List<Enchere> listeEnchere, String periode) throws BusinessException{
+	   List<Enchere> listeEncheresParPeriode = new ArrayList<Enchere>();
+	   LocalDate today = LocalDate.now();
+	   switch (periode) {
+			case "APRES_FIN":
+				for (Enchere enchere : listeEnchere) {
+					if(today.compareTo(enchere.getDate_enchere()) == 1) {
+						listeEncheresParPeriode.add(enchere);
+					}	
+				}
+				break;
+			case "EN_COURS":
+				for (Enchere enchere : listeEnchere) {
+					if(today.compareTo(enchere.getDate_enchere()) != 1) {
+						listeEncheresParPeriode.add(enchere);
+					}
+				}
+				break;		
+			default:
+				listeEncheresParPeriode = listeEnchere;
+				break;
+		}
+	   
+	   return listeEncheresParPeriode;
+}
+   
+   public List<ArticleVendu> ArticlesdeListeEncheres (List<Enchere> listeEnchere) throws BusinessException{
+	   List<ArticleVendu> listeArticle = new ArrayList<ArticleVendu>();
+	   for (Enchere enchere : listeEnchere) {
+		   listeArticle.add(enchere.getArticle());
+	   } 
+	   
+	   return listeArticle;
+	   
+   }
+   
 	public Enchere validerEnchere(LocalDate date_enchere, int montant_enchere, int no_article, int no_utilisateur )throws BusinessException{
 		BusinessException be = new BusinessException();
 		Enchere enchere = new Enchere();
@@ -52,3 +102,24 @@ public class EnchereManager {
 }
 	
 }
+   
+  /* public List<Enchere> toutesLesEncheresEnCours() throws BusinessException{
+	   List<Enchere> listeEncheres = enchereDAO.getListEnchere();
+	   List<Enchere> listeEnchereEnCours = new ArrayList<Enchere>();
+	   LocalDate today = LocalDate.now();
+	   for (Enchere enchere : listeEncheres) {
+		if(today.compareTo(enchere.getDate_enchere()) != 1) {
+			listeEnchereEnCours.add(enchere);
+		}
+	}
+	   
+		return listeEnchereEnCours;
+	}*/
+   
+   
+	/*--------------Fin méthodes pour les filtres de la page d'accueil --------------------------*/  
+
+
+
+
+

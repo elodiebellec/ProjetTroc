@@ -54,10 +54,12 @@ import java.time.LocalDate;
 
 
 	
-
 	public void setArticle(ArticleVendu article) {
 		this.article = article;
 	}
+	
+
+
 
 	public Utilisateur getUtilisateur() {
 		return utilisateur;

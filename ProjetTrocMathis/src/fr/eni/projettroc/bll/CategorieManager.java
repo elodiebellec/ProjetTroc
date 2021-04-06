@@ -29,7 +29,7 @@ public class CategorieManager {
 		return instance;
 	}
    
-   public List<Categorie> toutesLesCategorie() throws BusinessException{
+   public List<Categorie> toutesLesCategories() throws BusinessException{
 		//Aucune vérification
 		//Seulement l'appel à la couche DAL
 		return categorieDAO.getListCategories();

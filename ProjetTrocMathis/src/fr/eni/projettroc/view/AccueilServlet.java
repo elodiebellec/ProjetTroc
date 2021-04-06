@@ -14,8 +14,10 @@ import org.eclipse.jdt.internal.compiler.ast.CastExpression;
 
 import fr.eni.projettroc.bll.ArticleVenduManager;
 import fr.eni.projettroc.bll.CategorieManager;
+import fr.eni.projettroc.bll.EnchereManager;
 import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Categorie;
+import fr.eni.projettroc.bo.Enchere;
 import fr.eni.projettroc.exception.BusinessException;
 
 /**
@@ -25,9 +27,11 @@ import fr.eni.projettroc.exception.BusinessException;
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public List<Categorie> listeCategories;
-	public List<ArticleVendu> listeArticleVendu;
-	public List<ArticleVendu> listeArticleFiltree;
+	public List<ArticleVendu> listeArticles;
+	public List<ArticleVendu> listeArticleEnCours;
+	public List<ArticleVendu> listeArticleCategorie;
 	public List<ArticleVendu> listeArticleParNom;
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -49,20 +53,17 @@ public class AccueilServlet extends HttpServlet {
 		try {
 
 			// Afficher la liste des catégorie
-			listeCategories = CategorieManager.getCategorieManager().toutesLesCategorie();
+			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
-			// Afficher articles vendus
-			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
-			session.setAttribute("listeArticleVendu", listeArticleVendu);
-			// Récupérer une liste des articles par catégorie
-			// listeArticleVendu =
-			// ArticleVenduManager.getArticleVenduManager().listeArticlesParCategorie(1);
+			//Récupérer la liste des article en cours de vente
+			listeArticles = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticles, "");
+			session.setAttribute("listeArticleEnCours", listeArticleEnCours);
 
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 
 	}
@@ -86,21 +87,22 @@ public class AccueilServlet extends HttpServlet {
 		System.out.println(nomSelect);
 		// Afficher les articles vendus par catégorie
 		try {
+			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticles();
 			// Si l'utilisateur sélectionne toutes les catégories, pas de filtre par
 			// catégorie
 			// On récupère le libellé de la catégorie avec le numéro de catégorie du
 			// formulaire
-			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {
-				listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {				
+				listeArticleCategorie = listeArticleEnCours;
 			} else {
-				listeArticleFiltree = ArticleVenduManager.getArticleVenduManager()
-						.listeArticlesParCategorie(numCategorie);
+				listeArticleCategorie = ArticleVenduManager.getArticleVenduManager()
+						.listeArticlesParCategorie(ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticleEnCours, ""), numCategorie);
 			}
-			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleFiltree,
+			listeArticleParNom = ArticleVenduManager.getArticleVenduManager().listeArticlesParNom(listeArticleCategorie,
 					nomSelect);
-			session.setAttribute("listeArticleVendu", listeArticleParNom);
-			listeArticleVendu = ArticleVenduManager.getArticleVenduManager().listeArticles();
-			session.setAttribute("listeCategories", listeCategories);
+			session.setAttribute("listeArticleEnCours", listeArticleParNom);
+			
+			session.getAttribute("listeCategories");
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
