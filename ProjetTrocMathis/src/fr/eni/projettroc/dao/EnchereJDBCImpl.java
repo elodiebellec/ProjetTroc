@@ -26,8 +26,8 @@ public class EnchereJDBCImpl implements EnchereDAO{
 
 	private static final String SELECT_ALL = "SELECT `no_enchere`,`date_enchere`,`montant_enchere`,`no_article`,`no_utilisateur` FROM `encheres`;";
     private static final String INSERT = "insert into encheres (date_enchere, montant_enchere, no_article, no_utilisateur) values(?,?,?,?)";
-
-	private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `encheres` WHERE `no_utilisateur`=?";
+    private static final String SELECT_ALL_BY_NO_ARTICLE = "SELECT * FROM encheres where no_article=?";
+    private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `encheres` WHERE `no_utilisateur`=?";
 
 
 
@@ -138,9 +138,29 @@ public class EnchereJDBCImpl implements EnchereDAO{
 		be.addError(Errors.INSERT_OBJET_ECHEC);
 		throw be;
 	}
-
-
-		
 }
 	
+	public List<Enchere> selectByNoArticle(int no_article) throws BusinessException{
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(SELECT_ALL_BY_NO_ARTICLE);
+			stmt.setInt(1, no_article);
+			ResultSet rs = stmt.executeQuery();
+		
+			while (rs.next()) {
+				listeEnchere.add(enchereBuilder(rs));
+				}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur getListByCategorie DAO");
+			throw be;
+		}
+
+		return listeEnchere;
+	}
 }
+	
+	
+
