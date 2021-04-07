@@ -20,6 +20,7 @@ public class EnchereManager {
 
 	private static EnchereManager instance;
 
+
 	private EnchereManager() {
 		enchereDAO = DAOFactory.getEnchereDAO();
 	}
@@ -37,7 +38,14 @@ public class EnchereManager {
 		return enchereDAO.getListEnchere();
 	}
 
-	/*--------------Méthodes pour les filtres de la page d'accueil --------------------------*/
+	
+	public List<Enchere> enchereParNum(int no_article) throws BusinessException {
+
+		return enchereDAO.selectByNoArticle(no_article);
+	}
+
+
+	/*--------------MÃ©thodes pour les filtres de la page d'accueil --------------------------*/
 
 	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
 		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
@@ -79,9 +87,12 @@ public class EnchereManager {
 
 	}
 
-	public Enchere validerEnchere(LocalDate date_enchere, int montant_enchere, int no_article, int no_utilisateur)
-			throws BusinessException {
+	public Enchere validerEnchere(LocalDate date_enchere, int montant_enchere, int no_article, int no_utilisateur )throws BusinessException{
+
 		BusinessException be = new BusinessException();
+		boolean isEnchereSuperieur = verifEnchere(montant_enchere, no_article, be);
+		boolean isVerifPrixreserve = verifPrixreserve(montant_enchere, no_article, be);
+		if(isEnchereSuperieur && isVerifPrixreserve) {
 		Enchere enchere = new Enchere();
 
 		Utilisateur utilisateur = new Utilisateur();
@@ -94,24 +105,72 @@ public class EnchereManager {
 		enchere.setMontant_enchere(montant_enchere);
 		enchere.setArticle(article);
 		enchere.setUtilisateur(utilisateur);
-
 		enchereDAO.insert(enchere);
-
 		return enchere;
-
+		
+		
+	}else {
+		throw be;
 	}
+		
+	}
+	
+
+	public boolean verifEnchere(int montant_enchere , int no_article, BusinessException be) {
+	List<Enchere> enchere = null;
+	try {
+		enchere = enchereDAO.selectByNoArticle(no_article);
+	} catch (BusinessException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+     for(Enchere e : enchere) {
+    	 if(montant_enchere < e.getMontant_enchere() ) {
+    		 be.addError("Votre enchere est inferieur à l'enchere precedente");
+				return false;	 
+	}
+	
+   }
+    return true;
+ }
+	
+  public boolean verifPrixreserve(int montant_enchere, int no_article , BusinessException be) {
+	
+	 ArticleVendu article = null;
+	try {
+		article = ArticleVenduManager.getArticleVenduManager().articleParNumero(no_article);
+	} catch (BusinessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	 int prixreserve = article.getPrix_initial();
+	 if(montant_enchere < prixreserve) {
+		 be.addError("Votre enchère est inferieur à la reserve");
+		return false; 
+	 }
+	 return true;
+  }
+  
 
 }
 
-/*
- * public List<Enchere> toutesLesEncheresEnCours() throws BusinessException{
- * List<Enchere> listeEncheres = enchereDAO.getListEnchere(); List<Enchere>
- * listeEnchereEnCours = new ArrayList<Enchere>(); LocalDate today =
- * LocalDate.now(); for (Enchere enchere : listeEncheres) {
- * if(today.compareTo(enchere.getDate_enchere()) != 1) {
- * listeEnchereEnCours.add(enchere); } }
- * 
- * return listeEnchereEnCours; }
- */
 
-/*--------------Fin méthodes pour les filtres de la page d'accueil --------------------------*/
+	
+
+   
+  /* public List<Enchere> toutesLesEncheresEnCours() throws BusinessException{
+	   List<Enchere> listeEncheres = enchereDAO.getListEnchere();
+	   List<Enchere> listeEnchereEnCours = new ArrayList<Enchere>();
+	   LocalDate today = LocalDate.now();
+	   for (Enchere enchere : listeEncheres) {
+		if(today.compareTo(enchere.getDate_enchere()) != 1) {
+			listeEnchereEnCours.add(enchere);
+		}
+	}
+	   
+		return listeEnchereEnCours;
+	}*/
+   
+   
+	/*--------------Fin méthodes pour les filtres de la page d'accueil --------------------------*/
+

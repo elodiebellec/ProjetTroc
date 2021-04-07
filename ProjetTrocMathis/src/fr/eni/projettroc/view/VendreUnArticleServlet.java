@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.catalina.User;
-
 import fr.eni.projettroc.bll.ArticleVenduManager;
 import fr.eni.projettroc.bll.CategorieManager;
 import fr.eni.projettroc.bll.RetraitManager;
@@ -57,7 +54,8 @@ public class VendreUnArticleServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 //Récupérer les données du formulaire
+
+		 //RÃ©cupÃ©rer les donnÃ©es du formulaire
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         int no_user = (int) session.getAttribute("idUser");
@@ -76,13 +74,16 @@ public class VendreUnArticleServlet extends HttpServlet {
     
         try {
         	
-        	//injecter l'article dans la base de données
+        	//injecter l'article dans la base de donnÃ©es
 			ArticleVendu articleVendu = ArticleVenduManager.getArticleVenduManager().valideAjoutArticle(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial,  no_categorie, no_user);
-			//injecter le retrait dans la base de données
+
+			//injecter le retrait dans la base de donnÃ©es
 			Retrait retrait = RetraitManager.getRetraitManager().valideAjoutRetrait(articleVendu, rue, codePostal, ville);
+
 			
+			 request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 			
-			request.getRequestDispatcher("/DetailVente?id_article=" + articleVendu.getNo_article()).forward(request, response);
+		//	request.getRequestDispatcher("/DetailVente?param=" + articleVendu.getNo_article()).forward(request, response);
 		
 			
 			

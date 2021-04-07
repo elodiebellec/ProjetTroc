@@ -249,9 +249,7 @@ public class ArticleVenduManager {
 	}
 	
 	public ArticleVendu recupererArticle(int no_article) throws BusinessException{
-		
-			
-		return articleVenduDAO.selectByNoArticle(no_article);
+			return articleVenduDAO.selectByNoArticle(no_article);
 	}
 
 }

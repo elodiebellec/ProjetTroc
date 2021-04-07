@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page errorPage="error.jsp" isErrorPage="false"%>
 
@@ -15,7 +15,10 @@
 
 
 <body>
+
 	<%@ include file="template/navBarConnectee.html" %>
+
+
 
 	
 	<c:if test="${!empty errors}">
@@ -86,9 +89,11 @@
 					<label class="col-md-2" for="photoArticle">Photo de
 						l'article : </label>
 					<div class="col-md-8">
+					
+						<button type="button" class="btn btn-light">UPLOADER</button>
 
-						<input type="file" id="image" required name="image"
-							accept="image/png, image/jpeg">
+					<!--	<input type="file" id="image" required name="image"
+							accept="image/png, image/jpeg"> -->
 					</div>
 
 				</div>
@@ -98,7 +103,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="prixInitial">Mise à prix : </label>
+					<label class="col-md-2" for="prixInitial">Mise Ã  prix : </label>
 					<div class="col-md-8">
 						<input type="number" class="form-control" id="prixInitial" required
 							name="prixInitial">
@@ -108,8 +113,8 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="dateDebutEncheres">Début de
-						l'enchère : </label>
+					<label class="col-md-2" for="dateDebutEncheres">DÃ©but de
+						l'enchÃ¨re : </label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateDebutEncheres" required
 							name="dateDebutEncheres">
@@ -120,7 +125,7 @@
 			<div class="form-group">
 				<div class="form-row">
 
-					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchère :
+					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchÃ¨re :
 					</label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateFinEncheres" required
