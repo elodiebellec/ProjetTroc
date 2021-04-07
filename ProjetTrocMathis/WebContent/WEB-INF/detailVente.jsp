@@ -118,11 +118,9 @@
 					<input class="choixProposition" type="number" class="form-control" id="prixenchere" required
 							name="prixenchere">
 					<div class="col-md-1"></div>		
-<<<<<<< HEAD
+
 					<button type="submit" class="btn btn-light">Enchérir</button>
-=======
-					<button type="button" class="btn btn-light">Encherir</button>
->>>>>>> branch 'master' of https://github.com/elodiebellec/ProjetTroc.git
+
 				</div>
 			</div>
 

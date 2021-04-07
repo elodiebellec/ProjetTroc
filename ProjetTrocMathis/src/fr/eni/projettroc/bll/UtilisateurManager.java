@@ -2,12 +2,12 @@ package fr.eni.projettroc.bll;
 
 import java.util.List;
 
-
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.UtilisateurDAO;
 
 import fr.eni.projettroc.exception.BusinessException;
+import sun.nio.ch.Util;
 
 public class UtilisateurManager {
 	// Attribut pour repr�senter la couche DAL
@@ -28,8 +28,8 @@ public class UtilisateurManager {
 	}
 
 	public Utilisateur modifierUnUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String code_postal, String ville, String mot_de_passe, String ancienmotdepasse, int no_utilisateur,String saisieancienmotdepasse)
-			throws BusinessException {
+			String rue, String code_postal, String ville, String mot_de_passe, String ancienmotdepasse,
+			int no_utilisateur, String saisieancienmotdepasse) throws BusinessException {
 		BusinessException be = new BusinessException();
 		Utilisateur u = null;
 		boolean isValidPseudo = validatePseudo(pseudo, be);
@@ -56,7 +56,6 @@ public class UtilisateurManager {
 			throw be;
 		}
 	}
-	
 
 	public Utilisateur validerLaConnection(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		BusinessException be = new BusinessException();
@@ -73,7 +72,7 @@ public class UtilisateurManager {
 	public Utilisateur rechercherParPseudo(String utilisateur) throws BusinessException {
 		return utilisateurDAO.selectByPseudo(utilisateur);
 	}
-	
+
 	public Utilisateur rechercherParNumero(int no_utilisateur) throws BusinessException {
 		return utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
 	}
@@ -108,6 +107,44 @@ public class UtilisateurManager {
 		}
 	}
 
+	public Utilisateur verificationArgent(int credit, int no_utilisateur) throws BusinessException {
+		BusinessException be = new BusinessException();
+		Utilisateur user = null;
+		user = utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
+		int argentuser = user.getCredit();
+		boolean isAssezArgent = argentDisponible(credit, argentuser, no_utilisateur, be);
+        if(isAssezArgent) {
+		return user;
+	
+	} else {
+		throw be;
+	}
+	}
+	
+	public Utilisateur validerArgentEnchere(int credit, int no_utilisateur) throws BusinessException {
+		Utilisateur user = null;
+		user = utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
+		int argentuser = user.getCredit();
+		int argentdemander = credit;
+		int argentreel = argentuser - argentdemander;
+		user.setCredit(argentreel);
+		user.setNo_utilisateur(no_utilisateur);
+		utilisateurDAO.updateCredit(user);
+		return user;
+	}
+	
+	public Utilisateur rendreArgentEnchere(int credit, int no_utilisateur) throws BusinessException {
+		Utilisateur user = null;
+		user = utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
+		int argentuser = user.getCredit();
+		int argentdemander = credit;
+		int argentreel = argentuser + argentdemander;
+		user.setCredit(argentreel);
+		user.setNo_utilisateur(no_utilisateur);
+		utilisateurDAO.updateCredit(user);
+		return user;
+	}
+
 	public Utilisateur afficherPersonne(String pseudo) throws BusinessException {
 		return utilisateurDAO.selectByPseudo(pseudo);
 	}
@@ -135,16 +172,23 @@ public class UtilisateurManager {
 		return true;
 	}
 
-	
-	
-	private boolean validateAncienMdp(String saisieancienmotdepasse, String ancienmotdepasse, BusinessException be) {
-	if(!saisieancienmotdepasse.equals(ancienmotdepasse)) {
-		be.addError("Votre ancien mot de passe est incorrect");
-		return false;
-	}
+	private boolean argentDisponible(int credit, int argentuser, int no_utilsateur, BusinessException be) {
+		if (argentuser < credit) {
+			be.addError("Vous n'avez pas assez d'argent");
+			return false;
+			
+		}
 		return true;
 	}
-	
+
+	private boolean validateAncienMdp(String saisieancienmotdepasse, String ancienmotdepasse, BusinessException be) {
+		if (!saisieancienmotdepasse.equals(ancienmotdepasse)) {
+			be.addError("Votre ancien mot de passe est incorrect");
+			return false;
+		}
+		return true;
+	}
+
 	private boolean validatePseudo(String pseudo, BusinessException be) {
 		if (pseudo == null) {
 			be.addError("Login est obligatoire");

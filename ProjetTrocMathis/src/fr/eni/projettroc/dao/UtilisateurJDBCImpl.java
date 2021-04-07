@@ -28,7 +28,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
     private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
     private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
     private static final String SELECT_PERSONNE = "SELECT pseudo FROM utilisateurs";
-	
+	private static final String UPDATE_CREDIT = "UPDATE utilisateurs SET credit=? WHERE no_utilisateur=?";
     
     
     public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
@@ -159,8 +159,17 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	}
 
 
-
-
+   public void updateCredit(Utilisateur utilisateur) throws BusinessException{
+	   try(Connection cnx = ConnectionProvider.getConnection()){
+           PreparedStatement requete = cnx.prepareStatement(UPDATE_CREDIT);
+          requete.setInt(1, utilisateur.getCredit()); 
+          requete.setInt(2, utilisateur.getNo_utilisateur());
+          requete.executeUpdate();
+	   }catch (Exception e){
+			  
+           throw new BusinessException(e.getMessage());
+       }
+   }
 	
 	
 	 public void update(Utilisateur utilisateur)throws BusinessException{
