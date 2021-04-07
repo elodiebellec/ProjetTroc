@@ -205,7 +205,7 @@ public class ArticleVenduManager {
 			be.addError("La description est obligatoire");
 			return false;
 		}
-		if (description.trim().isEmpty() || description.trim().length() > 30) {
+		if (description.trim().isEmpty() || description.trim().length() > 300) {
 
 			be.addError("La description ne doit pas dépasser 300 caractères");
 
