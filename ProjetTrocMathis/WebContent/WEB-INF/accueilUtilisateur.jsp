@@ -74,12 +74,7 @@
 			<c:forEach var="c" items="${listeArticles}">
 				<div class="card h-100">
 
-					<a
-						href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
-						class="badge" title="Supprimer la liste"><i
-						class="material-icons">Detail</i></a>
-					<p>${c.nom_article}</p>
-
+					
 
 					<p><a href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
 				title="Article"><i>${c.nom_article}</i></a></p>
