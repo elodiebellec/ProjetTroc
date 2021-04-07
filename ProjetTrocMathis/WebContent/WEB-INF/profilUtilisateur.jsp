@@ -50,7 +50,7 @@
 						</tr>
 						<tr>
 							<th scope="row"></th>
-							<td>Pr&eacute;nom :</td>
+							<td>Prénom :</td>
 							<td>${user.prenom}</td>
 						</tr>
 						<tr>
@@ -60,7 +60,7 @@
 						</tr>
 						<tr>
 							<th scope="row"></th>
-							<td>T&eacute;l&eacute;phone :</td>
+							<td>Téléphone :</td>
 							<td>${user.telephone}</td>
 						</tr>
 						<tr>
@@ -80,7 +80,7 @@
 						</tr>
 						<tr>
 							<th scope="row"></th>
-							<td>Cr&eacute;dit :</td>
+							<td>Crédit :</td>
 							<td>${user.credit}</td>
 						</tr>
 					</table>

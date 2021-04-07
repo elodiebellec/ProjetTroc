@@ -45,7 +45,7 @@
 						</tr>
 						<tr>
 							<th scope="row"></th>
-							<td>Pr&eacute;nom :</td>
+							<td>Prénom :</td>
 							<td>${users.prenom}</td>
 						</tr>
 						<tr>
@@ -55,7 +55,7 @@
 						</tr>
 						<tr>
 							<th scope="row"></th>
-							<td>T&eacute;l&eacute;phone :</td>
+							<td>Téléphone :</td>
 							<td>${users.telephone}</td>
 						</tr>
 						<tr>

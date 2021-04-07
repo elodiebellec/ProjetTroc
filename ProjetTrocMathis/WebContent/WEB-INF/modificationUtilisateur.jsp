@@ -65,12 +65,12 @@
 									aria-describedby="nomHelp" placeholder="Entrer votre Nom">
 							</div>
 							<div class="form-group">
-								<label for="prenom">Pr&eacute;nom</label> <input type="text"
+								<label for="prenom">Prénom</label> <input type="text"
 									class="form-control" id="identite" name="prenom"
 									aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
 							</div>
 							<div class="form-group">
-								<p>Cr&eacute;dit : ${user.credit}</p>
+								<p>Crédit : ${user.credit}</p>
 							</div>
 
 						</div>
@@ -82,7 +82,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="telephone">T&eacute;l&eacute;phone</label> <input type="text"
+								<label for="telephone">Téléphone</label> <input type="text"
 									class="form-control" id="telephone" name="telephone"
 									placeholder="Entrer votre telephone">
 							</div>

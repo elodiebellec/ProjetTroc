@@ -24,7 +24,7 @@
 	<div class="container">
 
 		<!-- Page Heading -->
-		<h1 class="my-2">Liste des ench&egrave;res</h1>
+		<h1 class="my-2">Liste des enchères</h1>
 		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
 
 			
@@ -52,7 +52,7 @@
 	
 					 <p>${c.nom_article}</p>
 					 <p>Prix : ${c.prix_initial} points</p>				
-       				 <p>Fin de l'ench&egrave;re : <tags:localDate date="${c.date_fin_encheres}"/></p>	       				
+       				 <p>Fin de l'enchère : <tags:localDate date="${c.date_fin_encheres}"/></p>	       				
 					 <p>Vendeur : ${c.utilisateur.pseudo}</p>
 
 				</div>

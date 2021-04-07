@@ -48,7 +48,7 @@
 							<div class="groupecoco">
 								<input type="submit" value="Connexion"
 									class="btn btn-primary btn-lg"> <a
-									href="Mot de passe oublié">Mot de passe oubli&eacute;</a>
+									href="Mot de passe oublié">Mot de passe oublié</a>
 							</div>
 						</div>
 

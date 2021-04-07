@@ -10,18 +10,36 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-<%@ include file="template/head.html" %>
-<title>Detail vente</title>
+<%@ include file="template/head.html"%>
 
+<head>
+<title>Detail Vente</title>
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="css/style.css" rel="stylesheet">
 
 </head>
 
-
 <body>
-	
-<%@ include file="template/navBarNavigation.html" %>
-
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="#">ENI Encheres</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link"
+						href="./AccueilUtilisateur">Accueil </a></li>
+					<li class="nav-item active"><a class="nav-link"
+						href="./Deconnexion">Se deconnecter </a>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 	<c:if test="${!empty errors}">
 		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
@@ -41,7 +59,7 @@
 	<div class="container">
      <form action="./DetailVente" method="post">
 		<!-- Page Heading -->
-		<h1 class="my-2">Detail vente</h1>
+		<h1 class="my-2">Vous n'avez pas remporté la vente</h1>
 
 
 		<div class="form-group">
@@ -55,16 +73,7 @@
 			</div>
 		</div>
 
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="categorie">Catégorie </label>
-				<div class="col-md-8">${articlejsp.categorie.libelle}</div>
-
-			</div>
-		</div>
-
-
-		<div class="form-group">
+        <div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="meilleureOffre"> Meilleure
 					Offre : </label>
@@ -81,13 +90,6 @@
 			</div>
 		</div>
 
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="finEnchere"> Fin de l'enchère:
-				</label>
-				<div class="col-md-8"><tags:localDate date="${articlejsp.date_fin_encheres}" /></div>
-			</div>
-		</div>
 
 		<div class="form-group">
 			<div class="form-row">
@@ -111,43 +113,16 @@
 
 
 
-		<c:if test="${!isProprietaireArticle}">
+		<c:if test="${isProprietaireArticle}">
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="maProposition"> Ma proposition : </label>						
-					<input class="choixProposition" type="number" class="form-control" id="prixenchere" required
-							name="prixenchere">
-					<div class="col-md-1"></div>		
-<<<<<<< HEAD
-					<button type="submit" class="btn btn-light">Enchérir</button>
-=======
-					<button type="button" class="btn btn-light">Encherir</button>
->>>>>>> branch 'master' of https://github.com/elodiebellec/ProjetTroc.git
-				</div>
-			</div>
-
-		</c:if>
-
-		<c:if test="${isProprietaireArticle && isDateModifiable}">
-			<div class="form-group">
-				<div class="form-row">
-					<button type="button" class="btn btn-light">Modifier la vente</button>
-					<div class="col-md-8"></div>
-				</div> 
-			</div>
-
-		</c:if>
-		
-
-		<c:if test="${isProprietaireArticle && !isDateModifiable}">
-			<div class="form-group">
-				<div class="form-row">
-				<div>L'enchere a deja commencer, vous ne pouvez pas la modifier</div>	
+					<label class="col-md-2" for="maProposition"> Je suis le
+						vendeur </label>
 					<div class="col-md-8"></div>
 				</div> 
 			</div>
 			
-
+		
 			</c:if>
 			</form>
 

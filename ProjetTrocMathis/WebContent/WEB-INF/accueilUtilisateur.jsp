@@ -24,7 +24,7 @@
 	<div class="container">
 
 		<!-- Page Heading -->
-		<h1 class="my-2">Liste des ench&egrave;res</h1>
+		<h1 class="my-2">Liste des encheres</h1>
 		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
 
 
@@ -52,9 +52,9 @@
 					<input type="radio" name="typeTransaction" value="achat" checked>
 
 					<label for="achat"> Achats</label><br> 
-						<input type="checkbox" name="encoursEnchere" value="encoursEnchere" checked> ench&egrave;res ouvertes<br>      
-        				<input type="checkbox" name="enchereUtilisateur" value="enchereUtilisateur"> mes ench&egrave;res<br>      
-        				<input type="checkbox" name="enchereRemportee" value="enchereRemportee"> mes ench&egrave;res remport&eacute;es<br>      
+						<input type="checkbox" name="encoursEnchere" value="encoursEnchere" checked> encheres ouvertes<br>      
+        				<input type="checkbox" name="enchereUtilisateur" value="enchereUtilisateur"> mes encheres<br>      
+        				<input type="checkbox" name="enchereRemportee" value="enchereRemportee"> mes encheres remportées<br>      
 
 				</div>
 				<br>
@@ -64,8 +64,8 @@
 					<input type="radio" name="typeTransaction" value="vente">
 					<label for="vente"> Mes ventes</label><br> 
 						<input type="checkbox" name="encoursVente" value="encoursVente"> mes ventes en cours<br>      
-        				<input type="checkbox" name="futureVente" value="futureVente"> ventes non d&eacute;but&eacute;es<br>      
-        				<input type="checkbox" name="venteTerminee" value="venteTerminee"> ventes termin&eacute;es<br>     
+        				<input type="checkbox" name="futureVente" value="futureVente"> ventes non débutées<br>      
+        				<input type="checkbox" name="venteTerminee" value="venteTerminee"> ventes terminées<br>     
 
 				</div>
 
@@ -77,15 +77,18 @@
 				<div class="card h-100">
 
 
+					
+
+					<p><a href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
+				title="Article"><i>${c.nom_article}</i></a></p>
+
+
 					<p>
-						<a
-							href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
-							title="Article"><i>${c.nom_article}</i></a>
-					</p>
+
 
 					<p>Prix : ${c.prix_initial} points</p>
 					<p>
-						Fin de l'ench&egrave;re :
+						Fin de l'enchère :
 						<tags:localDate date="${c.date_fin_encheres}" />
 					</p>
 					<p>
