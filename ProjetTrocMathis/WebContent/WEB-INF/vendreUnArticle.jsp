@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page errorPage="error.jsp" isErrorPage="false"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,7 @@
 
 <body>
 
-	<%@ include file="template/navBarConnectee.html" %>
+	<%@ include file="template/navBarNavigation.html" %>
 
 
 
@@ -71,7 +71,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="categorie">Categorie </label>
+					<label class="col-md-2" for="categorie">Cat&eacute;gorie </label>
 					<div class="col-md-8">
 						<select class="form-select" aria-label="Default select example"
 							id="categorie" required name="categorie">
@@ -103,7 +103,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="prixInitial">Mise à prix : </label>
+					<label class="col-md-2" for="prixInitial">Mise &agrave; prix : </label>
 					<div class="col-md-8">
 						<input type="number" class="form-control" id="prixInitial" required
 							name="prixInitial">
@@ -113,8 +113,8 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="dateDebutEncheres">Début de
-						l'enchère : </label>
+					<label class="col-md-2" for="dateDebutEncheres">D&eacute;but de
+						l'ench&egrave;re : </label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateDebutEncheres" required
 							name="dateDebutEncheres">
@@ -125,7 +125,7 @@
 			<div class="form-group">
 				<div class="form-row">
 
-					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchère :
+					<label class="col-md-2" for="dateFinEncheres">Fin de l'ench&egrave;re :
 					</label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateFinEncheres" required

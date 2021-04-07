@@ -81,7 +81,7 @@ public class VendreUnArticleServlet extends HttpServlet {
 			Retrait retrait = RetraitManager.getRetraitManager().valideAjoutRetrait(articleVendu, rue, codePostal, ville);
 
 			
-			 request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+			 request.getRequestDispatcher("/WEB-INF/AccueilUtilisateur.jsp").forward(request, response);
 			
 		//	request.getRequestDispatcher("/DetailVente?param=" + articleVendu.getNo_article()).forward(request, response);
 		

@@ -10,20 +10,17 @@
 <!DOCTYPE html>
 <html>
 
-<%@ include file="template/head.html"%>
-
 <head>
-<title>Detail Vente</title>
-<!-- Bootstrap core CSS -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- Custom styles for this template -->
-<link href="css/style.css" rel="stylesheet">
+<%@ include file="template/head.html" %>
+<title>D&eacute;tail vente</title>
+
 
 </head>
 
+
 <body>
 	
-<%@ include file="template/navBarConnectee.html" %>
+<%@ include file="template/navBarNavigation.html" %>
 
 
 	<c:if test="${!empty errors}">
@@ -44,7 +41,7 @@
 	<div class="container">
      <form action="./DetailVente" method="post">
 		<!-- Page Heading -->
-		<h1 class="my-2">Détail vente</h1>
+		<h1 class="my-2">D&eacute;tail vente</h1>
 
 
 		<div class="form-group">
@@ -60,7 +57,7 @@
 
 		<div class="form-group">
 			<div class="form-row">
-				<label class="col-md-2" for="categorie">Categorie </label>
+				<label class="col-md-2" for="categorie">Cat&eacute;gorie </label>
 				<div class="col-md-8">${articlejsp.categorie.libelle}</div>
 
 			</div>
@@ -79,14 +76,14 @@
 
 		<div class="form-group">
 			<div class="form-row">
-				<label class="col-md-2" for="miseAPrix"> Mise à prix : </label>
+				<label class="col-md-2" for="miseAPrix"> Mise &agrave; prix : </label>
 				<div class="col-md-8">${articlejsp.prix_initial}</div>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="form-row">
-				<label class="col-md-2" for="finEnchere"> Fin de l'enchère:
+				<label class="col-md-2" for="finEnchere"> Fin de l'ench&egrave;re:
 				</label>
 				<div class="col-md-8"><tags:localDate date="${articlejsp.date_fin_encheres}" /></div>
 			</div>
@@ -121,7 +118,7 @@
 					<input class="choixProposition" type="number" class="form-control" id="prixInitial" required
 							name="prixInitial">
 					<div class="col-md-1"></div>		
-					<button type="button" class="btn btn-light">Enchérir</button>
+					<button type="button" class="btn btn-light">Ench&eacute;rir</button>
 				</div>
 			</div>
 
@@ -141,7 +138,7 @@
 		<c:if test="${isProprietaireArticle && !isDateModifiable}">
 			<div class="form-group">
 				<div class="form-row">
-				<div>L'enchère a déjà commencé, vous ne pouvez pas la modifier</div>	
+				<div>L'ench&egrave;re a d&eacute;j&agrave; commenc&eacute;, vous ne pouvez pas la modifier</div>	
 					<div class="col-md-8"></div>
 				</div> 
 			</div>

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<%@ include file="template/navBarConnectee.html" %>
+<%@ include file="template/navBarNavigation.html" %>
 
 	<c:if test="${!empty errors}">
 			<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
@@ -45,7 +45,7 @@
 						</tr>
 						<tr>
 							<th scope="row"></th>
-							<td>Prenom :</td>
+							<td>Pr&eacute;nom :</td>
 							<td>${users.prenom}</td>
 						</tr>
 						<tr>
@@ -55,7 +55,7 @@
 						</tr>
 						<tr>
 							<th scope="row"></th>
-							<td>Telephone :</td>
+							<td>T&eacute;l&eacute;phone :</td>
 							<td>${users.telephone}</td>
 						</tr>
 						<tr>

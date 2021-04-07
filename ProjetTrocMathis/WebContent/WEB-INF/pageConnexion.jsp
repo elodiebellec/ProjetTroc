@@ -1,33 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page errorPage="error.jsp" isErrorPage="false"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="ENI Ecole">
-<meta name="author" content="ENI Ecole">
-
-<title>Projet TROC</title>
-
-<!-- Bootstrap core CSS -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="css/pagelogin.css" rel="stylesheet">
-<link rel="icon" href="images/favicon.ico">
-
+<%@ include file="template/head.html"%>
+<title>Page Connexion</title>
 </head>
 
 <body>
 	<!-- Navigation -->
 
 
-<%@ include file="template/navBarDeconnectee.html"%>
+<%@ include file="template/navBarNavigation.html"%>
 	
 	<c:if test="${!empty errors}">
 		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
@@ -62,7 +48,7 @@
 							<div class="groupecoco">
 								<input type="submit" value="Connexion"
 									class="btn btn-primary btn-lg"> <a
-									href="Mot de passe oublié">Mot de passe oublié</a>
+									href="Mot de passe oubliÃ©">Mot de passe oubli&eacute;</a>
 							</div>
 						</div>
 
@@ -70,7 +56,7 @@
 					</form>
 					<div class="boutoncreate">
 						<form action="./Inscription" method="get">
-							<input type="submit" value="Créer un compte"
+							<input type="submit" value="CrÃ©er un compte"
 								class="btn btn-primary btn-lg btn-block">
 						</form>
 					</div>
