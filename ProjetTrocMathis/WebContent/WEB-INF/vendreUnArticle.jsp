@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page errorPage="error.jsp" isErrorPage="false"%>
 
@@ -17,7 +17,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="#">ENI Encheres</a>
+			<a class="navbar-brand" href="./AccueilUtilisateur">ENI Encheres</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="prixInitial">Mise à prix : </label>
+					<label class="col-md-2" for="prixInitial">Mise Ã  prix : </label>
 					<div class="col-md-8">
 						<input type="number" class="form-control" id="prixInitial" required
 							name="prixInitial">
@@ -127,8 +127,8 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="dateDebutEncheres">Début de
-						l'enchère : </label>
+					<label class="col-md-2" for="dateDebutEncheres">DÃ©but de
+						l'enchÃ¨re : </label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateDebutEncheres" required
 							name="dateDebutEncheres">
@@ -139,7 +139,7 @@
 			<div class="form-group">
 				<div class="form-row">
 
-					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchère :
+					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchÃ¨re :
 					</label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateFinEncheres" required

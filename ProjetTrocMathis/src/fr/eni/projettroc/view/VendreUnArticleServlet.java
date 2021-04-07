@@ -70,9 +70,9 @@ public class VendreUnArticleServlet extends HttpServlet {
         	
 			ArticleVendu articleVendu = ArticleVenduManager.getArticleVenduManager().valideAjoutArticle(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial,  no_categorie, no_user);
 			
-			// request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+			 request.getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 			
-			request.getRequestDispatcher("/DetailVente?param=" + articleVendu.getNo_article()).forward(request, response);
+		//	request.getRequestDispatcher("/DetailVente?param=" + articleVendu.getNo_article()).forward(request, response);
 		
 			
 			
