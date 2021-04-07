@@ -28,6 +28,8 @@ public class EnchereJDBCImpl implements EnchereDAO{
     private static final String INSERT = "insert into encheres (date_enchere, montant_enchere, no_article, no_utilisateur) values(?,?,?,?)";
     private static final String SELECT_ALL_BY_NO_ARTICLE = "SELECT * FROM encheres where no_article=?";
     private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `encheres` WHERE `no_utilisateur`=?";
+    private static final String DELETE_ALL_BY_UTILISATEUR = "DELETE FROM `encheres` WHERE `no_utilisateur`=?";
+
 
 
 
@@ -159,6 +161,23 @@ public class EnchereJDBCImpl implements EnchereDAO{
 		}
 
 		return listeEnchere;
+	}
+	
+	public void deleteEnchere (int no_utilisateur) throws BusinessException {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(DELETE_ALL_BY_UTILISATEUR);
+			stmt.setInt(1, no_utilisateur);
+			stmt.executeQuery();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur getListByCategorie DAO");
+			throw be;
+		}
+
+		
 	}
 }
 	

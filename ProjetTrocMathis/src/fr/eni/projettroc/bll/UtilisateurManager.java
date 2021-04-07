@@ -2,9 +2,13 @@ package fr.eni.projettroc.bll;
 
 import java.util.List;
 
-
+import fr.eni.projettroc.bo.ArticleVendu;
+import fr.eni.projettroc.bo.Retrait;
 import fr.eni.projettroc.bo.Utilisateur;
+import fr.eni.projettroc.dao.ArticleVenduDAO;
 import fr.eni.projettroc.dao.DAOFactory;
+import fr.eni.projettroc.dao.EnchereDAO;
+import fr.eni.projettroc.dao.RetraitDAO;
 import fr.eni.projettroc.dao.UtilisateurDAO;
 
 import fr.eni.projettroc.exception.BusinessException;
@@ -13,12 +17,20 @@ public class UtilisateurManager {
 	// Attribut pour repr�senter la couche DAL
 
 	private UtilisateurDAO utilisateurDAO;
+	private RetraitDAO retraitDAO;
+	private EnchereDAO enchereDAO;
+	private ArticleVenduDAO articleVenduDAO;
 
 	private static UtilisateurManager instance;
 
 	private UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		retraitDAO = DAOFactory.getRetraitDAO();
+		enchereDAO = DAOFactory.getEnchereDAO();
+		articleVenduDAO=DAOFactory.getArticleVenduDAO();
 	}
+	
+	
 
 	public static UtilisateurManager getUtilisateursManager() {
 		if (instance == null) {
@@ -112,8 +124,26 @@ public class UtilisateurManager {
 		return utilisateurDAO.selectByPseudo(pseudo);
 	}
 
-	public void supprimerUtilisateur(int no_utilsateur) throws BusinessException {
-		utilisateurDAO.delete(no_utilsateur);
+	public void supprimerUtilisateur(int no_utilisateur) throws BusinessException {
+		
+		// on vérifie que l'utilisateur ne fait pas d'enchère en cours
+		if (utilisateurDAO.isEnchereEnCours(no_utilisateur)) {
+			throw new BusinessException(" Des enchères sont en cours sur un de vos articles, il est impossible de supprimer le compte");
+		}
+		
+		//on récupère la liste des articles
+		List<ArticleVendu> listeArticles = articleVenduDAO.getListByNoUtilisateur(no_utilisateur);
+		// Pour chaque article
+		for(ArticleVendu articleVendu : listeArticles) {
+			// on supprime le retrait
+			retraitDAO.deleteRetrait(articleVendu.getNo_article());
+			// on supprime l'article 
+			articleVenduDAO.deleteArticle(articleVendu.getNo_article());
+		}
+		// on supprime les enchères que l'utilisateur fait
+		enchereDAO.deleteEnchere(no_utilisateur);
+		// on supprime l'utilisateur
+		utilisateurDAO.delete(no_utilisateur);
 
 	}
 
@@ -130,6 +160,7 @@ public class UtilisateurManager {
 				be.addError("Pseudo deja utiliser");
 				return false;
 			}
+			
 		}
 
 		return true;
