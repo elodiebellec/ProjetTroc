@@ -2,8 +2,12 @@ package fr.eni.projettroc.view;
 
 import java.io.IOException;
 import java.time.LocalDate;
+
+import java.util.Date;
+
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,14 +37,22 @@ public class DetailVenteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		
+	
+
+
 		HttpSession session = request.getSession();
 		int no_article = Integer.parseInt(request.getParameter("param"));
 		session.setAttribute("iddelarticle", no_article);
+
 		ArticleVendu art = null;
+
 		
 		try {
+
 			art = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
 		} catch (BusinessException e1) {
 			// TODO Auto-generated catch block
@@ -56,6 +68,40 @@ public class DetailVenteServlet extends HttpServlet {
 		List<Enchere> encheremax = null;
 		try {
 			encheremax = EnchereManager.getEnchereManager().enchereParNum(no_article);
+       ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
+			session.setAttribute("articlejsp", article);
+			
+			// rÃ©cupÃ©rer l'utisateur de l'article
+			Utilisateur utilisateurArticle = article.getUtilisateur();
+			
+			//rÃ©cupÃ©rer l'utilisateur connectÃ© (en session)
+			Utilisateur utilisateurConnecte =(Utilisateur) request.getSession().getAttribute("user");
+	
+			
+			// faire test : boolean , Si true = proprietaire, si false=connecte
+			
+			boolean isProprietaireArticle = utilisateurArticle.getNo_utilisateur() == utilisateurConnecte.getNo_utilisateur();
+	
+
+			// on le passe à la jsp
+			 
+
+			request.setAttribute("isProprietaireArticle",  isProprietaireArticle);
+			
+
+			
+			// Comparaison des dates d'enchères
+			
+			LocalDate date_debut_encheres = article.getDate_debut_encheres();
+			LocalDate date_jour = LocalDate.now();
+			
+			
+			boolean isDateOk = date_debut_encheres.isAfter(date_jour);
+				
+			
+			request.setAttribute("isDateModifiable", isDateOk );
+			
+
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

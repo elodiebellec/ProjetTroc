@@ -8,13 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.projettroc.bll.UtilisateurManager;
+import fr.eni.projettroc.bo.Utilisateur;
+import fr.eni.projettroc.exception.BusinessException;
+
 /**
  * Servlet implementation class MonCompte
  */
 @WebServlet("/MonCompte")
 public class MonCompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	int no_utilisateur;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -27,7 +31,7 @@ public class MonCompteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, response);
 	    
 	}

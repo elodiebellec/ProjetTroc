@@ -97,7 +97,7 @@
 				<div class="col-md-8">
 
 					${articlejsp.utilisateur.rue } <br>
-					${articlejsp.utilisateur.code_postal} &nbsp;
+					${articlejsp.utilisateur.code_postal} 
 					${articlejsp.utilisateur.ville }
 
 				</div>

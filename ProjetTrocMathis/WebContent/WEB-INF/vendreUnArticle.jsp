@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page errorPage="error.jsp" isErrorPage="false"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -15,24 +15,10 @@
 
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<div class="container">
-			<a class="navbar-brand" href="#">ENI Encheres</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarResponsive" aria-controls="navbarResponsive"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link"
-						href="./AccueilUtilisateur">Accueil </a></li>
-					<li class="nav-item active"><a class="nav-link"
-						href="./Deconnexion">Se deconnecter </a>
-				</ul>
-			</div>
-		</div>
-	</nav>
+
+	<%@ include file="template/navBarNavigation.html" %>
+
+
 
 	
 	<c:if test="${!empty errors}">
@@ -85,7 +71,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="categorie">Categorie </label>
+					<label class="col-md-2" for="categorie">Cat√©gorie </label>
 					<div class="col-md-8">
 						<select class="form-select" aria-label="Default select example"
 							id="categorie" required name="categorie">
@@ -103,9 +89,11 @@
 					<label class="col-md-2" for="photoArticle">Photo de
 						l'article : </label>
 					<div class="col-md-8">
+					
+						<button type="button" class="btn btn-light">UPLOADER</button>
 
-						<input type="file" id="image" required name="image"
-							accept="image/png, image/jpeg">
+					<!--	<input type="file" id="image" required name="image"
+							accept="image/png, image/jpeg"> -->
 					</div>
 
 				</div>
@@ -115,7 +103,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="prixInitial">Mise ‡ prix : </label>
+					<label class="col-md-2" for="prixInitial">Mise √† prix : </label>
 					<div class="col-md-8">
 						<input type="number" class="form-control" id="prixInitial" required
 							name="prixInitial">
@@ -125,8 +113,8 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="dateDebutEncheres">DÈbut de
-						l'enchËre : </label>
+					<label class="col-md-2" for="dateDebutEncheres">D√©but de
+						l'ench√®re : </label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateDebutEncheres" required
 							name="dateDebutEncheres">
@@ -137,7 +125,7 @@
 			<div class="form-group">
 				<div class="form-row">
 
-					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchËre :
+					<label class="col-md-2" for="dateFinEncheres">Fin de l'ench√®re :
 					</label>
 					<div class="col-md-8">
 						<input class="form-control" type="date" id="dateFinEncheres" required
