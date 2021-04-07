@@ -73,6 +73,10 @@ public class UtilisateurManager {
 	public Utilisateur rechercherParPseudo(String utilisateur) throws BusinessException {
 		return utilisateurDAO.selectByPseudo(utilisateur);
 	}
+	
+	public Utilisateur rechercherParNumero(int no_utilisateur) throws BusinessException {
+		return utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
+	}
 
 	public Utilisateur validerAjoutPersonne(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String code_postal, String ville, String mot_de_passe, String mot_de_passe_confirmation,

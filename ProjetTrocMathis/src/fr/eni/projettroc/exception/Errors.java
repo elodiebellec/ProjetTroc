@@ -65,5 +65,6 @@ public class Errors {
 	public static final String NOM_ARTICLE_OBLIGATOIRE = "Le nom de l'article est obligatoire";
 	public static final String NOM_LISTE_OBLIGATOIRE = "Le nom de la liste est obligatoire";
 	public static final String FORMAT_ID_ARTICLE_ERREUR = "L'identifiant de l'article n'est pas reconnu. Ce doit être un nombre valide.";
+	public static final String SUPPRESSION_RETRAIT_ERREUR = "Impossible de supprimer le retrait";
 	
 }

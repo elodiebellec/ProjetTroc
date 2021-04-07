@@ -86,6 +86,7 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 
 		// Récupérer le type de transaction à afficher
 		String typeTransaction = request.getParameter("typeTransaction");
+		request.setAttribute("typeTransaction", typeTransaction);
 		System.out.println("type transaction : " + typeTransaction);
 
 		// Récupérer les valeurs des ckeckbox

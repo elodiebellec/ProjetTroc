@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
-import fr.eni.projettroc.bo.Categorie;
 import fr.eni.projettroc.bo.Enchere;
 import fr.eni.projettroc.bo.Utilisateur;
-import fr.eni.projettroc.dao.CategorieDAO;
 
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.EnchereDAO;
@@ -21,6 +19,7 @@ public class EnchereManager {
 	private EnchereDAO enchereDAO;
 
 	private static EnchereManager instance;
+
 
 	private EnchereManager() {
 		enchereDAO = DAOFactory.getEnchereDAO();
@@ -38,13 +37,15 @@ public class EnchereManager {
 
 		return enchereDAO.getListEnchere();
 	}
+
 	
 	public List<Enchere> enchereParNum(int no_article) throws BusinessException {
 
 		return enchereDAO.selectByNoArticle(no_article);
 	}
 
-	/*--------------Méthodes pour les filtres de la page d'accueil --------------------------*/
+
+	/*--------------MÃ©thodes pour les filtres de la page d'accueil --------------------------*/
 
 	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
 		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
@@ -87,24 +88,23 @@ public class EnchereManager {
 	}
 
 	public Enchere validerEnchere(LocalDate date_enchere, int montant_enchere, int no_article, int no_utilisateur )throws BusinessException{
+
 		BusinessException be = new BusinessException();
 		boolean isEnchereSuperieur = verifEnchere(montant_enchere, no_article, be);
 		boolean isVerifPrixreserve = verifPrixreserve(montant_enchere, no_article, be);
 		if(isEnchereSuperieur && isVerifPrixreserve) {
 		Enchere enchere = new Enchere();
-	
+
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setNo_utilisateur(no_utilisateur);
-		
+
 		ArticleVendu article = new ArticleVendu();
 		article.setNo_article(no_article);
-		
-		
+
 		enchere.setDate_enchere(date_enchere);
 		enchere.setMontant_enchere(montant_enchere);
 		enchere.setArticle(article);
 		enchere.setUtilisateur(utilisateur);
-		
 		enchereDAO.insert(enchere);
 		return enchere;
 		
@@ -126,7 +126,7 @@ public class EnchereManager {
 	}
      for(Enchere e : enchere) {
     	 if(montant_enchere < e.getMontant_enchere() ) {
-    		 be.addError("Votre enchere est inferieur � l'enchere precedente");
+    		 be.addError("Votre enchere est inferieur à l'enchere precedente");
 				return false;	 
 	}
 	
@@ -145,7 +145,7 @@ public class EnchereManager {
 	}
 	 int prixreserve = article.getPrix_initial();
 	 if(montant_enchere < prixreserve) {
-		 be.addError("Votre ench�re est inferieur � la reserve");
+		 be.addError("Votre enchère est inferieur à la reserve");
 		return false; 
 	 }
 	 return true;
@@ -173,3 +173,4 @@ public class EnchereManager {
    
    
 	/*--------------Fin méthodes pour les filtres de la page d'accueil --------------------------*/
+
