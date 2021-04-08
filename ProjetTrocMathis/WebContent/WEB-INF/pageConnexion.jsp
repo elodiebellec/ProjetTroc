@@ -13,7 +13,7 @@
 	<!-- Navigation -->
 
 
-<%@ include file="template/navBarNavigation.html"%>
+<%@ include file="template/navBarDeconnectee2.html"%>
 	
 	<c:if test="${!empty errors}">
 		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
