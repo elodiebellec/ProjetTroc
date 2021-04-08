@@ -151,7 +151,7 @@
 			<c:if test="${isProprietaireArticle && !isDateModifiable}">
 				<div class="form-group">
 					<div class="form-row">
-						<div>L'ench&egrave;re a dej&agrave; commenc&eacute;, vous ne pouvez pas la
+						<div>L'ench&egrave;re a d&eacute;j&agrave; commenc&eacute;, vous ne pouvez pas la
 							modifier</div>
 						<div class="col-md-8"></div>
 					</div>

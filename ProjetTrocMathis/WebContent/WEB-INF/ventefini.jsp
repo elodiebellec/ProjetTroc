@@ -39,7 +39,7 @@
 	<div class="container">
     
 		<!-- Page Heading -->
-		<h1 class="my-2">${usermax }</h1>
+		<h1 class="my-2">${usermax} a remport&eacute; l'ench&egrave;re</h1>
 
 
 		<div class="form-group">
@@ -58,18 +58,29 @@
 				<label class="col-md-2" for="meilleureOffre"> Meilleure
 					Offre : </label>
 
-				<div class="col-md-8">${montantmaximum} De ${usermax}</div>
+				<div class="col-md-8">${montantmaximum} pts par ${usermax}</div>
 
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="form-row">
-				<label class="col-md-2" for="miseAPrix"> Mise à prix : </label>
-				<div class="col-md-8">${articlejsp.prix_initial}</div>
+				<label class="col-md-2" for="miseAPrix"> Mise &agrave; prix : </label>
+				<div class="col-md-8">${articlejsp.prix_initial} points</div>
 			</div>
 		</div>
-
+		
+		<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="finEnchere"> Fin de l'ench&egrave;re:
+					</label>
+					<div class="col-md-8">
+						<tags:localDate date="${articlejsp.date_fin_encheres}" />
+					</div>
+				</div>
+			</div>
+			
+			
 
 		<div class="form-group">
 			<div class="form-row">
@@ -87,23 +98,15 @@
 		<div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="vendeur"> Vendeur : </label>
-				<div class="col-md-8">${articlejsp.utilisateur.nom }</div>
+				<div class="col-md-8">${articlejsp.utilisateur.pseudo}</div>
 			</div>
 		</div>
 
 
 
-		<c:if test="${isProprietaireArticle}">
-			<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="maProposition"> Je suis le
-						vendeur </label>
-					<div class="col-md-8"></div>
-				</div> 
-			</div>
-			
-		
-			</c:if>
+		<div class="col-md-1"></div>
+						<button type="submit" class="btn btn-light">Retrait effectué</button>
+					</div>
 		
 
 		
