@@ -23,15 +23,17 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	private static final String CONNECTION = "select no_utilisateur,pseudo, mot_de_passe, nom, prenom, email, telephone,"
 			+ " rue, code_postal, ville, credit from utilisateurs where pseudo=? and mot_de_passe=? or email=? and mot_de_passe=?";
 	private static final String INSERT = "insert into utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values(?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
-    private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
-    private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
-    private static final String DELECT_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
-    private static final String SELECT_PERSONNE = "SELECT pseudo FROM utilisateurs";
+	private static final String SELECT_BY_PSEUDO = "select * from utilisateurs where pseudo=?";
+	private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
+	private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
+	private static final String DELETE_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
+	private static final String SELECT_PERSONNE = "SELECT pseudo FROM utilisateurs";
+	private static final String SELECT_NOMBRE_ENCHERE = "SELECT COUNT(1) FROM encheres E WHERE E.no_article in (SELECT AV.no_article FROM articles_vendus AV WHERE AV.no_utilisateur=?)";
 	private static final String UPDATE_CREDIT = "UPDATE utilisateurs SET credit=? WHERE no_utilisateur=?";
     
     
     public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
+
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
 		utilisateur.setPseudo(rs.getString("pseudo"));
@@ -71,7 +73,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 				u.setCredit(rs.getInt("credit"));
 				return u;
 			} else {
-				// Utilisateur non trouvÃ©
+				// Utilisateur non trouvé
 				BusinessException be = new BusinessException();
 				be.addError("Pseudo ou Mot de passe inconnu");
 				throw be;
@@ -137,11 +139,11 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	public Utilisateur selectByNoUtilisateur(int no_utilisateur) throws BusinessException {
 
 		Utilisateur utilisateur = null;
-		
+
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			
+
 			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO);
-		
+
 			requete.setInt(1, no_utilisateur);
 			ResultSet rs = requete.executeQuery();
 
@@ -158,7 +160,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 
-
+	
    public void updateCredit(Utilisateur utilisateur) throws BusinessException{
 	   try(Connection cnx = ConnectionProvider.getConnection()){
            PreparedStatement requete = cnx.prepareStatement(UPDATE_CREDIT);
@@ -176,7 +178,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	       
 	        try(Connection cnx = ConnectionProvider.getConnection()){
 	            PreparedStatement requete = cnx.prepareStatement(UPDATE_UTILISATEUR);
-	            requete.setString(1, utilisateur.getPseudo());
+	      requete.setString(1, utilisateur.getPseudo());
 				requete.setString(2, utilisateur.getNom());
 				requete.setString(3, utilisateur.getPrenom());
 				requete.setString(4, utilisateur.getEmail());
@@ -193,23 +195,22 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	            throw new BusinessException();
 	        }
 	    }
-	    public void delete(int no_utilisateur) throws BusinessException {
-			try (Connection cnx = ConnectionProvider.getConnection()) {
-				PreparedStatement stmt = cnx.prepareStatement(DELECT_UTILISATEUR);
-				stmt.setInt(1, no_utilisateur);
-				stmt.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-				BusinessException be = new BusinessException();
-				be.addError(Errors.SUPPRESSION_ARTICLE_ERREUR);
-				throw be;
-			}
-
-
-
+	   
 	}
 
+	public void delete(int no_utilisateur) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(DELETE_UTILISATEUR);
+			stmt.setInt(1, no_utilisateur);
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError(Errors.SUPPRESSION_ARTICLE_ERREUR);
+			throw be;
+		}
 
+	}
 
 	public List<Utilisateur> getListeUtilisateur() throws BusinessException {
 		List<Utilisateur> listeUtilisateur = new ArrayList<Utilisateur>();
@@ -218,7 +219,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 			Statement stmt = cnx.createStatement();
 			ResultSet rs = stmt.executeQuery(SELECT_PERSONNE);
 
-			// Parcours la liste des enregistrements, et rassembler par id du repas
+			// Parcours la liste des enregistrements
 			Utilisateur utilisateur = new Utilisateur();
 			while (rs.next()) {
 				try {
@@ -238,6 +239,37 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 		}
 
 		return listeUtilisateur;
+	}
+
+	public boolean isEnchereEnCours(int no_utilsateur) throws BusinessException {
+
+		boolean isEnchereEnCours = false;
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement request = cnx.prepareStatement(SELECT_NOMBRE_ENCHERE);
+		    request.setInt(1, no_utilsateur);
+		    ResultSet rs = request.executeQuery();
+
+			// Parcours la liste des enregistrements
+			Integer nbreEnchere;
+			while (rs.next()) {
+				try {
+					nbreEnchere = rs.getInt(1);
+					isEnchereEnCours = (nbreEnchere > 0);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Connexion impossible");
+			throw be;
+		}
+
+		return isEnchereEnCours;
 	}
 
 }

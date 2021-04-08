@@ -28,7 +28,9 @@ public class EnchereJDBCImpl implements EnchereDAO{
     private static final String INSERT = "insert into encheres (date_enchere, montant_enchere, no_article, no_utilisateur) values(?,?,?,?)";
     private static final String SELECT_ALL_BY_NO_ARTICLE = "SELECT * FROM encheres where no_article=?";
     private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `encheres` WHERE `no_utilisateur`=?";
+    private static final String DELETE_ALL_BY_UTILISATEUR = "DELETE FROM `encheres` WHERE `no_utilisateur`=?";
     private static final String SELECT_MAX_ENCHERES = "SELECT e.* FROM encheres e INNER JOIN ( SELECT no_article, MAX(montant_enchere) AS maxEnch FROM encheres GROUP BY no_article ) groupee ON e.no_article = groupee.no_article AND e.montant_enchere = groupee.maxEnch";
+
 
 
 	public List<Enchere> getListMaxEnchere() throws BusinessException {
@@ -73,13 +75,13 @@ public class EnchereJDBCImpl implements EnchereDAO{
 
 		
 		if(rs.getInt("no_article") != 0) {
-			//L'instance utilisateur r�cup�re les donn�es de utilisateurDAO
+			//L'instance utilisateur récupére les données de utilisateurDAO
 			articleVendu = articleDAO.selectByNoArticle(rs.getInt("no_article"));
 			enchere.setArticle(articleVendu);
 		}
 		
 		if(rs.getInt("no_utilisateur") != 0) {
-			//L'instance utilisateur r�cup�re les donn�es de utilisateurDAO
+			//L'instance utilisateur récupère les données de utilisateurDAO
 			utilisateur = utilisateurDAO.selectByNoUtilisateur(rs.getInt("no_utilisateur"));
 			enchere.setUtilisateur(utilisateur);
 		}
@@ -182,6 +184,23 @@ public class EnchereJDBCImpl implements EnchereDAO{
 		}
 
 		return listeEnchere;
+	}
+	
+	public void deleteEnchere (int no_utilisateur) throws BusinessException {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement stmt = cnx.prepareStatement(DELETE_ALL_BY_UTILISATEUR);
+			stmt.setInt(1, no_utilisateur);
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("EnchereJDBCImpl");
+			throw be;
+		}
+
+		
 	}
 }
 	

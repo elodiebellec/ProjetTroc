@@ -1,24 +1,41 @@
 package fr.eni.projettroc.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
+
+import fr.eni.projettroc.bo.ArticleVendu;
+import fr.eni.projettroc.bo.Retrait;
+
+
 import fr.eni.projettroc.bo.Utilisateur;
+import fr.eni.projettroc.dao.ArticleVenduDAO;
 import fr.eni.projettroc.dao.DAOFactory;
+import fr.eni.projettroc.dao.EnchereDAO;
+import fr.eni.projettroc.dao.RetraitDAO;
 import fr.eni.projettroc.dao.UtilisateurDAO;
 
 import fr.eni.projettroc.exception.BusinessException;
 import sun.nio.ch.Util;
 
 public class UtilisateurManager {
-	// Attribut pour repr�senter la couche DAL
+	// Attribut pour représenter la couche DAL
 
 	private UtilisateurDAO utilisateurDAO;
+	private RetraitDAO retraitDAO;
+	private EnchereDAO enchereDAO;
+	private ArticleVenduDAO articleVenduDAO;
 
 	private static UtilisateurManager instance;
 
 	private UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		retraitDAO = DAOFactory.getRetraitDAO();
+		enchereDAO = DAOFactory.getEnchereDAO();
+		articleVenduDAO=DAOFactory.getArticleVenduDAO();
 	}
+	
+	
 
 	public static UtilisateurManager getUtilisateursManager() {
 		if (instance == null) {
@@ -149,8 +166,27 @@ public class UtilisateurManager {
 		return utilisateurDAO.selectByPseudo(pseudo);
 	}
 
-	public void supprimerUtilisateur(int no_utilsateur) throws BusinessException {
-		utilisateurDAO.delete(no_utilsateur);
+	public void supprimerUtilisateur(int no_utilisateur) throws BusinessException {		
+		
+		// on vérifie que l'utilisateur ne fait pas d'enchère en cours
+		if (utilisateurDAO.isEnchereEnCours(no_utilisateur)==true) {
+			throw new BusinessException(" Des enchères sont en cours sur un de vos articles, il est impossible de supprimer le compte");
+		}		
+		//on récupère la liste des articles
+		List<ArticleVendu> listeArticles = new ArrayList<ArticleVendu>();
+		listeArticles=articleVenduDAO.getListByNoUtilisateur(no_utilisateur);
+				
+		// Pour chaque article
+		for(ArticleVendu articleVendu : listeArticles) {
+			// on supprime le retrait
+			retraitDAO.deleteRetrait(articleVendu.getNo_article());
+			// on supprime l'article 
+			articleVenduDAO.deleteArticle(articleVendu.getNo_article());
+		}
+		// on supprime les enchères que l'utilisateur fait
+		enchereDAO.deleteEnchere(no_utilisateur);
+		// on supprime l'utilisateur
+		utilisateurDAO.delete(no_utilisateur);
 
 	}
 
@@ -167,6 +203,7 @@ public class UtilisateurManager {
 				be.addError("Pseudo deja utiliser");
 				return false;
 			}
+			
 		}
 
 		return true;
@@ -196,11 +233,11 @@ public class UtilisateurManager {
 		}
 		pseudo = pseudo.trim();
 		if (pseudo.isEmpty() || pseudo.length() < 6) {
-			be.addError("Login doit contenir au moins 6 caract�res");
+			be.addError("Login doit contenir au moins 6 caractères");
 			return false;
 		}
 		if (pseudo.length() > 30) {
-			be.addError("Login doit contenir au plus 30 caract�res");
+			be.addError("Login doit contenir au plus 30 caractères");
 			return false;
 		}
 
@@ -255,11 +292,11 @@ public class UtilisateurManager {
 		}
 		pseudo = pseudo.trim();
 		if (pseudo.isEmpty() || email.isEmpty() || pseudo.length() < 6) {
-			be.addError("Login doit contenir au moins 6 caract�res");
+			be.addError("Login doit contenir au moins 6 caractères");
 			return false;
 		}
 		if (pseudo.length() > 30 || email.length() > 30) {
-			be.addError("Login doit contenir au plus 30 caract�res");
+			be.addError("Login doit contenir au plus 30 caractères");
 			return false;
 		}
 
@@ -273,7 +310,7 @@ public class UtilisateurManager {
 		}
 		if (!mot_de_passe.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,12}")) {
 			be.addError(
-					"Mot de passe doit contenir entre 6 et 12 caract�res (1 chiffre, 1 majuscule, 1 caract�re sp�cial)");
+					"Mot de passe doit contenir entre 6 et 12 caractères (1 chiffre, 1 majuscule, 1 caractère spécial)");
 			return false;
 		}
 
