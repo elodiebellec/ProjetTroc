@@ -59,9 +59,7 @@ public class EnchereManager {
 }
 	/*--------------MÃ©thodes pour les filtres de la page d'accueil --------------------------*/
 
-	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
-		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
-	}
+
 
 
 	public List<Enchere> toutesLesEncheresUniquesParUtilisateur(int no_utilisateur) throws BusinessException {
