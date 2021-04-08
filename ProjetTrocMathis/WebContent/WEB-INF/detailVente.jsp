@@ -42,7 +42,7 @@
 		<form action="./DetailVente" method="post">
 			<!-- Page Heading -->
 			<h1 class="my-2">D&eacute;tail vente</h1>
-
+           
 
 			<div class="form-group">
 				<div class="form-row">${articlejsp.nom_article}</div>
@@ -132,8 +132,14 @@
 				<div class="form-group">
 					<div class="form-row">
 
-						<button type="submit" class="btn btn-light">Modifier la
-							vente</button>
+<p>
+						<button type="submit" class="btn btn-light"><a
+							href="${pageContext.request.contextPath}/ModifierUnArticle?iddelarticle=${articlejsp.no_article}"
+							title="Modifier la vente">ModifierLaVente</a></button>
+</p>
+					
+
+		
 						<div class="col-md-8"></div>
 					</div>
 				</div>
