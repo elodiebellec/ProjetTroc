@@ -69,7 +69,7 @@
 					<label class="col-md-2" for="meilleureOffre"> Meilleure
 						Offre : </label>
 
-					<div class="col-md-8">${montantmaximum}De ${usermax}</div>
+					<div class="col-md-8">${montantmaximum} Pts De ${usermax}</div>
 
 				</div>
 			</div>
