@@ -69,21 +69,21 @@
 					<label class="col-md-2" for="meilleureOffre"> Meilleure
 						Offre : </label>
 
-					<div class="col-md-8">${montantmaximum}De ${usermax}</div>
+					<div class="col-md-8">${montantmaximum} Pts De ${usermax}</div>
 
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="miseAPrix"> Mise 	&agrave; prix : </label>
+					<label class="col-md-2" for="miseAPrix"> Mise &agrave; prix : </label>
 					<div class="col-md-8">${articlejsp.prix_initial}</div>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="finEnchere"> Fin de l'ench	&egrave;re:
+					<label class="col-md-2" for="finEnchere"> Fin de l'ench&egrave;re:
 					</label>
 					<div class="col-md-8">
 						<tags:localDate date="${articlejsp.date_fin_encheres}" />
@@ -118,8 +118,8 @@
 			<c:if test="${!isProprietaireArticle}">
 				<div class="form-group">
 					<div class="form-row">
-						<label class="col-md-2" for="maProposition"> Ma
-							proposition : </label> <input class="choixProposition" type="number"
+						<label class="col-md-2" for="maProposition">
+						 Ma proposition : </label> <input class="choixProposition" type="number"
 							class="form-control" id="prixenchere" required name="prixenchere">
 						<div class="col-md-1"></div>
 						<button type="submit" class="btn btn-light">Ench&eacute;rir</button>
@@ -131,14 +131,15 @@
 			<c:if test="${isProprietaireArticle && isDateModifiable}">
 				<div class="form-group">
 					<div class="form-row">
-					<p></p>
+
+<p>
+						<button type="submit" class="btn btn-light"><a
+							href="${pageContext.request.contextPath}/ModifierUnArticle?iddelarticle=${articlejsp.no_article}"
+							title="Modifier la vente">ModifierLaVente</a></button>
+</p>
 					
 
-							<p>
-					 <a
-							href="${pageContext.request.contextPath}/ModifierUnArticle?iddelarticle=${articlejsp.no_article}"
-							title="Modifier la vente">ModifierLaVente</a>
-					</p>
+		
 						<div class="col-md-8"></div>
 					</div>
 				</div>
@@ -150,7 +151,7 @@
 			<c:if test="${isProprietaireArticle && !isDateModifiable}">
 				<div class="form-group">
 					<div class="form-row">
-						<div>L'ench	&egrave;re a deja commenc&eacute;, vous ne pouvez pas la
+						<div>L'ench&egrave;re a dej&agrave; commenc&eacute;, vous ne pouvez pas la
 							modifier</div>
 						<div class="col-md-8"></div>
 					</div>

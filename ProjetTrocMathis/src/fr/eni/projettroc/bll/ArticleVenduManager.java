@@ -276,8 +276,9 @@ public class ArticleVenduManager {
 
 			return false;
 		}
+		
 
-		if (date_fin_encheres.isBefore(date_debut_encheres)) {
+		if (date_fin_encheres.isBefore(date_debut_encheres) || date_fin_encheres.isEqual(date_debut_encheres)) {
 
 			be.addError("La date de fin doit être supérieure à la date de début des enchères");
 
