@@ -66,8 +66,14 @@ body {
 	font-size: 1.8em;
 	margin-bottom: 1em;
 }
-
-/*------------barre de recherche avec loupe ----------------*/
+/*------------pages accueil et accueil connecté -------------------*/
+.accueilContainer{
+	grid-template: 
+            "titre" 20em
+            "filtres" 50em
+            "articles" auto / 1fr 1fr;
+}
+	/*------------barre de recherche avec loupe ----------------*/
 .form {
 	display: flex;
 	flex-direction: row;
@@ -94,14 +100,18 @@ body {
 	object-fit: cover;
 
 }
+	/*-----------------------------------------*/
 
-/*------------input pour mise à prix----------------*/
+	/*------------input pour mise à prix----------------*/
 
-. choixProposition { 
+.choixProposition { 
 	height : 40px;
 	width : 80px;
 	
 }
+
+	/*-----------------------------------------*/
+/*---------------------------------------------------------*/
 
 
 

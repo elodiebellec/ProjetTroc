@@ -110,7 +110,7 @@ public class EnchereManager {
 		List<Enchere> listeEncheresRemportees = new ArrayList<Enchere>();
 		LocalDate today = LocalDate.now();
 		for (Enchere enchere : listeEncheresMax) {
-			if(today.compareTo(enchere.getDate_enchere()) > 0 || today.compareTo(enchere.getDate_enchere()) == 0) {
+			if(today.compareTo(enchere.getArticle().getDate_fin_encheres()) > 0 || today.compareTo(enchere.getArticle().getDate_fin_encheres()) == 0) {
 				listeEncheresRemportees.add(enchere);
 			}
 		}
