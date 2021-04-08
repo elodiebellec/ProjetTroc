@@ -70,8 +70,10 @@ public class ModifierUnArticle extends HttpServlet {
         try {
         	
         	//injecter l'article dans la base de données
-			ArticleVenduManager.getArticleVenduManager().modifierArticles(nom_article, description, date_debut_encheres, 
+			ArticleVendu articlevendu = ArticleVenduManager.getArticleVenduManager().modifierArticles(nom_article, description, date_debut_encheres, 
 					date_fin_encheres, prix_initial, no_categorie, no_article);
+			
+			RetraitManager.getRetraitManager().modifierRetrait(rue, codePostal,ville,no_article);
 			
 			//injecter le retrait dans la base de données
 			/*Retrait retrait = RetraitManager.getRetraitManager().valideAjoutRetrait(articleVendu, rue, codePostal, ville);*/

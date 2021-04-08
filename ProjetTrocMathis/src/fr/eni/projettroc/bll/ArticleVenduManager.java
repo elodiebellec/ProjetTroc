@@ -159,36 +159,41 @@ public class ArticleVenduManager {
 
 	/*--------------Fin méthodes pour les filtres de la page d'accueil --------------------------*/
 
-	public ArticleVendu articleParNumero(int noArticle)  throws BusinessException {
+	public ArticleVendu articleParNumero(int noArticle) throws BusinessException {
 		return articleVenduDAO.selectByNoArticle(noArticle);
 	}
-	
-	
-	
+
 	public ArticleVendu modifierArticles(String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, int prix_initial, int no_categorie, int no_article) throws BusinessException {
 		BusinessException be = new BusinessException();
+		boolean isValiderNomArticle = validerNomArticle(nom_article, be);
+		boolean isValiderDescription = validerDescription(description, be);
+		boolean isValiderPrixInitial = validerPrixInitial(prix_initial, be);
+		boolean isValiderDate = validerDate(date_debut_encheres, date_fin_encheres, be);
+		if (isValiderNomArticle && isValiderPrixInitial && isValiderDate && isValiderDescription) {
 
-		ArticleVendu articleVendu = null;
+			ArticleVendu articleVendu = null;
 
+			Categorie categorie = new Categorie();
+			categorie.setNo_categorie(no_categorie);
 
-		Categorie categorie = new Categorie();
-		categorie.setNo_categorie(no_categorie);
-		
-		articleVendu = new ArticleVendu();
-		articleVendu.setNom_article(nom_article);
-		articleVendu.setDescription(description);
-		articleVendu.setPrix_initial(prix_initial);
-		articleVendu.setDate_debut_encheres(date_debut_encheres);
-		articleVendu.setDate_fin_encheres(date_fin_encheres);
-		articleVendu.setCategorie(categorie);
-		articleVendu.setNo_article(no_article);
-		
-		articleVenduDAO.update(articleVendu);
+			articleVendu = new ArticleVendu();
+			articleVendu.setNom_article(nom_article);
+			articleVendu.setDescription(description);
+			articleVendu.setPrix_initial(prix_initial);
+			articleVendu.setDate_debut_encheres(date_debut_encheres);
+			articleVendu.setDate_fin_encheres(date_fin_encheres);
+			articleVendu.setCategorie(categorie);
+			articleVendu.setNo_article(no_article);
 
-		return articleVendu;
+			articleVenduDAO.update(articleVendu);
 
-}
+			return articleVendu;
+		} else {
+			throw be;
+
+		}
+	}
 
 	public ArticleVendu valideAjoutArticle(String nom_article, String description, LocalDate date_debut_encheres,
 			LocalDate date_fin_encheres, int prix_initial, int no_categorie, int no_user) throws BusinessException {
@@ -276,7 +281,6 @@ public class ArticleVenduManager {
 
 			return false;
 		}
-		
 
 		if (date_fin_encheres.isBefore(date_debut_encheres) || date_fin_encheres.isEqual(date_debut_encheres)) {
 
