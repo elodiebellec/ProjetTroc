@@ -106,8 +106,18 @@
 
 			<div class="form-group">
 				<div class="form-row">
+
 					<label class="col-md-2" for="vendeur"> Vendeur : </label>
 					<div class="col-md-8">${articlejsp.utilisateur.nom }</div>
+
+					<label class="col-md-2" for="maProposition"> Ma proposition : </label>						
+					<input class="choixProposition" type="number" class="form-control" id="prixenchere" required
+							name="prixenchere">
+					<div class="col-md-1"></div>		
+
+					<button type="submit" class="btn btn-light">Enchérir</button>
+
+
 				</div>
 			</div>
 

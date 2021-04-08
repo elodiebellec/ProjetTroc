@@ -23,4 +23,7 @@ public interface UtilisateurDAO {
 	public List<Utilisateur> getListeUtilisateur() throws BusinessException;
 	
 	public boolean isEnchereEnCours(int no_utilsateur) throws BusinessException;
+
+	public void updateCredit(Utilisateur utilisateur) throws BusinessException;
+
 }

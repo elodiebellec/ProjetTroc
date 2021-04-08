@@ -29,8 +29,11 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	private static final String DELETE_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
 	private static final String SELECT_PERSONNE = "SELECT pseudo FROM utilisateurs";
 	private static final String SELECT_NOMBRE_ENCHERE = "SELECT COUNT(1) FROM encheres E WHERE E.no_article in (SELECT AV.no_article FROM articles_vendus AV WHERE AV.no_utilisateur=?)";
+	private static final String UPDATE_CREDIT = "UPDATE utilisateurs SET credit=? WHERE no_utilisateur=?";
+    
+    
+    public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception{
 
-	public static Utilisateur utilisateurBuilder(ResultSet rs) throws Exception {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setNo_utilisateur(rs.getInt("no_utilisateur"));
 		utilisateur.setPseudo(rs.getString("pseudo"));
@@ -70,7 +73,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 				u.setCredit(rs.getInt("credit"));
 				return u;
 			} else {
-				// Utilisateur non trouvÃ©
+				// Utilisateur non trouvé
 				BusinessException be = new BusinessException();
 				be.addError("Pseudo ou Mot de passe inconnu");
 				throw be;
@@ -157,26 +160,42 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 		return utilisateur;
 	}
 
-	public void update(Utilisateur utilisateur) throws BusinessException {
+	
+   public void updateCredit(Utilisateur utilisateur) throws BusinessException{
+	   try(Connection cnx = ConnectionProvider.getConnection()){
+           PreparedStatement requete = cnx.prepareStatement(UPDATE_CREDIT);
+          requete.setInt(1, utilisateur.getCredit()); 
+          requete.setInt(2, utilisateur.getNo_utilisateur());
+          requete.executeUpdate();
+	   }catch (Exception e){
+			  
+           throw new BusinessException(e.getMessage());
+       }
+   }
+	
+	
+	 public void update(Utilisateur utilisateur)throws BusinessException{
+	       
+	        try(Connection cnx = ConnectionProvider.getConnection()){
+	            PreparedStatement requete = cnx.prepareStatement(UPDATE_UTILISATEUR);
+	      requete.setString(1, utilisateur.getPseudo());
+				requete.setString(2, utilisateur.getNom());
+				requete.setString(3, utilisateur.getPrenom());
+				requete.setString(4, utilisateur.getEmail());
+				requete.setString(5, utilisateur.getTelephone());
+				requete.setString(6, utilisateur.getRue());
+				requete.setString(7, utilisateur.getCode_postal());
+				requete.setString(8, utilisateur.getVille());
+				requete.setString(9, utilisateur.getMot_de_passe());
+	            requete.setInt(10, utilisateur.getNo_utilisateur());
 
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement requete = cnx.prepareStatement(UPDATE_UTILISATEUR);
-			requete.setString(1, utilisateur.getPseudo());
-			requete.setString(2, utilisateur.getNom());
-			requete.setString(3, utilisateur.getPrenom());
-			requete.setString(4, utilisateur.getEmail());
-			requete.setString(5, utilisateur.getTelephone());
-			requete.setString(6, utilisateur.getRue());
-			requete.setString(7, utilisateur.getCode_postal());
-			requete.setString(8, utilisateur.getVille());
-			requete.setString(9, utilisateur.getMot_de_passe());
-			requete.setInt(10, utilisateur.getNo_utilisateur());
-
-			requete.executeUpdate();
-		} catch (Exception e) {
-
-			throw new BusinessException();
-		}
+	            requete.executeUpdate();
+	        }catch (Exception e){
+	  
+	            throw new BusinessException();
+	        }
+	    }
+	   
 	}
 
 	public void delete(int no_utilisateur) throws BusinessException {

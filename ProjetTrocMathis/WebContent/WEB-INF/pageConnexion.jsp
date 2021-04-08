@@ -36,13 +36,17 @@
 					<form action="./Connexion" method="post">
 						<div class="form-group">
 							<label for="login">Identifiant : </label> <input
-								class="form-control" id="login" required name="login">
+								class="form-control" value="${cookie.cookiePseudo.getValue()}" id="login" required name="login">
 						</div>
 						<div class="form-group">
 							<label for="password">Mot de passe : </label> <input
-								class="form-control" id="mdp" required name="mdp"
+								class="form-control" value="${cookie.cookiePassword.getValue()}" id="mdp" required name="mdp"
 								type="password">
 						</div>
+                          <div>
+                          <label for="memoire">Se souvenir de moi</label>
+                <input type="checkbox" id="memoire" name="memoire" />
+                          </div>
 
 						<div class="form-group">
 							<div class="groupecoco">
@@ -51,7 +55,7 @@
 									href="Mot de passe oublié">Mot de passe oublié</a>
 							</div>
 						</div>
-
+                  
 
 					</form>
 					<div class="boutoncreate">

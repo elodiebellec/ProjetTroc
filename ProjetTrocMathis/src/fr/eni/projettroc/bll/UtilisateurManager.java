@@ -3,8 +3,11 @@ package fr.eni.projettroc.bll;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import fr.eni.projettroc.bo.ArticleVendu;
 import fr.eni.projettroc.bo.Retrait;
+
+
 import fr.eni.projettroc.bo.Utilisateur;
 import fr.eni.projettroc.dao.ArticleVenduDAO;
 import fr.eni.projettroc.dao.DAOFactory;
@@ -13,9 +16,10 @@ import fr.eni.projettroc.dao.RetraitDAO;
 import fr.eni.projettroc.dao.UtilisateurDAO;
 
 import fr.eni.projettroc.exception.BusinessException;
+import sun.nio.ch.Util;
 
 public class UtilisateurManager {
-	// Attribut pour repr�senter la couche DAL
+	// Attribut pour représenter la couche DAL
 
 	private UtilisateurDAO utilisateurDAO;
 	private RetraitDAO retraitDAO;
@@ -41,8 +45,8 @@ public class UtilisateurManager {
 	}
 
 	public Utilisateur modifierUnUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String code_postal, String ville, String mot_de_passe, String ancienmotdepasse, int no_utilisateur,String saisieancienmotdepasse)
-			throws BusinessException {
+			String rue, String code_postal, String ville, String mot_de_passe, String ancienmotdepasse,
+			int no_utilisateur, String saisieancienmotdepasse) throws BusinessException {
 		BusinessException be = new BusinessException();
 		Utilisateur u = null;
 		boolean isValidPseudo = validatePseudo(pseudo, be);
@@ -69,7 +73,6 @@ public class UtilisateurManager {
 			throw be;
 		}
 	}
-	
 
 	public Utilisateur validerLaConnection(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		BusinessException be = new BusinessException();
@@ -86,7 +89,7 @@ public class UtilisateurManager {
 	public Utilisateur rechercherParPseudo(String utilisateur) throws BusinessException {
 		return utilisateurDAO.selectByPseudo(utilisateur);
 	}
-	
+
 	public Utilisateur rechercherParNumero(int no_utilisateur) throws BusinessException {
 		return utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
 	}
@@ -121,21 +124,54 @@ public class UtilisateurManager {
 		}
 	}
 
+	public Utilisateur verificationArgent(int credit, int no_utilisateur) throws BusinessException {
+		BusinessException be = new BusinessException();
+		Utilisateur user = null;
+		user = utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
+		int argentuser = user.getCredit();
+		boolean isAssezArgent = argentDisponible(credit, argentuser, no_utilisateur, be);
+        if(isAssezArgent) {
+		return user;
+	
+	} else {
+		throw be;
+	}
+	}
+	
+	public Utilisateur validerArgentEnchere(int credit, int no_utilisateur) throws BusinessException {
+		Utilisateur user = null;
+		user = utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
+		int argentuser = user.getCredit();
+		int argentdemander = credit;
+		int argentreel = argentuser - argentdemander;
+		user.setCredit(argentreel);
+		user.setNo_utilisateur(no_utilisateur);
+		utilisateurDAO.updateCredit(user);
+		return user;
+	}
+	
+	public Utilisateur rendreArgentEnchere(int credit, int no_utilisateur) throws BusinessException {
+		Utilisateur user = null;
+		user = utilisateurDAO.selectByNoUtilisateur(no_utilisateur);
+		int argentuser = user.getCredit();
+		int argentdemander = credit;
+		int argentreel = argentuser + argentdemander;
+		user.setCredit(argentreel);
+		user.setNo_utilisateur(no_utilisateur);
+		utilisateurDAO.updateCredit(user);
+		return user;
+	}
+
 	public Utilisateur afficherPersonne(String pseudo) throws BusinessException {
 		return utilisateurDAO.selectByPseudo(pseudo);
 	}
 
-	public void supprimerUtilisateur(int no_utilisateur) throws BusinessException {
-		
-		
+	public void supprimerUtilisateur(int no_utilisateur) throws BusinessException {		
 		
 		// on vérifie que l'utilisateur ne fait pas d'enchère en cours
 		if (utilisateurDAO.isEnchereEnCours(no_utilisateur)==true) {
 			throw new BusinessException(" Des enchères sont en cours sur un de vos articles, il est impossible de supprimer le compte");
-		}
-	
-
-		
+		}		
 		//on récupère la liste des articles
 		List<ArticleVendu> listeArticles = new ArrayList<ArticleVendu>();
 		listeArticles=articleVenduDAO.getListByNoUtilisateur(no_utilisateur);
@@ -173,16 +209,23 @@ public class UtilisateurManager {
 		return true;
 	}
 
-	
-	
-	private boolean validateAncienMdp(String saisieancienmotdepasse, String ancienmotdepasse, BusinessException be) {
-	if(!saisieancienmotdepasse.equals(ancienmotdepasse)) {
-		be.addError("Votre ancien mot de passe est incorrect");
-		return false;
-	}
+	private boolean argentDisponible(int credit, int argentuser, int no_utilsateur, BusinessException be) {
+		if (argentuser < credit) {
+			be.addError("Vous n'avez pas assez d'argent");
+			return false;
+			
+		}
 		return true;
 	}
-	
+
+	private boolean validateAncienMdp(String saisieancienmotdepasse, String ancienmotdepasse, BusinessException be) {
+		if (!saisieancienmotdepasse.equals(ancienmotdepasse)) {
+			be.addError("Votre ancien mot de passe est incorrect");
+			return false;
+		}
+		return true;
+	}
+
 	private boolean validatePseudo(String pseudo, BusinessException be) {
 		if (pseudo == null) {
 			be.addError("Login est obligatoire");
@@ -190,11 +233,11 @@ public class UtilisateurManager {
 		}
 		pseudo = pseudo.trim();
 		if (pseudo.isEmpty() || pseudo.length() < 6) {
-			be.addError("Login doit contenir au moins 6 caract�res");
+			be.addError("Login doit contenir au moins 6 caractères");
 			return false;
 		}
 		if (pseudo.length() > 30) {
-			be.addError("Login doit contenir au plus 30 caract�res");
+			be.addError("Login doit contenir au plus 30 caractères");
 			return false;
 		}
 
@@ -249,11 +292,11 @@ public class UtilisateurManager {
 		}
 		pseudo = pseudo.trim();
 		if (pseudo.isEmpty() || email.isEmpty() || pseudo.length() < 6) {
-			be.addError("Login doit contenir au moins 6 caract�res");
+			be.addError("Login doit contenir au moins 6 caractères");
 			return false;
 		}
 		if (pseudo.length() > 30 || email.length() > 30) {
-			be.addError("Login doit contenir au plus 30 caract�res");
+			be.addError("Login doit contenir au plus 30 caractères");
 			return false;
 		}
 
@@ -267,7 +310,7 @@ public class UtilisateurManager {
 		}
 		if (!mot_de_passe.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{6,12}")) {
 			be.addError(
-					"Mot de passe doit contenir entre 6 et 12 caract�res (1 chiffre, 1 majuscule, 1 caract�re sp�cial)");
+					"Mot de passe doit contenir entre 6 et 12 caractères (1 chiffre, 1 majuscule, 1 caractère spécial)");
 			return false;
 		}
 
