@@ -213,8 +213,8 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 
 	@Override
 	public void update(ArticleVendu article) throws BusinessException {
-		UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
-		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();
+	/*	UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();*/
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement requete = cnx.prepareStatement(UPDATE);
 			requete.setInt(1, article.getNo_article()); 	
@@ -225,6 +225,8 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 			requete.setInt(6, article.getPrix_initial());
 			requete.setInt(7,article.getPrix_vente());
 			requete.setInt(8,article.getCategorie().getNo_categorie());
+			
+			requete.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
