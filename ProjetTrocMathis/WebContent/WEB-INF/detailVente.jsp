@@ -12,7 +12,7 @@
 
 <head>
 <%@ include file="template/head.html"%>
-<title>Detail vente</title>
+<title>D&eacute;tail vente</title>
 
 
 </head>
@@ -41,7 +41,7 @@
 	<div class="container">
 		<form action="./DetailVente" method="post">
 			<!-- Page Heading -->
-			<h1 class="my-2">Detail vente</h1>
+			<h1 class="my-2">D&eacute;tail vente</h1>
 
 
 			<div class="form-group">
@@ -57,7 +57,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="categorie">Catégorie </label>
+					<label class="col-md-2" for="categorie">Cat&eacute;gorie </label>
 					<div class="col-md-8">${articlejsp.categorie.libelle}</div>
 
 				</div>
@@ -76,14 +76,14 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="miseAPrix"> Mise à prix : </label>
+					<label class="col-md-2" for="miseAPrix"> Mise 	&agrave; prix : </label>
 					<div class="col-md-8">${articlejsp.prix_initial}</div>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="finEnchere"> Fin de l'enchère:
+					<label class="col-md-2" for="finEnchere"> Fin de l'ench	&egrave;re:
 					</label>
 					<div class="col-md-8">
 						<tags:localDate date="${articlejsp.date_fin_encheres}" />
@@ -110,14 +110,6 @@
 					<label class="col-md-2" for="vendeur"> Vendeur : </label>
 					<div class="col-md-8">${articlejsp.utilisateur.nom }</div>
 
-					<label class="col-md-2" for="maProposition"> Ma proposition : </label>						
-					<input class="choixProposition" type="number" class="form-control" id="prixenchere" required
-							name="prixenchere">
-					<div class="col-md-1"></div>		
-
-					<button type="submit" class="btn btn-light">Enchérir</button>
-
-
 				</div>
 			</div>
 
@@ -130,7 +122,7 @@
 							proposition : </label> <input class="choixProposition" type="number"
 							class="form-control" id="prixenchere" required name="prixenchere">
 						<div class="col-md-1"></div>
-						<button type="button" class="btn btn-light">Encherir</button>
+						<button type="button" class="btn btn-light">Ench&eacute;rir</button>
 					</div>
 				</div>
 
@@ -151,7 +143,7 @@
 			<c:if test="${isProprietaireArticle && !isDateModifiable}">
 				<div class="form-group">
 					<div class="form-row">
-						<div>L'enchere a deja commence, vous ne pouvez pas la
+						<div>L'ench	&egrave;re a deja commenc&eacute;, vous ne pouvez pas la
 							modifier</div>
 						<div class="col-md-8"></div>
 					</div>
