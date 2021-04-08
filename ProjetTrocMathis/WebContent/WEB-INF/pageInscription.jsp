@@ -20,7 +20,7 @@
 	
 
 	<c:if test="${!empty errors}">
-		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
+		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item ">
 			<div class="card h-100 alert">
 				<div class="card-body alert alert-danger">
 					<h4 class="card-title">Erreurs</h4>
@@ -33,14 +33,21 @@
 
 	</c:if>
 	<header>
+	<div class="card-body">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-6 col-sm-6 portfolio-item align-middle">
 		<h1>Mon profil</h1>
-
+         </div>
+         </div>
+         </div>
+         </div>
 		<form action="./Inscription" method="post">
 			<div class="card-body">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
-
+                       
 							<div class="form-group">
 								<label for="pseudo">Pseudo</label> <input type="text"
 									class="form-control" id="pseudo" name="pseudo"

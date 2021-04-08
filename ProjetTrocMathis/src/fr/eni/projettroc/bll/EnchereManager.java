@@ -46,8 +46,24 @@ public class EnchereManager {
 	}
 
 
-	/*--------------Méthodes pour les filtres de la page d'accueil --------------------------*/
 	
+	public boolean premiereEnchere(int no_article)throws BusinessException{
+	List<Enchere> nombreEnchere = new ArrayList<Enchere>();
+	nombreEnchere = enchereDAO.selectByNoArticle(no_article);	
+	
+	int lesenchere = nombreEnchere.size();
+	if(lesenchere == 1) {
+			return true;
+	}
+	
+		return false;
+}
+	/*--------------MÃ©thodes pour les filtres de la page d'accueil --------------------------*/
+
+	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
+		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
+	}
+
 
 	public List<Enchere> toutesLesEncheresUniquesParUtilisateur(int no_utilisateur) throws BusinessException {
 		List<Enchere> listeEncheres = enchereDAO.getListByNoUtilisateur(no_utilisateur);
