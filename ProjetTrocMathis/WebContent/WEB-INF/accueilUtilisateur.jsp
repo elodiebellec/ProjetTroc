@@ -49,23 +49,23 @@
 				<br>
 
 				<div>
-					<input type="radio" name="typeTransaction" value="achat" checked>
+					<input type="radio" name="typeTransaction" value="achat" checked onclick="disable()">
 
 					<label for="achat"> Achats</label><br> 
-						<input type="checkbox" name="encoursEnchere" value="encours" checked> enchères ouvertes<br>      
-        				<input type="checkbox" name="enchereUtilisateur" value="encours"> mes enchères<br>      
-        				<input type="checkbox" name="enchereRemportee" value="remportee"> mes enchères remportées<br>      
+						<input type="checkbox" name="encoursEnchere" value="encours" class="checkboxAchat" id="checkboxAchat1" checked> enchères ouvertes<br>      
+        				<input type="checkbox" name="enchereUtilisateur" value="encours" class="checkboxAchat" id="checkboxAchat2"> mes enchères<br>      
+        				<input type="checkbox" name="enchereRemportee" value="remportee" class="checkboxAchat" id="checkboxAchat3"> mes enchères remportées<br>      
 
 				</div>
 				<br>
 				<div>
 
 
-					<input type="radio" name="typeTransaction" value="vente">
+					<input type="radio" name="typeTransaction" value="vente" onclick="undisable()">
 					<label for="vente"> Mes ventes</label><br> 
-						<input type="checkbox" name="encoursVente" value="encours"> mes ventes en cours<br>      
-        				<input type="checkbox" name="futureVente" value="future"> ventes non débutées<br>      
-        				<input type="checkbox" name="venteTerminee" value="terminee"> ventes terminées<br>     
+						<input type="checkbox" name="encoursVente" value="encours" class="checkboxVente" id="checkboxVente1" disabled> mes ventes en cours<br>      
+        				<input type="checkbox" name="futureVente" value="future" class="checkboxVente" id="checkboxVente2" disabled> ventes non débutées<br>      
+        				<input type="checkbox" name="venteTerminee" value="terminee" class="checkboxVente" id="checkboxVente3" disabled> ventes terminées<br>     
 
 				</div>
 
@@ -111,6 +111,33 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script>
+		function disable() {
+		document.getElementById("checkboxVente1").checked = false;
+		document.getElementById("checkboxVente2").checked = false;
+		document.getElementById("checkboxVente3").checked = false;
+ 		document.getElementById("checkboxVente1").disabled = true;
+ 		document.getElementById("checkboxVente2").disabled = true;
+ 		document.getElementById("checkboxVente3").disabled = true;
+ 		document.getElementById("checkboxAchat1").disabled = false;
+ 		document.getElementById("checkboxAchat2").disabled = false;
+ 		document.getElementById("checkboxAchat3").disabled = false;
+		}
+
+		function undisable() {
+		document.getElementById("checkboxAchat1").checked = false;
+		document.getElementById("checkboxAchat2").checked = false;
+		document.getElementById("checkboxAchat3").checked = false;
+  		document.getElementById("checkboxVente1").disabled = false;
+  		document.getElementById("checkboxVente2").disabled = false;
+  		document.getElementById("checkboxVente3").disabled = false;
+  		document.getElementById("checkboxAchat1").disabled = true;
+ 		document.getElementById("checkboxAchat2").disabled = true;
+ 		document.getElementById("checkboxAchat3").disabled = true;
+
+		}
+	</script>
+
 
 </body>
 

@@ -55,7 +55,7 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 			// Afficher la liste des cat�gorie
 			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
-			// R�cup�rer la liste des ench�res ouvertes de l'utilisateur
+			// Répérer la liste de par défaut de toutes les enchères ouvertes
 			listeArticle = ArticleVenduManager.getArticleVenduManager().listeArticles();
 			listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticle, "");
 			session.setAttribute("listeArticles", listeArticleFiltree);
