@@ -97,7 +97,7 @@ public class DetailVenteServlet extends HttpServlet {
 		}
 		for (Enchere en : encheremax) {
 			int montantmax = en.getMontant_enchere();
-			String usermax = en.getUtilisateur().getPseudo();
+			String usermax = en.getUtilisateur().getNom();
 			request.setAttribute("montantmaximum", montantmax);
 			request.setAttribute("usermax", usermax);
 		}
@@ -140,7 +140,7 @@ public class DetailVenteServlet extends HttpServlet {
 				en.getNo_enchere();
 
 				int montantmax = en.getMontant_enchere();
-				String usermax = en.getUtilisateur().getPseudo();
+				String usermax = en.getUtilisateur().getNom();
 				request.setAttribute("montantmaximum", montantmax);
 				request.setAttribute("usermax", usermax);
 			}
@@ -271,7 +271,7 @@ public class DetailVenteServlet extends HttpServlet {
 			}
 			for (Enchere en : enchere) {
 				int montantmax = en.getMontant_enchere();
-				String usermax = en.getUtilisateur().getPseudo();
+				String usermax = en.getUtilisateur().getNom();
 				request.setAttribute("montantmaximum", montantmax);
 				request.setAttribute("usermax", usermax);
 			}
@@ -294,7 +294,7 @@ public class DetailVenteServlet extends HttpServlet {
 			}
 			for (Enchere en : enchere) {
 				int montantmax = en.getMontant_enchere();
-				String usermax = en.getUtilisateur().getPseudo();
+				String usermax = en.getUtilisateur().getNom();
 				request.setAttribute("montantmaximum", montantmax);
 				request.setAttribute("usermax", usermax);
 			}
