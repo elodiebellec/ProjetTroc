@@ -10,6 +10,7 @@ import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.EnchereDAO;
+import fr.eni.projettroc.dao.UtilisateurDAO;
 import fr.eni.projettroc.exception.BusinessException;
 
 public class EnchereManager {
@@ -138,6 +139,13 @@ public class EnchereManager {
 		enchere.setArticle(article);
 		enchere.setUtilisateur(utilisateur);
 		enchereDAO.insert(enchere);
+		
+		
+		utilisateur.setCredit(montant_enchere);
+		
+		
+		
+		
 		return enchere;
 		
 		

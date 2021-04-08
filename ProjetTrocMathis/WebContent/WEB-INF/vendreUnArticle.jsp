@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page errorPage="error.jsp" isErrorPage="false"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,7 @@
 
 <body>
 
-	<%@ include file="template/navBarConnectee.html" %>
+	<%@ include file="template/navBarNavigation.html" %>
 
 
 
@@ -71,7 +71,7 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="categorie">Categorie </label>
+					<label class="col-md-2" for="categorie">Catégorie </label>
 					<div class="col-md-8">
 						<select class="form-select" aria-label="Default select example"
 							id="categorie" required name="categorie">

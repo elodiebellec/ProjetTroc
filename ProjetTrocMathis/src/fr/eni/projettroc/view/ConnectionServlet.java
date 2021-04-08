@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,18 +34,59 @@ public class ConnectionServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		//testPoolConnection();
+		
+		
+		
+		
+		
+		
 		request.getRequestDispatcher("./WEB-INF/pageConnexion.jsp").forward(request, response);
 	}
 	
 	
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-		//Récupération de la saisie
+		//Rï¿½cupï¿½ration de la saisie
 		request.setCharacterEncoding("UTF-8");
 		String pseudo = request.getParameter("login");
 		String mot_de_passe = request.getParameter("mdp");
 		String email = request.getParameter("login");
 		
+		
+		if(request.getParameter("memoire") != null) {
+		Cookie[] cookie = request.getCookies();
+		
+		System.out.println("il n'y a pas de cookie");
+		
+		Cookie login = new Cookie("cookiePseudo",  pseudo);
+		resp.addCookie(login);
+		System.out.println("Cookie" +login);
+        
+		Cookie password = new Cookie("cookiePassword",  mot_de_passe);
+		resp.addCookie(password);
+		System.out.println("Cookie" +password);
+		
+		try {
+			Utilisateur u = UtilisateurManager.getUtilisateursManager().validerLaConnection(pseudo, mot_de_passe , email);
+	        int  userId =  u.getNo_utilisateur();
+	        String mdpId = mot_de_passe;
+			//Transmettre les informations pour la page de welcome
+			HttpSession session = request.getSession();
+			session.setAttribute("idMdp", mdpId);
+			session.setAttribute("idUser", userId);
+			session.setAttribute("user", u);
+			request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, resp);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			request.setAttribute("errors", e.getErrors());
+			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, resp);
+		}
+	
+		
+		}
+	
+		else {	
 		
 		//Appelle a la BLL
 		try {
@@ -66,9 +108,10 @@ public class ConnectionServlet extends HttpServlet {
 			user=    	user.getID*/
 				
 	}
+	}
 
 	/**
-	 * Méthode pour valider la configuration de la base de données
+	 * Mï¿½thode pour valider la configuration de la base de donnï¿½es
 	 */
 	private void testPoolConnection() {
 		try {

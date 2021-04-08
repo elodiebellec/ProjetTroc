@@ -1,32 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page errorPage="error.jsp" isErrorPage="false"%>
+
 
 
 <!DOCTYPE html>
 <html>
 <head>
-
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="ENI Ecole">
-<meta name="author" content="ENI Ecole">
-
-<title>Projet TROC</title>
-
-<!-- Bootstrap core CSS -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="css/pagemodification.css" rel="stylesheet">
-<link rel="icon" href="images/favicon.ico">
-
+<%@ include file="template/head.html"%>
+<title>Modification Utilisateur</title>
 </head>
 
 <body>
-	<%@ include file="template/navBarConnectee.html" %>
+	<%@ include file="template/navBarNavigation.html" %>
 
 	<c:if test="${!empty errors}">
 		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
@@ -44,7 +30,7 @@
 
 
 	<header>
-		<h1>Modification du profil</h1>
+		<h1>Mon Profil</h1>
 
 		<form action="./ModificationUtilisateur" method="post">
 			<div class="card-body">
@@ -79,12 +65,12 @@
 									aria-describedby="nomHelp" placeholder="Entrer votre Nom">
 							</div>
 							<div class="form-group">
-								<label for="prenom">Prenom</label> <input type="text"
+								<label for="prenom">Prénom</label> <input type="text"
 									class="form-control" id="identite" name="prenom"
 									aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
 							</div>
 							<div class="form-group">
-								<p>Cr�dit : ${user.credit}</p>
+								<p>Crédit : ${user.credit}</p>
 							</div>
 
 						</div>
@@ -96,7 +82,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="telephone">Telephone</label> <input type="text"
+								<label for="telephone">Téléphone</label> <input type="text"
 									class="form-control" id="telephone" name="telephone"
 									placeholder="Entrer votre telephone">
 							</div>

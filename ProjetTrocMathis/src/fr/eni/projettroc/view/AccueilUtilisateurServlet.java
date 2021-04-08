@@ -52,12 +52,14 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 
 		try {
 
-			// Afficher la liste des cat�gorie
+			// Afficher la liste des catégorie
 			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
 			// Répérer la liste de par défaut de toutes les enchères ouvertes
 			listeArticle = ArticleVenduManager.getArticleVenduManager().listeArticles();
 			listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticle, "");
+
+
 			session.setAttribute("listeArticles", listeArticleFiltree);
 
 		} catch (BusinessException e) {
@@ -77,6 +79,7 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
+
 		// Récupérer l'ID de l'utilisateur connecté (si déconnecté on le renvoie sur la
 		// page d'accueil)
 		if (session.getAttribute("idUser") != null) {
@@ -84,15 +87,19 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 			System.out.println("idUser : " + idUser);
 		} else {
 			idUser = 0;
-			System.out.println("Utilisateur d�connect�");
+			System.out.println("Utilisateur déconnecté");
 		}
 
+
 		// Récupérer le type de transaction à afficher
+
 		String typeTransaction = request.getParameter("typeTransaction");
 		request.setAttribute("typeTransaction", typeTransaction);
 		System.out.println("type transaction : " + typeTransaction);
 
+
 		// Récupérer les valeurs des ckeckbox
+
 		// Checkbox achats
 		String checkboxAchat = (request.getParameter("encoursEnchere") + "_"
 				+ request.getParameter("enchereUtilisateur") + "_" + request.getParameter("enchereRemportee"))
@@ -102,14 +109,19 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 		String checkboxVente = (request.getParameter("encoursVente") + "_" + request.getParameter("futureVente") + "_"
 				+ request.getParameter("venteTerminee")).toUpperCase();
 		System.out.println("checkboxVente : " + checkboxVente);
+
 		// Afficher les articles vendus par catégorie
 
-		// Récupérer le num�ro de catégories sélectionnées
+		// Récupérer le numéro de catégories sélectionnées
+
+
 		String categorieSelect = request.getParameter("categorieSelect");
 		int numCategorie = Integer.parseInt(categorieSelect);
-		System.out.println("cat�gorie : " + categorieSelect);
+		System.out.println("catégorie : " + categorieSelect);
+
 
 		// Récupérer le nom de l'article filtré
+
 		String nomSelect = request.getParameter("nomSelect");
 		System.out.println("nom article : " + nomSelect);
 
@@ -118,6 +130,7 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 			// -------------- filtre par type de transaction----------------//
 			// ---------------------ACHATS-----------------------------------//
 			if ("achat".equals(typeTransaction)) {
+
 				// filtrer les enchères par période (checkbox)
 				if ("ENCOURS_NULL_NULL".equals(checkboxAchat) || "ENCOURS_ENCOURS_NULL".equals(checkboxAchat)) {
 					//Afficher tous les articles en cours
@@ -153,21 +166,22 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 				} 
 
 				
+
 			} else {
 				// ---------------------VENTES-----------------------------------//
 				listeArticlesUtilisateur = ArticleVenduManager.getArticleVenduManager()
 						.listeArticlesParNoUtilisateur(idUser);
-				// filtrer les articles par p�riode (checkbox)
+				// filtrer les articles par période (checkbox)
 				listeArticleFiltree =  ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticlesUtilisateur, checkboxVente);
 
 			}
 
-			// -------------- filtre par cat�gorie -------------------------//
+			// -------------- filtre par catégorie -------------------------//
 			session.getAttribute("listeCategories");
-			// On r�cup�re le libell� de la cat�gorie avec le num�ro de cat�gorie du
+			// On récupère le libellé de la catégorie avec le numéro de catégorie du
 			// formulaire.
-			// Si l'utilisateur s�lectionne toutes les cat�gories, pas de filtre par
-			// cat�gorie.
+			// Si l'utilisateur sélectionne toutes les catégories, pas de filtre par
+			// catégorie.
 			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {
 				listeArticleCategorie = listeArticleFiltree;
 			} else {

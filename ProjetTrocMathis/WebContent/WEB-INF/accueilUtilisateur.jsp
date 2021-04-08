@@ -1,8 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page errorPage="error.jsp" isErrorPage="false"%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 <%@page import="fr.eni.projettroc.bo.Utilisateur"%>
@@ -10,7 +8,9 @@
 <!DOCTYPE html>
 <html>
 
-<%@ include file="template/head.html"%>
+<head>
+<%@ include file="template/head.html" %>
+</head>
 
 <body>
 
@@ -24,7 +24,9 @@
 	<div class="container">
 
 		<!-- Page Heading -->
-		<h1 class="my-2">Liste des enchères</h1>
+
+		<h1 class="my-2">Liste des encheres</h1>
+
 		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
 
 
@@ -52,9 +54,12 @@
 					<input type="radio" name="typeTransaction" value="achat" checked onclick="disable()">
 
 					<label for="achat"> Achats</label><br> 
-						<input type="checkbox" name="encoursEnchere" value="encours" class="checkboxAchat" id="checkboxAchat1" checked> enchères ouvertes<br>      
-        				<input type="checkbox" name="enchereUtilisateur" value="encours" class="checkboxAchat" id="checkboxAchat2"> mes enchères<br>      
-        				<input type="checkbox" name="enchereRemportee" value="remportee" class="checkboxAchat" id="checkboxAchat3"> mes enchères remportées<br>      
+
+						<input type="checkbox" name="encoursEnchere" value="encours" class="checkboxAchat" id="checkboxAchat1" checked> enchÃ¨res ouvertes<br>      
+        				<input type="checkbox" name="enchereUtilisateur" value="encours" class="checkboxAchat" id="checkboxAchat2"> mes enchÃ¨res<br>      
+        				<input type="checkbox" name="enchereRemportee" value="remportee" class="checkboxAchat" id="checkboxAchat3"> mes enchÃ¨res remportÃ©es<br>      
+
+
 
 				</div>
 				<br>
@@ -64,8 +69,8 @@
 					<input type="radio" name="typeTransaction" value="vente" onclick="undisable()">
 					<label for="vente"> Mes ventes</label><br> 
 						<input type="checkbox" name="encoursVente" value="encours" class="checkboxVente" id="checkboxVente1" disabled> mes ventes en cours<br>      
-        				<input type="checkbox" name="futureVente" value="future" class="checkboxVente" id="checkboxVente2" disabled> ventes non débutées<br>      
-        				<input type="checkbox" name="venteTerminee" value="terminee" class="checkboxVente" id="checkboxVente3" disabled> ventes terminées<br>     
+        				<input type="checkbox" name="futureVente" value="future" class="checkboxVente" id="checkboxVente2" disabled> ventes non dÃ©butÃ©es<br>      
+        				<input type="checkbox" name="venteTerminee" value="terminee" class="checkboxVente" id="checkboxVente3" disabled> ventes terminÃ©es<br>     
 
 				</div>
 
@@ -77,15 +82,18 @@
 				<div class="card h-100">
 
 
+					
+
+					<p><a href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
+				title="Article"><i>${c.nom_article}</i></a></p>
+
+
 					<p>
-						<a
-							href="${pageContext.request.contextPath}/DetailVente?param=${c.no_article}"
-							title="Article"><i>${c.nom_article}</i></a>
-					</p>
+
 
 					<p>Prix : ${c.prix_initial} points</p>
 					<p>
-						Fin de l'enchère :
+						Fin de l'enchÃ¨re :
 						<tags:localDate date="${c.date_fin_encheres}" />
 					</p>
 					<p>
