@@ -122,15 +122,17 @@
 							proposition : </label> <input class="choixProposition" type="number"
 							class="form-control" id="prixenchere" required name="prixenchere">
 						<div class="col-md-1"></div>
-						<button type="button" class="btn btn-light">Ench&eacute;rir</button>
+						<button type="submit" class="btn btn-light">Ench&eacute;rir</button>
 					</div>
 				</div>
 
 			</c:if>
-
+     
 			<c:if test="${isProprietaireArticle && isDateModifiable}">
 				<div class="form-group">
 					<div class="form-row">
+					
+					
 						<button type="button" class="btn btn-light">Modifier la
 							vente</button>
 						<div class="col-md-8"></div>
@@ -138,8 +140,9 @@
 				</div>
 
 			</c:if>
+			
 
-
+     
 			<c:if test="${isProprietaireArticle && !isDateModifiable}">
 				<div class="form-group">
 					<div class="form-row">
@@ -152,5 +155,6 @@
 
 			</c:if>
 		</form>
+		</div>
 </body>
 </html>
