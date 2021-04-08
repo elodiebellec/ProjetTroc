@@ -28,9 +28,12 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 	public List<ArticleVendu> listeArticlesUtilisateur;
 	public List<ArticleVendu> listeArticleCategorie;
 	public List<ArticleVendu> listeArticleParNom;
+	public List<ArticleVendu> listeArticle;
 	public List<ArticleVendu> listeArticleFiltree;
 	public List<Enchere> listeEnchereFiltree;
 	public List<Enchere> listeEnchereUtilisateur;
+	public List<Enchere> listeEnchereRemportee;
+	public List<ArticleVendu> listeArticleRemportes;
 
 	public int idUser;
 
@@ -49,12 +52,12 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 
 		try {
 
-			// Afficher la liste des catégorie
+			// Afficher la liste des catï¿½gorie
 			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
-			// Récupérer la liste des enchères ouvertes de l'utilisateur
-			listeArticleFiltree = ArticleVenduManager.getArticleVenduManager()
-					.listeArticleParPeriode(ArticleVenduManager.getArticleVenduManager().listeArticles(), "");
+			// Rï¿½cupï¿½rer la liste des enchï¿½res ouvertes de l'utilisateur
+			listeArticle = ArticleVenduManager.getArticleVenduManager().listeArticles();
+			listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticle, "");
 			session.setAttribute("listeArticles", listeArticleFiltree);
 
 		} catch (BusinessException e) {
@@ -74,22 +77,22 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
-		// Récupérer l'ID de l'utilisateur connecté (si déconnecté, on le renvoie sur la
+		// RÃ©cupÃ©rer l'ID de l'utilisateur connectÃ© (si dÃ©connectÃ© on le renvoie sur la
 		// page d'accueil)
 		if (session.getAttribute("idUser") != null) {
 			idUser = (int) session.getAttribute("idUser");
 			System.out.println("idUser : " + idUser);
 		} else {
 			idUser = 0;
-			System.out.println("Utilisateur déconnecté");
+			System.out.println("Utilisateur dï¿½connectï¿½");
 		}
 
-		// Récupérer le type de transaction à afficher
+		// RÃ©cupÃ©rer le type de transaction Ã  afficher
 		String typeTransaction = request.getParameter("typeTransaction");
 		request.setAttribute("typeTransaction", typeTransaction);
 		System.out.println("type transaction : " + typeTransaction);
 
-		// Récupérer les valeurs des ckeckbox
+		// RÃ©cupÃ©rer les valeurs des ckeckbox
 		// Checkbox achats
 		String checkboxAchat = (request.getParameter("encoursEnchere") + "_"
 				+ request.getParameter("enchereUtilisateur") + "_" + request.getParameter("enchereRemportee"))
@@ -99,14 +102,14 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 		String checkboxVente = (request.getParameter("encoursVente") + "_" + request.getParameter("futureVente") + "_"
 				+ request.getParameter("venteTerminee")).toUpperCase();
 		System.out.println("checkboxVente : " + checkboxVente);
-		// Afficher les articles vendus par catégorie
+		// Afficher les articles vendus par catÃ©gorie
 
-		// Récupérer le numéro de catégorie sélectionnée
+		// RÃ©cupÃ©rer le numï¿½ro de catÃ©gories sÃ©lectionnÃ©es
 		String categorieSelect = request.getParameter("categorieSelect");
 		int numCategorie = Integer.parseInt(categorieSelect);
-		System.out.println("catégorie : " + categorieSelect);
+		System.out.println("catï¿½gorie : " + categorieSelect);
 
-		// Récupérer le nom de l'article filtré
+		// RÃ©cupÃ©rer le nom de l'article filtrÃ©
 		String nomSelect = request.getParameter("nomSelect");
 		System.out.println("nom article : " + nomSelect);
 
@@ -115,50 +118,56 @@ public class AccueilUtilisateurServlet extends HttpServlet {
 			// -------------- filtre par type de transaction----------------//
 			// ---------------------ACHATS-----------------------------------//
 			if ("achat".equals(typeTransaction)) {
-				// filtrer les enchères par période (checkbox)
-				if ("ENCOURSENCHERE_NULL_NULL".equals(checkboxAchat)
-						|| "ENCOURSENCHERE_ENCHEREUTILISATEUR_NULL".equals(checkboxAchat)) {
-					// toutes les encheres encours
-					listeEnchereFiltree = EnchereManager.getEnchereManager()
-							.listeEnchereParPeriode(EnchereManager.getEnchereManager().toutesLesEncheres(), "EN_COURS");
-				} else if ("NULL_ENCHEREUTILISATEUR_ENCHEREREMPORTEE".equals(checkboxAchat)) {
-					// les encheres encours et passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(
-							EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser), "TOUTES");
-				} else if ("NULL_ENCHEREUTILISATEUR_NULL".equals(checkboxAchat)) {
+				// filtrer les enchÃ¨res par pÃ©riode (checkbox)
+				if ("ENCOURS_NULL_NULL".equals(checkboxAchat) || "ENCOURS_ENCOURS_NULL".equals(checkboxAchat)) {
+					//Afficher tous les articles en cours
+					listeArticleFiltree =  ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(ArticleVenduManager.getArticleVenduManager().listeArticles(), checkboxAchat);
+					
+				} else if ("ENCOURS_NULL_REMPORTEE".equals(checkboxAchat) || "ENCOURS_ENCOURS_REMPORTEE".equals(checkboxAchat) || "NULL_NULL_NULL".equals(checkboxAchat)) {
+					//Afficher tous les articles en cours
+					listeArticleFiltree =  ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(ArticleVenduManager.getArticleVenduManager().listeArticles(), "ENCOURS_NULL_NULL");
+					// Toutes les encheres remportÃ©es
+					listeEnchereRemportee = EnchereManager.getEnchereManager().encheresRemporteesParUtilisateur(idUser);
+					listeArticlesUtilisateur = EnchereManager.getEnchereManager().ArticlesdeListeEncheres(listeEnchereRemportee);
+					// Additionner les deux listes
+					listeArticleFiltree.addAll(listeArticlesUtilisateur);
+				} else if ("NULL_ENCOURS_REMPORTEE".equals(checkboxAchat)) {
 					// les encheres encours de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(
-							EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser), "EN_COURS");
-				} else if ("NULL_NULL_ENCHEREREMPORTEE".equals(checkboxAchat)) {
-					// les encheres passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager().listeEnchereParPeriode(
-							EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser), "APRES_FIN");
+					listeEnchereFiltree = EnchereManager.getEnchereManager().toutesLesEncheresUniquesParUtilisateur(idUser);
+					// RÃ©cupÃ©rer la liste des articles correspondants Ã  la liste des enchÃ¨res
+					listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(EnchereManager.getEnchereManager().ArticlesdeListeEncheres(listeEnchereFiltree), "NULL_ENCOURS_NULL");
+					// Toutes les encheres remportÃ©es
+					listeEnchereRemportee = EnchereManager.getEnchereManager().encheresRemporteesParUtilisateur(idUser);
+					listeArticlesUtilisateur = EnchereManager.getEnchereManager().ArticlesdeListeEncheres(listeEnchereRemportee);
+					// Additionner les deux listes
+					listeArticleFiltree.addAll(listeArticlesUtilisateur);
+				} else if ("NULL_NULL_REMPORTEE".equals(checkboxAchat)) {
+					// toutes les encheres encours + les encheres passÃ©es de l'utilisateur
+					listeEnchereRemportee = EnchereManager.getEnchereManager().encheresRemporteesParUtilisateur(idUser);
+					listeArticleFiltree = EnchereManager.getEnchereManager().ArticlesdeListeEncheres(listeEnchereRemportee);
 				} else {
-					// toutes les encheres encours + les encheres passées de l'utilisateur
-					listeEnchereFiltree = EnchereManager.getEnchereManager()
-							.listeEnchereParPeriode(EnchereManager.getEnchereManager().toutesLesEncheres(), "EN_COURS");
-					listeEnchereUtilisateur = EnchereManager.getEnchereManager().listeEnchereParPeriode(
-							EnchereManager.getEnchereManager().toutesLesEncheresParUtilisateur(idUser), "APRES_FIN");
-					listeEnchereFiltree.addAll(listeEnchereUtilisateur);
-				}
+					// les encheres encours de l'utilisateur
+					listeEnchereFiltree = EnchereManager.getEnchereManager().toutesLesEncheresUniquesParUtilisateur(idUser);
+					// RÃ©cupÃ©rer la liste des articles correspondants Ã  la liste des enchÃ¨res
+					listeArticleFiltree = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(EnchereManager.getEnchereManager().ArticlesdeListeEncheres(listeEnchereFiltree), checkboxAchat);
+				} 
 
-				// Récupérer la liste des articles correspondants à la liste des enchères
-				listeArticleFiltree = EnchereManager.getEnchereManager().ArticlesdeListeEncheres(listeEnchereFiltree);
+				
 			} else {
 				// ---------------------VENTES-----------------------------------//
 				listeArticlesUtilisateur = ArticleVenduManager.getArticleVenduManager()
 						.listeArticlesParNoUtilisateur(idUser);
-				// filtrer les articles par période (checkbox)
+				// filtrer les articles par pï¿½riode (checkbox)
 				listeArticleFiltree =  ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticlesUtilisateur, checkboxVente);
 
 			}
 
-			// -------------- filtre par catégorie -------------------------//
+			// -------------- filtre par catï¿½gorie -------------------------//
 			session.getAttribute("listeCategories");
-			// On récupère le libellé de la catégorie avec le numéro de catégorie du
+			// On rï¿½cupï¿½re le libellï¿½ de la catï¿½gorie avec le numï¿½ro de catï¿½gorie du
 			// formulaire.
-			// Si l'utilisateur sélectionne toutes les catégories, pas de filtre par
-			// catégorie.
+			// Si l'utilisateur sï¿½lectionne toutes les catï¿½gories, pas de filtre par
+			// catï¿½gorie.
 			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {
 				listeArticleCategorie = listeArticleFiltree;
 			} else {

@@ -28,10 +28,33 @@ public class EnchereJDBCImpl implements EnchereDAO{
     private static final String INSERT = "insert into encheres (date_enchere, montant_enchere, no_article, no_utilisateur) values(?,?,?,?)";
     private static final String SELECT_ALL_BY_NO_ARTICLE = "SELECT * FROM encheres where no_article=?";
     private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `encheres` WHERE `no_utilisateur`=?";
+    private static final String SELECT_MAX_ENCHERES = "SELECT e.* FROM encheres e INNER JOIN ( SELECT no_article, MAX(montant_enchere) AS maxEnch FROM encheres GROUP BY no_article ) groupee ON e.no_article = groupee.no_article AND e.montant_enchere = groupee.maxEnch";
 
 
+	public List<Enchere> getListMaxEnchere() throws BusinessException {
+		List<Enchere> listeEcheres = new ArrayList<Enchere>();
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			Statement stmt = cnx.createStatement();
+			ResultSet rs = stmt.executeQuery(SELECT_MAX_ENCHERES);
 
-	private Enchere enchereBuilder(ResultSet rs) throws SQLException, BusinessException {
+		
+			while (rs.next()) {
+				listeEcheres.add(enchereBuilder(rs));
+				}
+				
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException be = new BusinessException();
+			be.addError("Erreur getListEnchere DAO");
+			throw be;
+		}
+
+		return listeEcheres;		
+	}
+    
+    private Enchere enchereBuilder(ResultSet rs) throws SQLException, BusinessException {
 
 		Enchere enchere = new Enchere();
 		

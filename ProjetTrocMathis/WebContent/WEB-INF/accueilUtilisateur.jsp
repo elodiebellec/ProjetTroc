@@ -24,7 +24,7 @@
 	<div class="container">
 
 		<!-- Page Heading -->
-		<h1 class="my-2">Liste des enchÃ¨res</h1>
+		<h1 class="my-2">Liste des enchères</h1>
 		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
 
 
@@ -52,9 +52,9 @@
 					<input type="radio" name="typeTransaction" value="achat" checked>
 
 					<label for="achat"> Achats</label><br> 
-						<input type="checkbox" name="encoursEnchere" value="encoursEnchere" checked> enchÃ¨res ouvertes<br>      
-        				<input type="checkbox" name="enchereUtilisateur" value="enchereUtilisateur"> mes enchÃ¨res<br>      
-        				<input type="checkbox" name="enchereRemportee" value="enchereRemportee"> mes enchÃ¨res remportÃ©es<br>      
+						<input type="checkbox" name="encoursEnchere" value="encours" checked> enchères ouvertes<br>      
+        				<input type="checkbox" name="enchereUtilisateur" value="encours"> mes enchères<br>      
+        				<input type="checkbox" name="enchereRemportee" value="remportee"> mes enchères remportées<br>      
 
 				</div>
 				<br>
@@ -63,9 +63,9 @@
 
 					<input type="radio" name="typeTransaction" value="vente">
 					<label for="vente"> Mes ventes</label><br> 
-						<input type="checkbox" name="encoursVente" value="encoursVente"> mes ventes en cours<br>      
-        				<input type="checkbox" name="futureVente" value="futureVente"> ventes non dÃ©butÃ©es<br>      
-        				<input type="checkbox" name="venteTerminee" value="venteTerminee"> ventes terminÃ©es<br>     
+						<input type="checkbox" name="encoursVente" value="encours"> mes ventes en cours<br>      
+        				<input type="checkbox" name="futureVente" value="future"> ventes non débutées<br>      
+        				<input type="checkbox" name="venteTerminee" value="terminee"> ventes terminées<br>     
 
 				</div>
 
@@ -85,7 +85,7 @@
 
 					<p>Prix : ${c.prix_initial} points</p>
 					<p>
-						Fin de l'enchÃ¨re :
+						Fin de l'enchère :
 						<tags:localDate date="${c.date_fin_encheres}" />
 					</p>
 					<p>
