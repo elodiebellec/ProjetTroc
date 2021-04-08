@@ -7,7 +7,7 @@ import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
 
-import fr.eni.projettroc.bo.Enchere;
+
 
 import fr.eni.projettroc.bo.Categorie;
 import fr.eni.projettroc.bo.Utilisateur;
@@ -62,6 +62,8 @@ public class ArticleVenduManager {
 	}
 	
 	
+
+	
 	public List<ArticleVendu> listeArticlesParCategorie(List<ArticleVendu> listeArticle, int no_categorie) throws BusinessException {
 		List<ArticleVendu> listeParCategorie = new ArrayList<ArticleVendu>();
 		for (ArticleVendu articleVendu : listeArticle) {
@@ -91,50 +93,56 @@ public class ArticleVenduManager {
 		   List<ArticleVendu> listeArticlesParPeriode = new ArrayList<ArticleVendu>();
 		   LocalDate today = LocalDate.now();
 		   switch (periode) {
-				case "NULL_FUTUREVENTE_NULL":
+				case "NULL_FUTURE_NULL":
 					for (ArticleVendu article : listeArticles) {
-						if(today.compareTo(article.getDate_debut_encheres()) == 1) {
+						if(today.compareTo(article.getDate_debut_encheres()) < 0) {
 							listeArticlesParPeriode.add(article);
 						}
 					}
 					break;
-				case "NULL_NULL_VENTETERMINEE":
+				case "NULL_NULL_TERMINEE":
 					for (ArticleVendu article : listeArticles) {
-						if(today.compareTo(article.getDate_fin_encheres()) == 1) {
+						if(today.compareTo(article.getDate_fin_encheres()) > 0 || today.compareTo(article.getDate_fin_encheres()) == 0) {
 							listeArticlesParPeriode.add(article);
 						}	
 					}
+				
 					break;
-				case "ENCOURSVENTE_NULL_NULL":
+				case "ENCOURS_FUTURE_NULL":
 					for (ArticleVendu article : listeArticles) {
-						if(today.compareTo(article.getDate_debut_encheres()) != 1 && today.compareTo(article.getDate_fin_encheres()) != 1) {
+						if(today.compareTo(article.getDate_debut_encheres()) < 0 || ((today.compareTo(article.getDate_debut_encheres()) > 0 || today.compareTo(article.getDate_debut_encheres()) == 0) && today.compareTo(article.getDate_fin_encheres()) < 0)) {
 							listeArticlesParPeriode.add(article);
 						}
 					}
 					break;
-				case "ENCOURSVENTE_FUTUREVENTE_NULL":
+				case "NULL_FUTURE_TERMINEE":
 					for (ArticleVendu article : listeArticles) {
-						if(today.compareTo(article.getDate_debut_encheres()) == 1 || (today.compareTo(article.getDate_debut_encheres()) != 1 && today.compareTo(article.getDate_fin_encheres()) != 1)) {
+						if(today.compareTo(article.getDate_debut_encheres()) < 0 || (today.compareTo(article.getDate_fin_encheres()) > 0 || today.compareTo(article.getDate_fin_encheres()) == 0)) {
 							listeArticlesParPeriode.add(article);
 						}
 					}
 					break;
-				case "NULL_FUTUREVENTE_VENTETERMINEE":
+				case "NULL_NULL_NULL":
+				case "ENCOURS_FUTURE_TERMINEE":
 					for (ArticleVendu article : listeArticles) {
-						if(today.compareTo(article.getDate_debut_encheres()) == 1 || today.compareTo(article.getDate_fin_encheres()) == 1) {
+						if(today.compareTo(article.getDate_debut_encheres()) < 0 || (today.compareTo(article.getDate_fin_encheres()) > 0 || today.compareTo(article.getDate_fin_encheres()) == 0) || ((today.compareTo(article.getDate_debut_encheres()) > 0 || today.compareTo(article.getDate_debut_encheres()) == 0) && today.compareTo(article.getDate_fin_encheres()) < 0)) {
 							listeArticlesParPeriode.add(article);
 						}
 					}
 					break;
-				case "ENCOURSVENTE_NULL_VENTETERMINEE":
+				case "ENCOURS_NULL_TERMINEE":
 					for (ArticleVendu article : listeArticles) {
-						if((today.compareTo(article.getDate_debut_encheres()) != 1 && today.compareTo(article.getDate_fin_encheres()) != 1) || today.compareTo(article.getDate_fin_encheres()) == 1) {
+						if(((today.compareTo(article.getDate_debut_encheres()) > 0 || today.compareTo(article.getDate_debut_encheres()) == 0) && today.compareTo(article.getDate_fin_encheres()) < 0) || (today.compareTo(article.getDate_fin_encheres()) > 0 || today.compareTo(article.getDate_fin_encheres()) == 0)) {
 							listeArticlesParPeriode.add(article);
 						}
 					}
 					break;
 				default:
-					listeArticlesParPeriode = listeArticles;
+					for (ArticleVendu article : listeArticles) {
+						if((today.compareTo(article.getDate_debut_encheres()) > 0 || today.compareTo(article.getDate_debut_encheres()) == 0) && today.compareTo(article.getDate_fin_encheres()) < 0) {
+							listeArticlesParPeriode.add(article);
+						}
+					}
 					break;
 			}
 		   

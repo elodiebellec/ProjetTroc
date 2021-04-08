@@ -14,7 +14,7 @@ public class RetraitJDBCImpl implements RetraitDAO {
 
 	private static final String SELECT_BY_NO_ARTICLE = "SELECT * FROM `retraits` WHERE `no_article`=?";
 	private static final String INSERT = "INSERT INTO `retraits`(`no_article`, `rue`, `code_postal`, `ville`) VALUES (?,?,?,?)";
-	private static final String DELETE_UTILISATEUR = "DELETE FROM `retraits` WHERE `no_article` =?";
+	private static final String DELETE_RETRAIT = "DELETE FROM `retraits` WHERE `no_article` =?";
 	private static final String UPDATE_RETRAIT = "UPDATE `retraits` SET `no_article`=?,`rue`=?,`code_postal`=?,`ville`=? WHERE `no_article` =?";
 
 	@Override
@@ -41,7 +41,7 @@ public class RetraitJDBCImpl implements RetraitDAO {
 	@Override
 	public void deleteRetrait(int no_article) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement stmt = cnx.prepareStatement(DELETE_UTILISATEUR);
+			PreparedStatement stmt = cnx.prepareStatement(DELETE_RETRAIT);
 			stmt.setInt(1, no_article);
 			stmt.executeUpdate();
 		} catch (Exception e) {
@@ -77,12 +77,12 @@ public class RetraitJDBCImpl implements RetraitDAO {
 	public Retrait getByArticleId(int no_article) throws BusinessException {
 
 		Retrait retrait = null;
-		// Connexion à la base de données et try pour que la connexion se ferme
+		// Connexion ï¿½ la base de donnï¿½es et try pour que la connexion se ferme
 		// automatiquement.
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			// requete
 			PreparedStatement requete = cnx.prepareStatement(SELECT_BY_NO_ARTICLE);
-			// on sélectionne le retrait dont le numéro est renseigné dans la requête
+			// on sï¿½lectionne le retrait dont le numï¿½ro est renseignï¿½ dans la requï¿½te
 			requete.setInt(1, no_article);
 			ResultSet rs = requete.executeQuery();
 
@@ -95,7 +95,7 @@ public class RetraitJDBCImpl implements RetraitDAO {
 			be.addError("Erreur getByArticleId");
 			throw be;
 		}
-		// Je retourne le retrait sélectionné
+		// Je retourne le retrait sï¿½lectionnï¿½
 		return retrait;
 
 	}

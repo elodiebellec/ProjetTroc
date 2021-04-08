@@ -24,8 +24,10 @@
 	<div class="container">
 
 		<!-- Page Heading -->
-		<h1 class="my-2">Liste des enchères</h1>
+		
 		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+		
+		<h1 class="my-2">Liste des enchères</h1>
 
 			
 				<h2>Filtres :</h2>
