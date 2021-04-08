@@ -76,14 +76,14 @@
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="miseAPrix"> Mise 	&agrave; prix : </label>
+					<label class="col-md-2" for="miseAPrix"> Mise &agrave; prix : </label>
 					<div class="col-md-8">${articlejsp.prix_initial}</div>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="finEnchere"> Fin de l'ench	&egrave;re:
+					<label class="col-md-2" for="finEnchere"> Fin de l'ench&egrave;re:
 					</label>
 					<div class="col-md-8">
 						<tags:localDate date="${articlejsp.date_fin_encheres}" />
@@ -118,11 +118,11 @@
 			<c:if test="${!isProprietaireArticle}">
 				<div class="form-group">
 					<div class="form-row">
-						<label class="col-md-2" for="maProposition"> Ma
-							proposition : </label> <input class="choixProposition" type="number"
+						<label class="col-md-2" for="maProposition">
+						 Ma proposition : </label> <input class="choixProposition" type="number"
 							class="form-control" id="prixenchere" required name="prixenchere">
 						<div class="col-md-1"></div>
-						<button type="button" class="btn btn-light">Ench&eacute;rir</button>
+						<button type="submit" class="btn btn-light">Ench&eacute;rir</button>
 					</div>
 				</div>
 
@@ -131,7 +131,7 @@
 			<c:if test="${isProprietaireArticle && isDateModifiable}">
 				<div class="form-group">
 					<div class="form-row">
-						<button type="button" class="btn btn-light">Modifier la
+						<button type="submit" class="btn btn-light">Modifier la
 							vente</button>
 						<div class="col-md-8"></div>
 					</div>
@@ -143,7 +143,7 @@
 			<c:if test="${isProprietaireArticle && !isDateModifiable}">
 				<div class="form-group">
 					<div class="form-row">
-						<div>L'ench	&egrave;re a deja commenc&eacute;, vous ne pouvez pas la
+						<div>L'ench&egrave;re a dej&agrave; commenc&eacute;, vous ne pouvez pas la
 							modifier</div>
 						<div class="col-md-8"></div>
 					</div>
