@@ -10,36 +10,15 @@
 <!DOCTYPE html>
 <html>
 
-<%@ include file="template/head.html"%>
+
 
 <head>
-<title>Detail Vente</title>
-<!-- Bootstrap core CSS -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- Custom styles for this template -->
-<link href="css/style.css" rel="stylesheet">
-
+<%@ include file="template/head.html"%>
+<title>Vente gagnée</title>
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<div class="container">
-			<a class="navbar-brand" href="#">ENI Encheres</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarResponsive" aria-controls="navbarResponsive"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link"
-						href="./AccueilUtilisateur">Accueil </a></li>
-					<li class="nav-item active"><a class="nav-link"
-						href="./Deconnexion">Se deconnecter </a>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<%@ include file="template/navBarDeconnectee.html"%>
 
 	<c:if test="${!empty errors}">
 		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
@@ -57,9 +36,9 @@
 
 	<!-- Page Content -->
 	<div class="container">
-     <form action="./DetailVente" method="post">
+
 		<!-- Page Heading -->
-		<h1 class="my-2">Vous avez remporté la vente</h1>
+		<h1 class="my-2">Vous avez remport&eacute; la vente</h1>
 
 
 		<div class="form-group">
@@ -73,12 +52,12 @@
 			</div>
 		</div>
 
-        <div class="form-group">
+		<div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="meilleureOffre"> Meilleure
 					Offre : </label>
 
-				<div class="col-md-8">${montantmaximum} De ${usermax}</div>
+				<div class="col-md-8">${montantmaximum}pts</div>
 
 			</div>
 		</div>
@@ -86,7 +65,7 @@
 		<div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="miseAPrix"> Mise à prix : </label>
-				<div class="col-md-8">${articlejsp.prix_initial}</div>
+				<div class="col-md-8">${articlejsp.prix_initial}points</div>
 			</div>
 		</div>
 
@@ -97,7 +76,7 @@
 				<div class="col-md-8">
 
 					${articlejsp.utilisateur.rue } <br>
-					${articlejsp.utilisateur.code_postal} 
+					${articlejsp.utilisateur.code_postal}
 					${articlejsp.utilisateur.ville }
 
 				</div>
@@ -107,25 +86,27 @@
 		<div class="form-group">
 			<div class="form-row">
 				<label class="col-md-2" for="vendeur"> Vendeur : </label>
-				<div class="col-md-8">${articlejsp.utilisateur.nom }</div>
+				<div class="col-md-8">${articlejsp.utilisateur.pseudo }</div>
 			</div>
 		</div>
 
-
-
-		<c:if test="${isProprietaireArticle}">
-			<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="maProposition"> Je suis le
-						vendeur </label>
-					<div class="col-md-8"></div>
-				</div> 
+		<div class="form-group">
+			<div class="form-row">
+				<label class="col-md-2" for="vendeur">
+					T&eacute;l&eacute;phone : </label>
+				<div class="col-md-8">${articlejsp.utilisateur.telephone}</div>
 			</div>
-			
-		
-			</c:if>
-			</form>
+		</div>
 
+		<div class="col-md-1"></div>
+		<a href="./AccueilUtilisateur" class="btn btn-light" role="button" aria-pressed="true">Back</a>
+	
+	
 		
+	</div>
+
+
+
+
 </body>
 </html>

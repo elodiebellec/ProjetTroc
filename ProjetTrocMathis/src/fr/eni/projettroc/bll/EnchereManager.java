@@ -177,7 +177,7 @@ public class EnchereManager {
 	}
      for(Enchere e : enchere) {
     	 if(montant_enchere < e.getMontant_enchere() ) {
-    		 be.addError("Votre enchere est inferieur à l'enchere precedente");
+    		 be.addError("Votre enchere est inferieure à l'enchere precedente");
 				return false;	 
 	}
 	
@@ -196,7 +196,7 @@ public class EnchereManager {
 	}
 	 int prixreserve = article.getPrix_initial();
 	 if(montant_enchere < prixreserve) {
-		 be.addError("Votre enchère est inferieur à la reserve");
+		 be.addError("Votre enchère est inferieure à la reserve");
 		return false; 
 	 }
 	 return true;

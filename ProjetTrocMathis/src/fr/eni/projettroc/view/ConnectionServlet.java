@@ -54,39 +54,8 @@ public class ConnectionServlet extends HttpServlet {
 		String email = request.getParameter("login");
 		
 		
-		if(request.getParameter("memoire") != null) {
-		Cookie[] cookie = request.getCookies();
-		
-		System.out.println("il n'y a pas de cookie");
-		
-		Cookie login = new Cookie("cookiePseudo",  pseudo);
-		resp.addCookie(login);
-		System.out.println("Cookie" +login);
-        
-		Cookie password = new Cookie("cookiePassword",  mot_de_passe);
-		resp.addCookie(password);
-		System.out.println("Cookie" +password);
-		
-		try {
-			Utilisateur u = UtilisateurManager.getUtilisateursManager().validerLaConnection(pseudo, mot_de_passe , email);
-	        int  userId =  u.getNo_utilisateur();
-	        String mdpId = mot_de_passe;
-			//Transmettre les informations pour la page de welcome
-			HttpSession session = request.getSession();
-			session.setAttribute("idMdp", mdpId);
-			session.setAttribute("idUser", userId);
-			session.setAttribute("user", u);
-			request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, resp);
-		} catch (BusinessException e) {
-			e.printStackTrace();
-			request.setAttribute("errors", e.getErrors());
-			request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, resp);
-		}
 	
-		
-		}
 	
-		else {	
 		
 		//Appelle a la BLL
 		try {
@@ -108,7 +77,7 @@ public class ConnectionServlet extends HttpServlet {
 			user=    	user.getID*/
 				
 	}
-	}
+	
 
 	/**
 	 * M�thode pour valider la configuration de la base de donn�es

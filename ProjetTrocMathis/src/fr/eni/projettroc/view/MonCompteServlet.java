@@ -31,10 +31,23 @@ public class MonCompteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		session.getAttribute("user");
+		int id = (int) session.getAttribute("idUser");
 		
-		request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, response);
+		Utilisateur u = null;
+		try {
+			u = UtilisateurManager.getUtilisateursManager().rechercherParNumero(id);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		session.setAttribute("user", u );
+	
+		   request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, response);
 	    
-	}
+}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
