@@ -46,37 +46,43 @@ public class EnchereManager {
 	}
 
 
-	/*--------------MÃ©thodes pour les filtres de la page d'accueil --------------------------*/
+	/*--------------Méthodes pour les filtres de la page d'accueil --------------------------*/
+	
 
+	public List<Enchere> toutesLesEncheresUniquesParUtilisateur(int no_utilisateur) throws BusinessException {
+		List<Enchere> listeEncheres = enchereDAO.getListByNoUtilisateur(no_utilisateur);
+		List<Enchere> listeEncheresFiltree = new ArrayList<Enchere>();
+		int numArticle = 0;
+		
+		for (Enchere enchere : listeEncheres) {
+			if(numArticle != enchere.getArticle().getNo_article()) {
+				listeEncheresFiltree.add(enchere);
+				numArticle = enchere.getArticle().getNo_article();
+			}
+		}
+		return listeEncheresFiltree;
+	}
+	
+	public List<Enchere> toutesLesEncheresUniques() throws BusinessException {
+		List<Enchere> listeEncheres = enchereDAO.getListEnchere();
+		List<Enchere> listeEncheresFiltree = new ArrayList<Enchere>();
+		int numArticle = 0;	
+		
+		for (Enchere enchere : listeEncheres) {
+			if(numArticle != enchere.getArticle().getNo_article()) {
+				listeEncheresFiltree.add(enchere);
+				numArticle = enchere.getArticle().getNo_article();
+			}
+		}
+		return listeEncheresFiltree;
+		
+	}
+	
 	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
 		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
 	}
 
-	public List<Enchere> listeEnchereParPeriode(List<Enchere> listeEnchere, String periode) throws BusinessException {
-		List<Enchere> listeEncheresParPeriode = new ArrayList<Enchere>();
-		LocalDate today = LocalDate.now();
-		switch (periode) {
-		case "APRES_FIN":
-			for (Enchere enchere : listeEnchere) {
-				if (today.compareTo(enchere.getDate_enchere()) == 1) {
-					listeEncheresParPeriode.add(enchere);
-				}
-			}
-			break;
-		case "EN_COURS":
-			for (Enchere enchere : listeEnchere) {
-				if (today.compareTo(enchere.getDate_enchere()) != 1) {
-					listeEncheresParPeriode.add(enchere);
-				}
-			}
-			break;
-		default:
-			listeEncheresParPeriode = listeEnchere;
-			break;
-		}
-
-		return listeEncheresParPeriode;
-	}
+	
 
 	public List<ArticleVendu> ArticlesdeListeEncheres(List<Enchere> listeEnchere) throws BusinessException {
 		List<ArticleVendu> listeArticle = new ArrayList<ArticleVendu>();
@@ -87,6 +93,32 @@ public class EnchereManager {
 		return listeArticle;
 
 	}
+	
+	public List<Enchere> toutesLesEncheresRemportees() throws BusinessException{
+		List<Enchere> listeEncheresMax = enchereDAO.getListMaxEnchere();
+		List<Enchere> listeEncheresRemportees = new ArrayList<Enchere>();
+		LocalDate today = LocalDate.now();
+		for (Enchere enchere : listeEncheresMax) {
+			if(today.compareTo(enchere.getDate_enchere()) > 0 || today.compareTo(enchere.getDate_enchere()) == 0) {
+				listeEncheresRemportees.add(enchere);
+			}
+		}
+		
+		return listeEncheresRemportees;
+	}
+	
+	public List<Enchere> encheresRemporteesParUtilisateur(int idUser) throws BusinessException{
+		List<Enchere> listeEncheresRemportees = EnchereManager.getEnchereManager().toutesLesEncheresRemportees();
+		List<Enchere> listeEncheresUtilisateur = new ArrayList<Enchere>();
+		for (Enchere enchere : listeEncheresRemportees) {
+			if(enchere.getUtilisateur().getNo_utilisateur() == idUser) {
+				listeEncheresUtilisateur.add(enchere);
+			}
+		}
+		return listeEncheresUtilisateur;
+	}
+	
+	/*----------------------------------------------------------------------------------------------*/
 
 	public Enchere validerEnchere(LocalDate date_enchere, int montant_enchere, int no_article, int no_utilisateur )throws BusinessException{
 
