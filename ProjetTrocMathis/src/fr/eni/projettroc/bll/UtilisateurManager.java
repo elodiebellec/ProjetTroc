@@ -16,7 +16,6 @@ import fr.eni.projettroc.dao.RetraitDAO;
 import fr.eni.projettroc.dao.UtilisateurDAO;
 
 import fr.eni.projettroc.exception.BusinessException;
-import sun.nio.ch.Util;
 
 public class UtilisateurManager {
 	// Attribut pour représenter la couche DAL
@@ -200,7 +199,7 @@ public class UtilisateurManager {
 		}
 		for (Utilisateur u : utilisateur) {
 			if (pseudo.equals(u.getPseudo())) {
-				be.addError("Pseudo deja utiliser");
+				be.addError("Pseudo déjà utilisé");
 				return false;
 			}
 			
@@ -220,7 +219,7 @@ public class UtilisateurManager {
 
 	private boolean validateAncienMdp(String saisieancienmotdepasse, String ancienmotdepasse, BusinessException be) {
 		if (!saisieancienmotdepasse.equals(ancienmotdepasse)) {
-			be.addError("Votre ancien mot de passe est incorrect");
+			be.addError("Votre ancien mot de passe est incorrecte");
 			return false;
 		}
 		return true;
@@ -228,16 +227,16 @@ public class UtilisateurManager {
 
 	private boolean validatePseudo(String pseudo, BusinessException be) {
 		if (pseudo == null) {
-			be.addError("Login est obligatoire");
+			be.addError("Le Pseudo est obligatoire");
 			return false;
 		}
 		pseudo = pseudo.trim();
 		if (pseudo.isEmpty() || pseudo.length() < 6) {
-			be.addError("Login doit contenir au moins 6 caractères");
+			be.addError("Le Pseudo doit contenir au moins 6 caractères");
 			return false;
 		}
 		if (pseudo.length() > 30) {
-			be.addError("Login doit contenir au plus 30 caractères");
+			be.addError("Le Pseudo doit contenir au maximum 30 caractères");
 			return false;
 		}
 
@@ -320,7 +319,7 @@ public class UtilisateurManager {
 	private boolean validateSecondPassword(String mot_de_passe, String mot_de_passe_confirmation,
 			BusinessException be) {
 		if (!mot_de_passe.equals(mot_de_passe_confirmation)) {
-			be.addError("Les deux mot de passe doivent etre identique");
+			be.addError("Les deux mots de passe doivent être identiques");
 			return false;
 		}
 

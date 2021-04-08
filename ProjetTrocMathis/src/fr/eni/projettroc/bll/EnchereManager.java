@@ -10,7 +10,6 @@ import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.EnchereDAO;
-import fr.eni.projettroc.dao.UtilisateurDAO;
 import fr.eni.projettroc.exception.BusinessException;
 
 public class EnchereManager {
@@ -94,7 +93,7 @@ public class EnchereManager {
 		
 	}
 	
-	
+
 
 	public List<ArticleVendu> ArticlesdeListeEncheres(List<Enchere> listeEnchere) throws BusinessException {
 		List<ArticleVendu> listeArticle = new ArrayList<ArticleVendu>();
