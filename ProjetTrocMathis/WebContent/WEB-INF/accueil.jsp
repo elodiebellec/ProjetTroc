@@ -21,34 +21,35 @@
 
 
 	<!-- Page Content -->
-	<div class="container">
+	<div class="container portfolio-item accueilContainer">
 
 		<!-- Page Heading -->
 		
-		<div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+		<div class="titre">
+			<h1 class="my-2">Liste des enchères</h1>
+		</div>
 		
-		<h1 class="my-2">Liste des enchères</h1>
+		
 
-			
+		<div class="filtres">	
 				<h2>Filtres :</h2>
-				<br>
-			
-
-		<form action="./Accueil" method="post">
-			<div class="form-group fg--search" class="form">
-				<button type="submit" value="Rechercher" class="search-button"><img src="image/search.png"></button>			
-				<input type="search" placeholder="Le nom de l'article contient"  class="search-field" name="nomSelect" id="nomSelect" value= "" />
-			</div>		
-			<br> <br>				
-			<select name="categorieSelect" class="form-select" aria-label="Default select example">			 
-			 	 <c:forEach var="c" items="${listeCategories}">
-					 <option value="${c.no_categorie}">${c.libelle}</option>
-				</c:forEach>
-			</select>
-			<br> <br>		
-			 <input type="submit" value="Rechercher" />			
-		</form>
-			<br>
+			<form action="./Accueil" method="post">
+				<div class="form-group fg--search" class="form">
+					<button type="submit" value="Rechercher" class="search-button"><img src="image/search.png"></button>			
+					<input type="search" placeholder="Le nom de l'article contient"  class="search-field" name="nomSelect" id="nomSelect" value= "" />
+				</div>		
+				<br> <br>				
+				<select name="categorieSelect" class="form-select" aria-label="Default select example">			 
+				 	 <c:forEach var="c" items="${listeCategories}">
+						 <option value="${c.no_categorie}">${c.libelle}</option>
+					</c:forEach>
+				</select>
+				<br> <br>		
+				 <input type="submit" value="Rechercher" />			
+			</form>
+		</div>
+		
+		<div  class="articles">
 			<c:forEach var="c" items="${listeArticleEnCours}">
 				<div class="card h-100">	
 	
@@ -60,9 +61,8 @@
 				</div>
 				<br>
 			</c:forEach>
-			
+		</div>	
 
-		</div>
 
 	</div>
 	<!-- /.container -->

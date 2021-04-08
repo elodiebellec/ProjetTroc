@@ -21,13 +21,13 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 	
 	private static final String INSERT = "INSERT INTO `articles_vendus`(`nom_article`, `description`, `date_debut_encheres`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie`) VALUES (?,?,?,?,?,?,?,?)";
 	private static final String DELETE_BY_NO = "DELETE FROM `articles_vendus` WHERE `no_article`=?";
-	private static final String UPDATE = "UPDATE `articles_vendus` SET `no_article`=?,`nom_article`=?,`description`=?,`date_debut_encheres`=?,`date_fin_encheres`=?,`prix_initial`=?,`prix_vente`=?,`no_utilisateur`=?,`no_categorie`=? WHERE `no_article`=?";
+	private static final String UPDATE = "UPDATE `articles_vendus` SET `nom_article`=?,`description`=?,`date_debut_encheres`=?,`date_fin_encheres`=?,`prix_initial`=?,`no_categorie`=? WHERE `no_article`=?";
 	private static final String SELECT_ALL = "SELECT `no_article`,`nom_article`,`description`,`date_debut_encheres`,`date_fin_encheres`,`prix_initial`,`prix_vente`,`no_utilisateur`,`no_categorie` FROM `articles_vendus`";
 	private static final String SELECT_BY_UTILISATEUR = "SELECT `no_article`, `nom_article`, `description`, `date_debut_encheres`, `date_fin_encheres`, `prix_initial`, `prix_vente`, `no_utilisateur`, `no_categorie` FROM `articles_vendus` WHERE `no_utilisateur`=?";
 	private static final String SELECT_ALL_BY_CATEGORIE = "SELECT * FROM `articles_vendus` WHERE `no_categorie`=?";
 	private static final String SELECT_BY_NO = "SELECT * FROM `articles_vendus` WHERE `no_article`=?";
 	private static final String SELECT_ALL_BY_UTILISATEUR = "SELECT * FROM `articles_vendus` WHERE `no_utilisateur`= ?";
-
+    
 	
 	@Override
 	public int insert(ArticleVendu article) throws BusinessException {
@@ -213,18 +213,19 @@ public class ArticleVenduJDBCImpl implements ArticleVenduDAO {
 
 	@Override
 	public void update(ArticleVendu article) throws BusinessException {
-		UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
-		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();
+	/*	UtilisateurDAO utilisateurDAO = DAOFactory.getUtilisateurDAO();
+		CategorieDAO categorieDAO =DAOFactory.getCategorieDAO();*/
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement requete = cnx.prepareStatement(UPDATE);
-			requete.setInt(1, article.getNo_article()); 	
-			requete.setString(2, article.getNom_article());
-			requete.setString(3, article.getDescription());
-			requete.setDate(4,java.sql.Date.valueOf(article.getDate_debut_encheres()));
-			requete.setDate(5,java.sql.Date.valueOf(article.getDate_fin_encheres()));
-			requete.setInt(6, article.getPrix_initial());
-			requete.setInt(7,article.getPrix_vente());
-			requete.setInt(8,article.getCategorie().getNo_categorie());
+			
+			requete.setString(1, article.getNom_article());
+			requete.setString(2, article.getDescription());
+			requete.setDate(3,java.sql.Date.valueOf(article.getDate_debut_encheres()));
+			requete.setDate(4,java.sql.Date.valueOf(article.getDate_fin_encheres()));
+			requete.setInt(5, article.getPrix_initial());
+			requete.setInt(6,article.getCategorie().getNo_categorie());
+			requete.setInt(7, article.getNo_article()); 
+			requete.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

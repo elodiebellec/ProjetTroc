@@ -10,7 +10,6 @@ import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.EnchereDAO;
-import fr.eni.projettroc.dao.UtilisateurDAO;
 import fr.eni.projettroc.exception.BusinessException;
 
 public class EnchereManager {
@@ -46,8 +45,24 @@ public class EnchereManager {
 	}
 
 
-	/*--------------Méthodes pour les filtres de la page d'accueil --------------------------*/
 	
+	public boolean premiereEnchere(int no_article)throws BusinessException{
+	List<Enchere> nombreEnchere = new ArrayList<Enchere>();
+	nombreEnchere = enchereDAO.selectByNoArticle(no_article);	
+	
+	int lesenchere = nombreEnchere.size();
+	if(lesenchere == 1) {
+			return true;
+	}
+	
+		return false;
+}
+	/*--------------MÃ©thodes pour les filtres de la page d'accueil --------------------------*/
+	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
+		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
+	}
+
+
 
 	public List<Enchere> toutesLesEncheresUniquesParUtilisateur(int no_utilisateur) throws BusinessException {
 		List<Enchere> listeEncheres = enchereDAO.getListByNoUtilisateur(no_utilisateur);
@@ -78,11 +93,7 @@ public class EnchereManager {
 		
 	}
 	
-	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
-		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
-	}
 
-	
 
 	public List<ArticleVendu> ArticlesdeListeEncheres(List<Enchere> listeEnchere) throws BusinessException {
 		List<ArticleVendu> listeArticle = new ArrayList<ArticleVendu>();
@@ -99,7 +110,7 @@ public class EnchereManager {
 		List<Enchere> listeEncheresRemportees = new ArrayList<Enchere>();
 		LocalDate today = LocalDate.now();
 		for (Enchere enchere : listeEncheresMax) {
-			if(today.compareTo(enchere.getDate_enchere()) > 0 || today.compareTo(enchere.getDate_enchere()) == 0) {
+			if(today.compareTo(enchere.getArticle().getDate_fin_encheres()) > 0 || today.compareTo(enchere.getArticle().getDate_fin_encheres()) == 0) {
 				listeEncheresRemportees.add(enchere);
 			}
 		}

@@ -9,9 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.conf.ConnectionPropertiesTransform;
-
-import fr.eni.projettroc.bo.Enchere;
 import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.exception.BusinessException;
@@ -27,7 +24,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_NO = "SELECT * FROM utilisateurs WHERE no_utilisateur=?";
 	private static final String UPDATE_UTILISATEUR = "UPDATE utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
 	private static final String DELETE_UTILISATEUR = "delete from utilisateurs where no_utilisateur=?";
-	private static final String SELECT_PERSONNE = "SELECT pseudo FROM utilisateurs";
+	private static final String SELECT_PERSONNE = "SELECT * FROM utilisateurs";
 	private static final String SELECT_NOMBRE_ENCHERE = "SELECT COUNT(1) FROM encheres E WHERE E.no_article in (SELECT AV.no_article FROM articles_vendus AV WHERE AV.no_utilisateur=?)";
 	private static final String UPDATE_CREDIT = "UPDATE utilisateurs SET credit=? WHERE no_utilisateur=?";
     
@@ -48,6 +45,8 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 		return utilisateur;
 
 	}
+    
+    
 
 	public Utilisateur find(String pseudo, String mot_de_passe, String email) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
