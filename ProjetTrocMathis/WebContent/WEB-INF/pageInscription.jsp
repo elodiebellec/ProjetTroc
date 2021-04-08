@@ -16,7 +16,7 @@
 	<!-- Navigation -->
 
 
-<%@ include file="template/navBarNavigation.html"%>
+<%@ include file="template/navBarDeconnecteeSans.html"%>
 	
 
 	<c:if test="${!empty errors}">
