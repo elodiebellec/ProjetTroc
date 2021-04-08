@@ -10,7 +10,6 @@ import fr.eni.projettroc.bo.Utilisateur;
 
 import fr.eni.projettroc.dao.DAOFactory;
 import fr.eni.projettroc.dao.EnchereDAO;
-import fr.eni.projettroc.dao.UtilisateurDAO;
 import fr.eni.projettroc.exception.BusinessException;
 
 public class EnchereManager {
@@ -60,9 +59,7 @@ public class EnchereManager {
 }
 	/*--------------MÃ©thodes pour les filtres de la page d'accueil --------------------------*/
 
-	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
-		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
-	}
+
 
 
 	public List<Enchere> toutesLesEncheresUniquesParUtilisateur(int no_utilisateur) throws BusinessException {

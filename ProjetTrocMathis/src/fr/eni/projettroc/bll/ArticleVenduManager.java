@@ -158,6 +158,23 @@ public class ArticleVenduManager {
 		return articleVenduDAO.selectByNoArticle(noArticle);
 	}
 	
+	/*public ArticleVendu modifierArticles() throws BusinessException{
+		BusinessException be = new BusinessException();
+		
+		ArticleVendu articleVendu = null;
+		
+		articleVendu = new ArticleVendu();
+		articleVendu.setNom_article(nom_article);
+		articleVendu.setDescription(description);
+		articleVendu.setPrix_initial(prix_initial);
+		articleVendu.setDate_debut_encheres(date_debut_encheres);
+		articleVendu.setDate_fin_encheres(date_fin_encheres);
+		articleVendu.setCategorie(categorie);
+		articleVendu.setUtilisateur(utilisateur);
+		articleVenduDAO.update(articleVendu);
+
+		return articleVendu;
+	}*/
 
 
 	public ArticleVendu valideAjoutArticle(String nom_article, String description, LocalDate date_debut_encheres,
@@ -245,8 +262,9 @@ public class ArticleVenduManager {
 
 			return false;
 		}
+		
 
-		if (date_fin_encheres.isBefore(date_debut_encheres)) {
+		if (date_fin_encheres.isBefore(date_debut_encheres) || date_fin_encheres.isEqual(date_debut_encheres)) {
 
 			be.addError("La date de fin doit être supérieure à la date de début des enchères");
 
