@@ -227,8 +227,9 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 		boolean isEnchereEnCours = false;
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			Statement stmt = cnx.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_NOMBRE_ENCHERE);
+			PreparedStatement request = cnx.prepareStatement(SELECT_NOMBRE_ENCHERE);
+		    request.setInt(1, no_utilsateur);
+		    ResultSet rs = request.executeQuery();
 
 			// Parcours la liste des enregistrements
 			Integer nbreEnchere;

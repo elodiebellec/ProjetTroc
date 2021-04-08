@@ -168,12 +168,12 @@ public class EnchereJDBCImpl implements EnchereDAO{
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement stmt = cnx.prepareStatement(DELETE_ALL_BY_UTILISATEUR);
 			stmt.setInt(1, no_utilisateur);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException be = new BusinessException();
-			be.addError("Erreur getListByCategorie DAO");
+			be.addError("EnchereJDBCImpl");
 			throw be;
 		}
 

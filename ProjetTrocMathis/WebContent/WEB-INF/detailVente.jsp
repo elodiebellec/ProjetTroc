@@ -11,7 +11,7 @@
 <html>
 
 <head>
-<%@ include file="template/head.html" %>
+<%@ include file="template/head.html"%>
 <title>Detail vente</title>
 
 
@@ -19,8 +19,8 @@
 
 
 <body>
-	
-<%@ include file="template/navBarNavigation.html" %>
+
+	<%@ include file="template/navBarNavigation.html"%>
 
 
 	<c:if test="${!empty errors}">
@@ -39,118 +39,116 @@
 
 	<!-- Page Content -->
 	<div class="container">
-     <form action="./DetailVente" method="post">
-		<!-- Page Heading -->
-		<h1 class="my-2">Detail vente</h1>
+		<form action="./DetailVente" method="post">
+			<!-- Page Heading -->
+			<h1 class="my-2">Detail vente</h1>
 
 
-		<div class="form-group">
-			<div class="form-row">${articlejsp.nom_article}</div>
-		</div>
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="description">Description : </label>
-				<div class="col-md-8" class="card">${articlejsp.description}</div>
+			<div class="form-group">
+				<div class="form-row">${articlejsp.nom_article}</div>
 			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="categorie">Catégorie </label>
-				<div class="col-md-8">${articlejsp.categorie.libelle}</div>
-
-			</div>
-		</div>
-
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="meilleureOffre"> Meilleure
-					Offre : </label>
-
-				<div class="col-md-8">${montantmaximum} De ${usermax}</div>
-
-			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="miseAPrix"> Mise à prix : </label>
-				<div class="col-md-8">${articlejsp.prix_initial}</div>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="finEnchere"> Fin de l'enchère:
-				</label>
-				<div class="col-md-8"><tags:localDate date="${articlejsp.date_fin_encheres}" /></div>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="retrait"> Retrait : </label>
-				<div class="col-md-8">
-
-					${articlejsp.utilisateur.rue } <br>
-					${articlejsp.utilisateur.code_postal} 
-					${articlejsp.utilisateur.ville }
-
-				</div>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="vendeur"> Vendeur : </label>
-				<div class="col-md-8">${articlejsp.utilisateur.nom }</div>
-			</div>
-		</div>
-
-
-
-		<c:if test="${!isProprietaireArticle}">
 			<div class="form-group">
 				<div class="form-row">
-					<label class="col-md-2" for="maProposition"> Ma proposition : </label>						
-					<input class="choixProposition" type="number" class="form-control" id="prixenchere" required
-							name="prixenchere">
-					<div class="col-md-1"></div>		
-<<<<<<< HEAD
-					<button type="submit" class="btn btn-light">Enchérir</button>
-=======
-					<button type="button" class="btn btn-light">Encherir</button>
->>>>>>> branch 'master' of https://github.com/elodiebellec/ProjetTroc.git
+					<label class="col-md-2" for="description">Description : </label>
+					<div class="col-md-8" class="card">${articlejsp.description}</div>
 				</div>
 			</div>
 
-		</c:if>
-
-		<c:if test="${isProprietaireArticle && isDateModifiable}">
 			<div class="form-group">
 				<div class="form-row">
-					<button type="button" class="btn btn-light">Modifier la vente</button>
-					<div class="col-md-8"></div>
-				</div> 
+					<label class="col-md-2" for="categorie">Catégorie </label>
+					<div class="col-md-8">${articlejsp.categorie.libelle}</div>
+
+				</div>
 			</div>
 
-		</c:if>
-		
 
-		<c:if test="${isProprietaireArticle && !isDateModifiable}">
 			<div class="form-group">
 				<div class="form-row">
-				<div>L'enchere a deja commencer, vous ne pouvez pas la modifier</div>	
-					<div class="col-md-8"></div>
-				</div> 
+					<label class="col-md-2" for="meilleureOffre"> Meilleure
+						Offre : </label>
+
+					<div class="col-md-8">${montantmaximum}De ${usermax}</div>
+
+				</div>
 			</div>
-			
+
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="miseAPrix"> Mise à prix : </label>
+					<div class="col-md-8">${articlejsp.prix_initial}</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="finEnchere"> Fin de l'enchère:
+					</label>
+					<div class="col-md-8">
+						<tags:localDate date="${articlejsp.date_fin_encheres}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="retrait"> Retrait : </label>
+					<div class="col-md-8">
+
+						${articlejsp.utilisateur.rue } <br>
+						${articlejsp.utilisateur.code_postal}
+						${articlejsp.utilisateur.ville }
+
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="form-row">
+					<label class="col-md-2" for="vendeur"> Vendeur : </label>
+					<div class="col-md-8">${articlejsp.utilisateur.nom }</div>
+				</div>
+			</div>
+
+
+
+			<c:if test="${!isProprietaireArticle}">
+				<div class="form-group">
+					<div class="form-row">
+						<label class="col-md-2" for="maProposition"> Ma
+							proposition : </label> <input class="choixProposition" type="number"
+							class="form-control" id="prixenchere" required name="prixenchere">
+						<div class="col-md-1"></div>
+						<button type="button" class="btn btn-light">Encherir</button>
+					</div>
+				</div>
 
 			</c:if>
-			</form>
 
-		
+			<c:if test="${isProprietaireArticle && isDateModifiable}">
+				<div class="form-group">
+					<div class="form-row">
+						<button type="button" class="btn btn-light">Modifier la
+							vente</button>
+						<div class="col-md-8"></div>
+					</div>
+				</div>
+
+			</c:if>
+
+
+			<c:if test="${isProprietaireArticle && !isDateModifiable}">
+				<div class="form-group">
+					<div class="form-row">
+						<div>L'enchere a deja commence, vous ne pouvez pas la
+							modifier</div>
+						<div class="col-md-8"></div>
+					</div>
+				</div>
+
+
+			</c:if>
+		</form>
 </body>
 </html>

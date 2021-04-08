@@ -1,5 +1,6 @@
 package fr.eni.projettroc.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.projettroc.bo.ArticleVendu;
@@ -126,13 +127,19 @@ public class UtilisateurManager {
 
 	public void supprimerUtilisateur(int no_utilisateur) throws BusinessException {
 		
+		
+		
 		// on vérifie que l'utilisateur ne fait pas d'enchère en cours
-		if (utilisateurDAO.isEnchereEnCours(no_utilisateur)) {
+		if (utilisateurDAO.isEnchereEnCours(no_utilisateur)==true) {
 			throw new BusinessException(" Des enchères sont en cours sur un de vos articles, il est impossible de supprimer le compte");
 		}
+	
+
 		
 		//on récupère la liste des articles
-		List<ArticleVendu> listeArticles = articleVenduDAO.getListByNoUtilisateur(no_utilisateur);
+		List<ArticleVendu> listeArticles = new ArrayList<ArticleVendu>();
+		listeArticles=articleVenduDAO.getListByNoUtilisateur(no_utilisateur);
+				
 		// Pour chaque article
 		for(ArticleVendu articleVendu : listeArticles) {
 			// on supprime le retrait
