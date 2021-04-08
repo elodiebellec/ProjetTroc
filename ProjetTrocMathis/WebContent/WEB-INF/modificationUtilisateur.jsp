@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<%@ include file="template/navBarNavigation.html" %>
+	<%@ include file="template/navBarNavigation.html"%>
 
 	<c:if test="${!empty errors}">
 		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
@@ -43,48 +43,51 @@
 									class="form-control" id="pseudo" name="pseudo"
 									aria-describedby="pseudoHelp" placeholder="Entrer votre pseudo">
 							</div>
+
 							<div class="form-group">
-								<label for="password">Ancien Mot De Passe</label> <input
+								<label for="prenom">Pr&eacute;nom</label> <input type="text"
+									class="form-control" id="identite" name="prenom"
+									aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
+							</div>
+
+							<div class="form-group">
+								<label for="telephone">T&eacute;l&eacute;phone</label> <input
+									type="text" class="form-control" id="telephone"
+									name="telephone" placeholder="Entrer votre telephone">
+							</div>
+
+							<div class="form-group">
+								<label for="codepostal">Code Postal</label> <input type="text"
+									class="form-control" id="codepostal" name="codepostal"
+									placeholder="Entrer votre CP">
+							</div>
+
+							<div class="form-group">
+								<label for="password">Mot De passe actuel</label> <input
 									type="password" class="form-control" id="ancienmotdepasse"
 									name="ancienmotdepasse" placeholder="Mot de passe">
 							</div>
+
+
 							<div class="form-group">
-								<label for="password">Mot De Passe</label> <input
+								<label for="password">Nouveau mot de passe</label> <input
 									type="password" class="form-control" id="motdepasse"
 									name="motdepasse" placeholder="Mot de passe">
 							</div>
-							<div class="form-group">
-								<label for="password2">Confirmation du Mot De Passe</label> <input
-									type="password" class="form-control"
-									id="motdepasseconfirmation" name="motdepasseconfirmation"
-									placeholder="Mot de passe">
-							</div>
+
+						</div>
+
+						<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
 							<div class="form-group">
 								<label for="nom">Nom</label> <input type="text"
 									class="form-control" id="identite" name="nom"
 									aria-describedby="nomHelp" placeholder="Entrer votre Nom">
 							</div>
-							<div class="form-group">
-								<label for="prenom">Prénom</label> <input type="text"
-									class="form-control" id="identite" name="prenom"
-									aria-describedby="prenomHelp" placeholder="Entrer votre Prenom">
-							</div>
-							<div class="form-group">
-								<p>Crédit : ${user.credit}</p>
-							</div>
 
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6 portfolio-item">
 							<div class="form-group">
 								<label for="email">Email</label> <input type="email"
 									class="form-control" id="email" name="email"
 									aria-describedby="emailHelp" placeholder="Entrer votre Email">
-							</div>
-
-							<div class="form-group">
-								<label for="telephone">Téléphone</label> <input type="text"
-									class="form-control" id="telephone" name="telephone"
-									placeholder="Entrer votre telephone">
 							</div>
 
 							<div class="form-group">
@@ -93,26 +96,37 @@
 									placeholder="Entrer votre rue">
 							</div>
 							<div class="form-group">
-								<label for="codepostal">Code Postal</label> <input type="text"
-									class="form-control" id="codepostal" name="codepostal"
-									placeholder="Entrer votre CP">
-							</div>
-							<div class="form-group">
 								<label for="codepostal">Ville</label> <input type="text"
 									class="form-control" id="ville" name="ville"
 									placeholder="Entrer votre ville">
 							</div>
+							
+
+							<div class="form-group">
+								<label for="password2">Confirmation du Mot De Passe</label> <input
+									type="password" class="form-control"
+									id="motdepasseconfirmation" name="motdepasseconfirmation"
+									placeholder="Mot de passe">
+							</div>
 						</div>
-						<div class="boutonsubmit">
-							<button type="submit" class="btn btn-primary">Enregistrer</button>
-							<a
-								href="${pageContext.servletContext.contextPath}/SuppressionUtilisateur"><input
-								type="button" class="btn btn-primary  "
-								value="Supprimer mon compte"></a>
+
+
+						<div class="form-group">
+							<p>Cr&eacute;dit : ${user.credit}</p>
 						</div>
+
 					</div>
+
+				</div>
+				<div class="boutonsubmit">
+					<button type="submit" class="btn btn-primary">Enregistrer</button>
+					<a
+						href="${pageContext.servletContext.contextPath}/SuppressionUtilisateur"><input
+						type="button" class="btn btn-primary  "
+						value="Supprimer mon compte"></a>
 				</div>
 			</div>
+		
 		</form>
 	</header>
 </body>
