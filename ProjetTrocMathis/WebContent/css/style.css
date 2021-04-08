@@ -11,79 +11,126 @@
 }
 
 body {
-  padding-top: 54px;
+	padding-top: 54px;
 }
 
-@media (min-width: 992px) {
-  body {
-    padding-top: 56px;
-  }
+@media ( min-width : 992px) {
+	body {
+		padding-top: 56px;
+	}
+}
+
+h1{
+	font-size: 2em;
+	
+}
+
+h2{
+	font-size: 1.5em;
+	
 }
 
 .portfolio-item {
-  margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 .pagination {
-  margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
-.footer-demodule
-{
-	margin-top: 15px;
-}
-.demo
-{
+.footer-demodule {
 	margin-top: 15px;
 }
 
-.support
-{
+.demo {
+	margin-top: 15px;
+}
+
+.support {
 	float: right;
 }
-.obligatoire
-{
-	color:blue;
+
+.obligatoire {
+	color: blue;
 	font-weight: bolder;
 	font-size: larger;
 }
 
-
-.boutonmodif{
-	font-size : 1em;
-	margin-left : 9em;
-	
+.boutonmodif {
+	font-size: 1em;
+	margin-left: 9em;
 }
 
-.h1profil{
-	margin-left:4em;
+.h1profil {
+	margin-left: 4em;
 	font-size: 1.8em;
 	margin-bottom: 1em;
 }
 
-.h1personne{
-	margin-left:2.5em;
+.h1personne {
+	margin-left: 2.5em;
 	font-size: 1.8em;
 	margin-bottom: 1em;
 }
 /*------------pages accueil et accueil connecté -------------------*/
-.accueilContainer{
-	grid-template: 
-            "titre" 20em
-            "filtres" 50em
-            "articles" auto / 1fr 1fr;
+.accueilContainer {
+	grid-template: "titre" 20em "filtres" 50em "articles" auto/1fr 1fr;
 }
-	/*------------barre de recherche avec loupe ----------------*/
-.form {
+
+.form, .categoriesForm, .radioForm  {
 	display: flex;
+	flex-wrap: wrap;
 	flex-direction: row;
 }
 
+
+.articles {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.articleCard {
+	flex: 40%;
+	margin: 1em;
+	padding: 1em;
+}
+.flitresForm {
+	flex: 40%;
+	margin: 2em;
+
+}
+
+.titre{
+	text-align: center;
+}
+
+.formCategoriesItem, .radioFormItem{
+	flex-wrap: wrap;
+	flex-direction: row;
+	margin-top: 1em;
+	
+}
+
+.radioFormItem{
+	margin : 1em auto;
+}
+
+
+select.formCategoriesItem {
+flex: 2;
+margin-left: 1em;
+}
+
+input.flitresForm{
+	height: 6em;
+	margin: auto 3em;
+}
+
+/*------------barre de recherche avec loupe ----------------*/
 .search-field {
 	width: 100%;
-	padding: 10px 35px 10px 15px;
-	border:1px solid;
-	border-radius: 50px;
+	
+	border: none;
 	outline: none;
 }
 
@@ -98,22 +145,20 @@ body {
 	width: 20px;
 	height: 20px;
 	object-fit: cover;
-
-}
-	/*-----------------------------------------*/
-
-	/*------------input pour mise à prix----------------*/
-
-.choixProposition { 
-	height : 40px;
-	width : 80px;
-	
 }
 
-	/*-----------------------------------------*/
+.loupeForm{
+	border: 1px solid;
+	border-radius: 2em;
+	padding: 0.5em 2em 0.5em 3em;
+}
+/*-----------------------------------------*/
+
+/*------------input pour mise à prix----------------*/
+.choixProposition {
+	height: 40px;
+	width: 80px;
+}
+
+/*-----------------------------------------*/
 /*---------------------------------------------------------*/
-
-
-
-
-
