@@ -8,7 +8,6 @@ import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,18 +33,15 @@ import fr.eni.projettroc.exception.BusinessException;
 public class DetailVenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/*public int no_article;*/
+	/* public int no_article; */
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-	
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
 		int no_article = Integer.parseInt(request.getParameter("param"));
@@ -53,7 +49,6 @@ public class DetailVenteServlet extends HttpServlet {
 
 		ArticleVendu art = null;
 
-		
 		try {
 
 			art = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
@@ -61,72 +56,17 @@ public class DetailVenteServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	    LocalDate finDeLenchere =  art.getDate_fin_encheres();
-		LocalDate dateActuelle  = LocalDate.now();
+		LocalDate finDeLenchere = art.getDate_fin_encheres();
+		LocalDate dateActuelle = LocalDate.now();
 		Utilisateur utilisateurensession = (Utilisateur) request.getSession().getAttribute("user");
 		int utilisateuren = utilisateurensession.getNo_utilisateur();
-		
-		
-		
+
 		List<Enchere> encheremax = null;
 		try {
 			encheremax = EnchereManager.getEnchereManager().enchereParNum(no_article);
-       ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
-			session.setAttribute("articlejsp", article);
-			
-			// rÃ©cupÃ©rer l'utisateur de l'article
-			Utilisateur utilisateurArticle = article.getUtilisateur();
-			
-			//rÃ©cupÃ©rer l'utilisateur connectÃ© (en session)
-			Utilisateur utilisateurConnecte =(Utilisateur) request.getSession().getAttribute("user");
-	
-			
-			// faire test : boolean , Si true = proprietaire, si false=connecte
-			
-			boolean isProprietaireArticle = utilisateurArticle.getNo_utilisateur() == utilisateurConnecte.getNo_utilisateur();
-	
-
-			// on le passe à la jsp
-			 
-
-			request.setAttribute("isProprietaireArticle",  isProprietaireArticle);
-			
-
-			
-			// Comparaison des dates d'enchères
-			
-			LocalDate date_debut_encheres = article.getDate_debut_encheres();
-			LocalDate date_jour = LocalDate.now();
-			
-			
-			boolean isDateOk = date_debut_encheres.isAfter(date_jour);
-				
-			
-			request.setAttribute("isDateModifiable", isDateOk );
-			
-
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Enchere en : encheremax) {
-			int montantmax = en.getMontant_enchere();
-			String usermax = en.getUtilisateur().getPseudo();
-			request.setAttribute("montantmaximum", montantmax);
-			request.setAttribute("usermax", usermax);
-		}
-		
-		
-		
-		
-		if(finDeLenchere.compareTo(dateActuelle)>0) {
-		
-			try {
 			ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
 			session.setAttribute("articlejsp", article);
-            System.out.println("date bonne");
-            
- 
+
 			// rÃ©cupÃ©rer l'utisateur de l'article
 			Utilisateur utilisateurArticle = article.getUtilisateur();
 
@@ -142,76 +82,111 @@ public class DetailVenteServlet extends HttpServlet {
 
 			request.setAttribute("isProprietaireArticle", isProprietaireArticle);
 
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			// Comparaison des dates d'enchères
 
-		List<Enchere> enchere = null;
-		try {
-			enchere = EnchereManager.getEnchereManager().enchereParNum(no_article);
+			LocalDate date_debut_encheres = article.getDate_debut_encheres();
+			LocalDate date_jour = LocalDate.now();
+
+			boolean isDateOk = date_debut_encheres.isAfter(date_jour);
+
+			request.setAttribute("isDateModifiable", isDateOk);
+
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (Enchere en : enchere) {
-		    en.getNo_enchere();
-		    
+		for (Enchere en : encheremax) {
 			int montantmax = en.getMontant_enchere();
 			String usermax = en.getUtilisateur().getPseudo();
 			request.setAttribute("montantmaximum", montantmax);
 			request.setAttribute("usermax", usermax);
 		}
-		
-		request.getRequestDispatcher("/WEB-INF/detailVente.jsp").forward(request, response);
-		
-   }
-		
-		
-		if(finDeLenchere.compareTo(dateActuelle)<0) {
-		
-		
-		
-		List<Enchere> enchereverif = null;
-		try {
-			enchereverif = EnchereManager.getEnchereManager().enchereParNum(no_article);
-		} catch (BusinessException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		Object derniereElement = enchereverif.get(enchereverif.size() -1).getUtilisateur().getNo_utilisateur();
-		int numerodudernieruser = (int) derniereElement;
-		
-		
-		 if(finDeLenchere.compareTo(dateActuelle)<0 && utilisateuren == numerodudernieruser) {
-			 ArticleVendu article = null;
+
+		if (finDeLenchere.compareTo(dateActuelle) > 0) {
+
 			try {
-				article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
 				session.setAttribute("articlejsp", article);
-		
-		request.getRequestDispatcher("/WEB-INF/ventegagner.jsp").forward(request, response);
-		}
-		 
-		else {
-			ArticleVendu article = null;
-			try {
-				article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
+				System.out.println("date bonne");
+
+				// rÃ©cupÃ©rer l'utisateur de l'article
+				Utilisateur utilisateurArticle = article.getUtilisateur();
+
+				// rÃ©cupÃ©rer l'utilisateur connectÃ© (en session)
+				Utilisateur utilisateurConnecte = (Utilisateur) request.getSession().getAttribute("user");
+
+				// faire test : boolean , Si true = proprietaire, si false=connecte
+
+				boolean isProprietaireArticle = utilisateurArticle.getNo_utilisateur() == utilisateurConnecte
+						.getNo_utilisateur();
+
+				// on le passe à la jsp
+
+				request.setAttribute("isProprietaireArticle", isProprietaireArticle);
+
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			session.setAttribute("articlejsp", article);
-			request.getRequestDispatcher("/WEB-INF/ventefini.jsp").forward(request, response);
+
+			List<Enchere> enchere = null;
+			try {
+				enchere = EnchereManager.getEnchereManager().enchereParNum(no_article);
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for (Enchere en : enchere) {
+				en.getNo_enchere();
+
+				int montantmax = en.getMontant_enchere();
+				String usermax = en.getUtilisateur().getPseudo();
+				request.setAttribute("montantmaximum", montantmax);
+				request.setAttribute("usermax", usermax);
+			}
+
+			request.getRequestDispatcher("/WEB-INF/detailVente.jsp").forward(request, response);
+
+		}
+
+		if (finDeLenchere.compareTo(dateActuelle) < 0) {
+
+			List<Enchere> enchereverif = null;
+			try {
+				enchereverif = EnchereManager.getEnchereManager().enchereParNum(no_article);
+			} catch (BusinessException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			Object derniereElement = enchereverif.get(enchereverif.size() - 1).getUtilisateur().getNo_utilisateur();
+			int numerodudernieruser = (int) derniereElement;
+
+			if (finDeLenchere.compareTo(dateActuelle) < 0 && utilisateuren == numerodudernieruser) {
+				ArticleVendu article = null;
+				try {
+					article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
+				} catch (BusinessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				session.setAttribute("articlejsp", article);
+
+				request.getRequestDispatcher("/WEB-INF/ventegagner.jsp").forward(request, response);
+			}
+
+			else {
+				ArticleVendu article = null;
+				try {
+					article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
+				} catch (BusinessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				session.setAttribute("articlejsp", article);
+				request.getRequestDispatcher("/WEB-INF/ventefini.jsp").forward(request, response);
+			}
 		}
 	}
-	}
-	
-	
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -228,6 +203,8 @@ public class DetailVenteServlet extends HttpServlet {
 		LocalDate date_enchere = LocalDate.now();
 		int montant = Integer.parseInt(request.getParameter("prixenchere"));
 
+		
+	
 		try {
 			UtilisateurManager.getUtilisateursManager().verificationArgent(montant, no_user); 
 			EnchereManager.getEnchereManager().validerEnchere(date_enchere, montant, no_article, no_user);
@@ -241,16 +218,26 @@ public class DetailVenteServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
-			Object derniereElement = enchereverif.get(enchereverif.size() -2).getUtilisateur().getNo_utilisateur();
-			Object argentARendre =  enchereverif.get(enchereverif.size()-2).getMontant_enchere();
-			int numerodudernieruser = (int) derniereElement;
-			int argentarendre = (int) argentARendre;
-			UtilisateurManager.getUtilisateursManager().rendreArgentEnchere(argentarendre, numerodudernieruser);
+			if(EnchereManager.getEnchereManager().premiereEnchere(no_article) == true) {
+			
 			
 			session.getAttribute("articlejsp");
 			request.setAttribute("prixmax", montant);
+			}
 			/* request.getRequestDispatcher("/").forward(request, response); */
-
+			else {
+				Object derniereElement = enchereverif.get(enchereverif.size() -2).getUtilisateur().getNo_utilisateur();
+				Object argentARendre =  enchereverif.get(enchereverif.size()-2).getMontant_enchere();
+				int numerodudernieruser = (int) derniereElement;
+				int argentarendre = (int) argentARendre;
+				UtilisateurManager.getUtilisateursManager().rendreArgentEnchere(argentarendre, numerodudernieruser);	
+					
+					
+			session.getAttribute("articlejsp");
+			request.setAttribute("prixmax", montant);
+					}
+			
+	
 			try {
 				ArticleVendu article = ArticleVenduManager.getArticleVenduManager().recupererArticle(no_article);
 				session.setAttribute("articlejsp", article);
@@ -269,6 +256,7 @@ public class DetailVenteServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/detailVente.jsp").forward(request, response);
 			}
 
+		
 			
 			
 			
@@ -294,10 +282,31 @@ public class DetailVenteServlet extends HttpServlet {
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+
+			List<Enchere> enchere = null;
+			try {
+				enchere = EnchereManager.getEnchereManager().enchereParNum(no_article);
+		
+			} catch (BusinessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			for (Enchere en : enchere) {
+				int montantmax = en.getMontant_enchere();
+				String usermax = en.getUtilisateur().getPseudo();
+				request.setAttribute("montantmaximum", montantmax);
+				request.setAttribute("usermax", usermax);
+			}
+			
+
 			request.setAttribute("errors", e.getErrors());
 			request.getRequestDispatcher("/WEB-INF/detailVente.jsp").forward(request, response);
 		}
 		
 	}
 }
+
+
+	
 

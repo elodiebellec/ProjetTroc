@@ -98,7 +98,7 @@ public class ConnectionServlet extends HttpServlet {
 			session.setAttribute("idMdp", mdpId);
 			session.setAttribute("idUser", userId);
 			session.setAttribute("user", u);
-			request.getRequestDispatcher("/WEB-INF/profilUtilisateur.jsp").forward(request, resp);
+			request.getRequestDispatcher("/WEB-INF/accueilUtilisateur.jsp").forward(request, resp);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			request.setAttribute("errors", e.getErrors());
