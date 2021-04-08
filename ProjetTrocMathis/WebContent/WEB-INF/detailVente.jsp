@@ -135,7 +135,7 @@
 <p>
 						<button type="submit" class="btn btn-light"><a
 							href="${pageContext.request.contextPath}/ModifierUnArticle?iddelarticle=${articlejsp.no_article}"
-							title="Modifier la vente">ModifierLaVente</a></button>
+							title="Modifier la vente">Modifier La Vente</a></button>
 </p>
 					
 
