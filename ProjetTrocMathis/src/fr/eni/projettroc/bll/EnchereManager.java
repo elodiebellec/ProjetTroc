@@ -94,9 +94,7 @@ public class EnchereManager {
 		
 	}
 	
-	public List<Enchere> toutesLesEncheresParUtilisateur(int no_utilisateur) throws BusinessException {
-		return enchereDAO.getListByNoUtilisateur(no_utilisateur);
-	}
+
 
 	
 
