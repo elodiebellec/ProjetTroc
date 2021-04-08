@@ -15,7 +15,7 @@ public class RetraitJDBCImpl implements RetraitDAO {
 	private static final String SELECT_BY_NO_ARTICLE = "SELECT * FROM `retraits` WHERE `no_article`=?";
 	private static final String INSERT = "INSERT INTO `retraits`(`no_article`, `rue`, `code_postal`, `ville`) VALUES (?,?,?,?)";
 	private static final String DELETE_RETRAIT = "DELETE FROM `retraits` WHERE `no_article` =?";
-	private static final String UPDATE_RETRAIT = "UPDATE `retraits` SET `no_article`=?,`rue`=?,`code_postal`=?,`ville`=? WHERE `no_article` =?";
+	private static final String UPDATE_RETRAIT = "UPDATE `retraits` SET `rue`=?,`code_postal`=?,`ville`=? WHERE `no_article` =?";
 
 	@Override
 	public void insertRetrait(Retrait retrait) throws BusinessException {
@@ -58,11 +58,11 @@ public class RetraitJDBCImpl implements RetraitDAO {
 	@Override
 	public void updateRetrait(Retrait retrait) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection()){
-            PreparedStatement requete = cnx.prepareStatement(UPDATE_RETRAIT);
-        	requete.setInt(1, retrait.getArticle().getNo_article());
-			requete.setString(2, retrait.getRue());
-			requete.setString(3, retrait.getCode_postal());
-			requete.setString(4, retrait.getVille());
+            PreparedStatement requete = cnx.prepareStatement(UPDATE_RETRAIT);       	
+			requete.setString(1, retrait.getRue());
+			requete.setString(2, retrait.getCode_postal());
+			requete.setString(3, retrait.getVille());
+			requete.setInt(4, retrait.getArticle().getNo_article());
             
             requete.executeUpdate();
         }catch (Exception e){

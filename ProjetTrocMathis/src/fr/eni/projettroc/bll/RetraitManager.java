@@ -32,9 +32,7 @@ public class RetraitManager {
 		retraitDAO.deleteRetrait(no_article);
 	}
 
-	public void modifierRetrait(Retrait retrait) throws BusinessException {
-		retraitDAO.updateRetrait(retrait);
-	}
+	
 
 	public Retrait retraitParArticle(int no_article) throws BusinessException {
 		return retraitDAO.getByArticleId(no_article);
@@ -60,6 +58,33 @@ public class RetraitManager {
 			retraitDAO.insertRetrait(retrait);
 
 			return retrait;
+		} else {
+			throw be;
+
+		}
+	}
+	
+	public Retrait modifierRetrait( String rue, String codePostal, String ville, int no_article) throws BusinessException {
+		BusinessException be = new BusinessException();
+		boolean isValiderRue = validerRue(rue, be);
+		boolean isValiderCodePostal = validerCodePostal(codePostal, be);
+		boolean isValiderVille = validerVille(ville, be);
+		if (isValiderRue && isValiderCodePostal && isValiderVille) {
+		
+		ArticleVendu article = new ArticleVendu();
+		 article.setNo_article(no_article);
+		
+		Retrait retrait = null;
+		
+		retrait = new Retrait();
+		retrait.setRue(rue);
+		retrait.setCode_postal(codePostal);
+		retrait.setVille(ville);
+		retrait.setArticle(article);
+
+		retraitDAO.updateRetrait(retrait);
+
+		return retrait;
 		} else {
 			throw be;
 
@@ -112,5 +137,7 @@ public class RetraitManager {
 		}
 		return true;
 	}
+
+
 
 }
