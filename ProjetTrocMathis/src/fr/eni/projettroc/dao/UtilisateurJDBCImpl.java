@@ -196,7 +196,7 @@ public class UtilisateurJDBCImpl implements UtilisateurDAO {
 	        }
 	    }
 	   
-	}
+	
 
 	public void delete(int no_utilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
