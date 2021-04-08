@@ -52,10 +52,10 @@ public class AccueilServlet extends HttpServlet {
 
 		try {
 
-			// Afficher la liste des catégorie
+			// Afficher la liste des catï¿½gorie
 			listeCategories = CategorieManager.getCategorieManager().toutesLesCategories();
 			session.setAttribute("listeCategories", listeCategories);
-			//Récupérer la liste des article en cours de vente
+			//Rï¿½cupï¿½rer la liste des article en cours de vente
 			listeArticles = ArticleVenduManager.getArticleVenduManager().listeArticles();
 			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticleParPeriode(listeArticles, "");
 			session.setAttribute("listeArticleEnCours", listeArticleEnCours);
@@ -76,21 +76,21 @@ public class AccueilServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		// Récupérer le numéro de catégorie sélectionnée
+		// Rï¿½cupï¿½rer le numï¿½ro de catï¿½gorie sï¿½lectionnï¿½e
 		String categorieSelect = request.getParameter("categorieSelect");
 		int numCategorie = Integer.parseInt(categorieSelect);
 		System.out.println(categorieSelect);
 
-		// Récupérer le nom de l'article filtré
+		// Rï¿½cupï¿½rer le nom de l'article filtrï¿½
 		String nomSelect = request.getParameter("nomSelect");
 				
 		System.out.println(nomSelect);
-		// Afficher les articles vendus par catégorie
+		// Afficher les articles vendus par catï¿½gorie
 		try {
 			listeArticleEnCours = ArticleVenduManager.getArticleVenduManager().listeArticles();
-			// Si l'utilisateur sélectionne toutes les catégories, pas de filtre par
-			// catégorie
-			// On récupère le libellé de la catégorie avec le numéro de catégorie du
+			// Si l'utilisateur sï¿½lectionne toutes les catï¿½gories, pas de filtre par
+			// catï¿½gorie
+			// On rï¿½cupï¿½re le libellï¿½ de la catï¿½gorie avec le numï¿½ro de catï¿½gorie du
 			// formulaire
 			if ("Toutes".equals(CategorieManager.getCategorieManager().categorieParNumero(numCategorie).getLibelle())) {				
 				listeArticleCategorie = listeArticleEnCours;
