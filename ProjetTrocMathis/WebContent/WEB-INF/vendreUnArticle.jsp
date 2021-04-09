@@ -171,11 +171,11 @@
 
 
 			<br>
-			<div class="bouttons">
+			<div class="userSubmit">
 				<input type="submit"
-					class="btn btn-primary" value="Enregistrer">
+					class="btn btn-primary boutonsubmit" value="Enregistrer">
 				<button type="button"
-					class="btn btn-primary">Annuler</button>
+					class="btn btn-primary boutonsubmit">Annuler</button>
 			</div>
 		</form>
 	</div>
