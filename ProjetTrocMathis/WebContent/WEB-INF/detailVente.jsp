@@ -44,6 +44,7 @@
 			<div class="titre">
 				<h1 class="my-2">D&eacute;tail&nbsp;vente</h1>
 			</div>
+			<br>
 
 			<div class="container">
 				<div class="row">
@@ -53,7 +54,7 @@
 						<div class="form-group">
 							<div class="form-row">${articlejsp.nom_article}</div>
 						</div>
-						<br>
+					
 
 						<div class="form-group">
 							<div class="form-row">
@@ -133,7 +134,7 @@
 										type="number" class="form-control" id="prixenchere" required
 										name="prixenchere">
 									<div class="col-md-1"></div>
-									<button type="submit" class="btn btn-light col-md-4">Ench&eacute;rir</button>
+									<button type="submit" class="btn btn-primary col-md-4">Ench&eacute;rir</button>
 								</div>
 							</div>
 
@@ -144,7 +145,7 @@
 								<div class="form-row">
 
 									<p>
-										<button type="submit" class="btn btn-light">
+										<button type="submit" class="btn btn-primary">
 											<a
 												href="${pageContext.request.contextPath}/ModifierUnArticle?iddelarticle=${articlejsp.no_article}"
 												title="Modifier la vente">Modifier&nbsp; la&nbsp; Vente</a>
