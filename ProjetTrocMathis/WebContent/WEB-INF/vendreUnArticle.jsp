@@ -172,10 +172,10 @@
 
 			<br>
 			<div class="bouttons">
-				<input type="submit" class="col-md-2"
-					class="btn btn-outline-secondary mb-2" value="Enregistrer">
-				<button type="button" class="col-md-2"
-					class="btn btn-outline-secondary mb-2">Annuler</button>
+				<input type="submit"
+					class="btn btn-primary" value="Enregistrer">
+				<button type="button"
+					class="btn btn-primary">Annuler</button>
 			</div>
 		</form>
 	</div>
