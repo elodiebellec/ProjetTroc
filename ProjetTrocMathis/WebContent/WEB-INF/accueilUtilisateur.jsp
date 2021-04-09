@@ -91,7 +91,7 @@
 
 
 					<input type="submit" value="Rechercher"
-						class="flitresForm btn btn-light btn-lg" />
+						class="flitresForm btn $gray-400 btn-lg" />
 				</form>
 			</div>
 			<div class="articles">
