@@ -132,6 +132,15 @@ input.flitresForm{
 }
 
 /*------------barre de recherche avec loupe ----------------*/
+.userSubmit{
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+ justify-content: center;
+}
+.boutonsubmit{
+	margin: 1em;
+}
 .search-field {
 	width: 100%;
 	

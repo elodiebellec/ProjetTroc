@@ -30,7 +30,10 @@
 
 
 	<header>
-		<h1>Mon Profil</h1>
+	<div class="titre">
+			<h1 class="my-2">Mon Profil</h1>
+		</div>
+	
 
 		<form action="./ModificationUtilisateur" method="post">
 			<div class="card-body">
@@ -118,11 +121,11 @@
 					</div>
 
 				</div>
-				<div class="boutonsubmit">
-					<button type="submit" class="btn btn-primary">Enregistrer</button>
+				<div class="userSubmit">
+					<button type="submit" class="btn btn-primary boutonsubmit">Enregistrer</button>
 					<a
 						href="${pageContext.servletContext.contextPath}/SuppressionUtilisateur"><input
-						type="button" class="btn btn-primary  "
+						type="button" class="btn btn-primary boutonsubmit"
 						value="Supprimer mon compte"></a>
 				</div>
 			</div>

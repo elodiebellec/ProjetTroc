@@ -38,10 +38,10 @@
 		<div class="card-body">
 			<div class="container">
 				<div class="row">
-					<div
-						class="col-lg-12 col-md-6 col-sm-6 portfolio-item align-middle">
-						<h1>Mon profil</h1>
-					</div>
+				<div class="titre">
+			<h1 class="my-2">Mon Profil</h1>
+		</div>
+					
 				</div>
 			</div>
 		</div>
@@ -118,10 +118,10 @@
 				</div>
 			</div>
 
-			<div class="boutonsubmit">
-				<button type="submit" class="btn btn-primary ">Cr&eacute;er</button>
+			<div class="userSubmit">
+				<button type="submit" class="btn btn-primary boutonsubmit">Cr&eacute;er</button>
 				<a href="${pageContext.servletContext.contextPath}/Accueil"><input
-					type="button" class="btn btn-primary  " value="Annuler"></a>
+					type="button" class="btn btn-primary boutonsubmit" value="Annuler"></a>
 
 			</div>
 		</form>
