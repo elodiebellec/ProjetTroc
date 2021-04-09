@@ -119,6 +119,7 @@ h2{
 select.formCategoriesItem {
 flex: 2;
 margin-left: 1em;
+border-color: silver;
 }
 
 input.flitresForm{
@@ -151,6 +152,7 @@ input.flitresForm{
 	border: 1px solid;
 	border-radius: 2em;
 	padding: 0.5em 2em 0.5em 3em;
+	border-color: silver;
 }
 /*-----------------------------------------*/
 
