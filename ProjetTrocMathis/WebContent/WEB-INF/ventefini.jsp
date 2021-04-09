@@ -17,8 +17,9 @@
 
 <body>
 
+	<!-- Navigation -->
 
-	<%@ include file="template/navBarDeconnectee.html" %>
+	<%@ include file="template/navBarNavigation.html"%>
 
 
 	<c:if test="${!empty errors}">
@@ -37,78 +38,66 @@
 
 	<!-- Page Content -->
 	<div class="container">
-    
+
 		<!-- Page Heading -->
-		<h1 class="my-2">${usermax} a remport&eacute; l'ench&egrave;re</h1>
-
-
-		<div class="form-group">
-			<div class="form-row">${articlejsp.nom_article}</div>
+		<div class="titre">
+			<h1 class="my-2">${usermax}&nbsp;a&nbsp;remport&eacute;&nbsp;l'ench&egrave;re</h1>
 		</div>
 
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="description">Description : </label>
-				<div class="col-md-8" class="card">${articlejsp.description}</div>
-			</div>
-		</div>
-
-        <div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="meilleureOffre"> Meilleure
-					Offre : </label>
-
-				<div class="col-md-8">${montantmaximum} pts par ${usermax}</div>
-
-			</div>
-		</div>
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="miseAPrix"> Mise &agrave; prix : </label>
-				<div class="col-md-8">${articlejsp.prix_initial} points</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-				<div class="form-row">
-					<label class="col-md-2" for="finEnchere"> Fin de l'ench&egrave;re:
-					</label>
-					<div class="col-md-8">
-						<tags:localDate date="${articlejsp.date_fin_encheres}" />
+		<div class="container">
+			<div class="row">
+				<div  class="col-4"></div>
+				<div class="container col-8">
+					<div class="row">
+						<h2 class="col-12">${articlejsp.nom_article}</h2>
+					</div>
+					<br>
+					<div class="row">
+						<label class="col-4" for="description">Description : </label>
+						<div class="col-8">${articlejsp.description}</div>
+					</div>
+					<br>
+					<div class="row">
+						<label class="col-4" for="meilleureOffre"> Meilleure Offre
+							: </label>
+						<div class="col-8">${montantmaximum}&nbsp;pts&nbsp;par&nbsp;${usermax}</div>
+					</div>
+					<br>
+					<div class="row">
+						<label class="col-4" for="miseAPrix"> Mise&nbsp;&agrave;&nbsp;prix :
+						</label>
+						<div class="col-8">${articlejsp.prix_initial}&nbsp;points</div>
+					</div>
+					<br>
+					<div class="row">
+						<label class="col-4" for="finEnchere"> Fin de
+							l'ench&egrave;re: </label>
+						<div class="col-8">
+							<tags:localDate date="${articlejsp.date_fin_encheres}" />
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<label class="col-4" for="retrait"> Retrait : </label>
+						<div class="col-8">
+							${articlejsp.utilisateur.rue } <br>
+							${articlejsp.utilisateur.code_postal}
+							${articlejsp.utilisateur.ville }
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<label class="col-4" for="vendeur"> Vendeur : </label>
+						<div class="col-8">${articlejsp.utilisateur.pseudo}</div>
+					</div>
+					<br>
+					<div class="row">
+						<button class="col-3" type="submit" class="btn btn-light">Retrait
+							effectué</button>
 					</div>
 				</div>
 			</div>
-			
-			
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="retrait"> Retrait : </label>
-				<div class="col-md-8">
-
-					${articlejsp.utilisateur.rue } <br>
-					${articlejsp.utilisateur.code_postal} 
-					${articlejsp.utilisateur.ville }
-
-				</div>
-			</div>
 		</div>
-
-		<div class="form-group">
-			<div class="form-row">
-				<label class="col-md-2" for="vendeur"> Vendeur : </label>
-				<div class="col-md-8">${articlejsp.utilisateur.pseudo}</div>
-			</div>
-		</div>
-
-
-
-		<div class="col-md-1"></div>
-						<button type="submit" class="btn btn-light">Retrait effectué</button>
-					</div>
-		
-
-		
+	</div>
 </body>
 </html>

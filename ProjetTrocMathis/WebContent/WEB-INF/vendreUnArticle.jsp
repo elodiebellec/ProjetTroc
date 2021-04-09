@@ -16,11 +16,11 @@
 
 <body>
 
-	<%@ include file="template/navBarNavigation.html" %>
+	<%@ include file="template/navBarNavigation.html"%>
 
 
 
-	
+
 	<c:if test="${!empty errors}">
 		<div class="col-lg-6 col-md-4 col-sm-6 portfolio-item">
 			<div class="card h-100 alert">
@@ -39,8 +39,9 @@
 	<div class="container">
 
 		<!-- Page Heading -->
-		<h1 class="my-2">Nouvelle vente</h1>
-
+		<div class="titre">
+			<h1 class="my-2">Nouvelle&nbsp;vente</h1>
+		</div>
 
 		<form action="./VendreUnArticle" method="post">
 
@@ -56,15 +57,14 @@
 				</div>
 			</div>
 
-			
 
-			 	<div class="form-group">
+
+			<div class="form-group">
 				<div class="form-row">
 					<label class="col-md-2" for="description">Description : </label>
 					<div class="col-md-8">
 						<textarea class="form-control" id="description" required
-							name="description" rows="5" cols="30"
-							></textarea>
+							name="description" rows="5" cols="30"></textarea>
 					</div>
 				</div>
 			</div>
@@ -89,10 +89,10 @@
 					<label class="col-md-2" for="photoArticle">Photo de
 						l'article : </label>
 					<div class="col-md-8">
-					
+
 						<button type="button" class="btn btn-light">UPLOADER</button>
 
-					<!--	<input type="file" id="image" required name="image"
+						<!--	<input type="file" id="image" required name="image"
 							accept="image/png, image/jpeg"> -->
 					</div>
 
@@ -105,8 +105,8 @@
 				<div class="form-row">
 					<label class="col-md-2" for="prixInitial">Mise à prix : </label>
 					<div class="col-md-8">
-						<input type="number" class="form-control" id="prixInitial" required
-							name="prixInitial">
+						<input type="number" class="form-control" id="prixInitial"
+							required name="prixInitial">
 					</div>
 				</div>
 			</div>
@@ -116,8 +116,8 @@
 					<label class="col-md-2" for="dateDebutEncheres">Début de
 						l'enchère : </label>
 					<div class="col-md-8">
-						<input class="form-control" type="date" id="dateDebutEncheres" required
-							name="dateDebutEncheres">
+						<input class="form-control" type="date" id="dateDebutEncheres"
+							required name="dateDebutEncheres">
 					</div>
 				</div>
 			</div>
@@ -125,11 +125,11 @@
 			<div class="form-group">
 				<div class="form-row">
 
-					<label class="col-md-2" for="dateFinEncheres">Fin de l'enchère :
-					</label>
+					<label class="col-md-2" for="dateFinEncheres">Fin de
+						l'enchère : </label>
 					<div class="col-md-8">
-						<input class="form-control" type="date" id="dateFinEncheres" required
-							name="dateFinEncheres">
+						<input class="form-control" type="date" id="dateFinEncheres"
+							required name="dateFinEncheres">
 					</div>
 				</div>
 			</div>
@@ -152,7 +152,7 @@
 							<label class="col-md-2" for="codePostal">Code Postal : </label>
 							<div class="col-md-8">
 								<input class="form-control" id="codePostal" type="text" required
-									name="codePostal" value="${sessionScope.user.code_postal}" >
+									name="codePostal" value="${sessionScope.user.code_postal}">
 							</div>
 						</div>
 					</div>
@@ -162,22 +162,21 @@
 							<label class="col-md-2" for="ville">Ville : </label>
 							<div class="col-md-8">
 								<input class="form-control" id="ville" type="text" required
-									name="ville" value="${sessionScope.user.ville}" >
+									name="ville" value="${sessionScope.user.ville}">
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 
 
-
+			<br>
 			<div class="bouttons">
 				<input type="submit" class="col-md-2"
 					class="btn btn-outline-secondary mb-2" value="Enregistrer">
 				<button type="button" class="col-md-2"
 					class="btn btn-outline-secondary mb-2">Annuler</button>
-			</div>  
+			</div>
 		</form>
 	</div>
 
